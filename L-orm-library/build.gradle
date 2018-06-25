@@ -1,0 +1,158 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:3.10.0'
+        classpath group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "5.0.7"
+//    id 'nu.studer.jooq' version '2.0.9'
+}
+
+apply plugin: 'java'
+//apply plugin: 'nu.studer.jooq'
+
+// 参考资料
+// https://flywaydb.org/documentation/gradle/
+// flywayClean
+// flywayMigrate
+flyway {
+
+
+
+//    url = 'jdbc:mysql://127.0.0.1:50005/JicELearning?useSSL=false&createDatabaseIfNotExist=true'
+    url = 'jdbc:mysql://127.0.0.1:50005/TNW?useSSL=false&createDatabaseIfNotExist=true'
+    user = 'root'
+    password = '123456'
+
+//    url = 'jdbc:mysql://10.1.2.233:3306/JicELearning?useSSL=false&createDatabaseIfNotExist=true'
+//    user = 'el'
+//    password = 'el123'
+
+    schemas = ['TNW']
+    placeholders = [
+            'keyABC'          : 'valueXYZ',
+            'otherplaceholder': 'value123'
+    ]
+}
+
+// 参考资料
+// https://github.com/etiennestuder/gradle-jooq-plugin
+// https://github.com/Sethuraman/JooqFlywaySpringBoot/blob/master/build.gradle
+
+// Use your favourite XML builder to construct the code generation configuration file
+def writer = new StringWriter()
+def xml = new groovy.xml.MarkupBuilder(writer)
+.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
+    jdbc() {
+        driver('com.mysql.jdbc.Driver')
+        url('jdbc:mysql://127.0.0.1:50005/TNW?useSSL=false')
+        user('root')
+        password('123456')
+//        url('jdbc:mysql://10.1.2.233:3306/JicELearning?useSSL=false')
+//        user('el')
+//        password('el123')
+
+
+    }
+    generator() {
+        database() {
+            excludes "flyway_schema_history|QRTZ_.*|username_sequence"
+            unsignedTypes false
+            inputSchema "TNW"
+
+            customTypes(){
+                customType(){
+                    name "integer2LocalDateTime"
+                    type "java.time.LocalDateTime"
+                    converter "com.jic.tnw.db.converter.LocalDateTimeConverter1"
+                }
+                customType(){
+                    name "date2LocalDate"
+                    type "java.time.LocalDate"
+                    converter "com.jic.tnw.db.converter.SqlDate2LocalDateConverter"
+                }
+            }
+
+            forcedTypes(){
+                forcedType(){
+                    name "BOOLEAN"
+                    types "(?i:TINYINT(\\s*\\(\\d+\\))?(\\s*UNSIGNED)?)"
+                }
+                forcedType(){
+                    name "integer2LocalDateTime"
+                    //converter "com.jic.elearning.db.converter.LocalDateTimeConverter1"
+                   // userType "java.time.LocalDateTime"
+                    types ".*"
+                    expression ".*\\.*time"
+                }
+
+                forcedType(){
+                    name "date2LocalDate"
+                    //converter "com.jic.elearning.db.converter.SqlDate2LocalDateConverter"
+                    //userType "java.time.LocalDate"
+                    types ".*"
+                    expression ".*\\.*date"
+                }
+            }
+
+        }
+
+        generate([:]) {
+            pojos true
+            daos true
+            instanceFields true
+            springAnnotations true
+        }
+
+        target() {
+            packageName "com.jic.tnw.db.mysql"
+            directory "${project.projectDir}/src/main/java"
+        }
+    }
+
+
+}
+task generateJOOQ() {
+    doLast {
+        org.jooq.util.GenerationTool.generate(
+                javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+        )
+    }
+}
+
+generateJOOQ.dependsOn flywayMigrate
+
+dependencies {
+    //compile('org.springframework.boot:spring-boot-starter')
+    //JOOQ
+    //compile('org.springframework.boot:spring-boot-starter-jooq')
+    compile("org.springframework.boot:spring-boot-starter-jooq")
+    //compile('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.data:spring-data-commons")
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    // https://mvnrepository.com/artifact/org.jooq/jooq
+    compile group: 'org.jooq', name: 'jooq'
+
+    //org.flywaydb:flyway-core
+    compile group: 'org.flywaydb', name: 'flyway-core'
+
+
+    //compile("org.jooq:jooq:3.10.0")
+    //jooqRuntime 'mysql:mysql-connector-java:5.1.40'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
+
+
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+}

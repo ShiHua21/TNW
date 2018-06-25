@@ -1,0 +1,78 @@
+
+server:
+  port: 8010
+
+spring:
+  #jOOQ Configuration
+  jooq:
+    sql-dialect: mysql
+  datasource:
+    url: jdbc:mysql://rm-m5e41xelr0d8uvu78.mysql.rds.aliyuncs.com:3306/Jic_Alpha?useSSL=false&createDatabaseIfNotExist=true
+    username: xxxx
+    password: xxxx
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      auto-commit: true
+      connection-test-query: 'SELECT 1'
+      maximum-pool-size: 150
+      #minimum-idle: 100
+  #redis
+  redis:
+      database: 0
+      host: r-xxxxx.redis.rds.aliyuncs.com
+      port: 6379
+      password: xxxx
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+      timeout: 0
+
+#日志log4j2
+logging:
+  config: /opt/ordercat2/schedule-job/conf/logging-config.xml
+
+# JWT
+jwt:
+  header: Authorization
+  secret: fmOp9wZ0GnPojrBT
+  expiration: 604800
+  tokenHead: "JA "
+  route:
+    authentication:
+      login: auth
+      refresh: "auth/refresh"
+      register: "auth/register"
+
+
+tianma:
+  host-name: "www.tianmasport.com"
+  vcode-path: "/Users/lee5hx/src/myjo/OrderCat2/third-library/src/main/java/com/myjo/ordercat2/thrid/"
+  login-name: "青岛麦巨商贸"
+  login-pass: "mj258123"
+  http-url:
+    verify-code: "http://${tianma.host-name}/ms/ImageServlet?time=%d"
+    login: "http://${tianma.host-name}/ms/beLogin.do"
+    main-html: "http://${tianma.host-name}/ms/main.shtml"
+    my-orders: "http://${tianma.host-name}/ms/tradeOrders/myDataList.do"
+    after-sales-management: "http://${tianma.host-name}/ms/soldFront/dataList.do"
+    add-order-remark: "http://${tianma.host-name}/ms/tradeOrders/addRemark.do"
+
+taobao:
+  api:
+    url: "http://gw.api.taobao.com/router/rest"
+    app-key: "23279400"
+    app-secret: "7cb1d50fc70c7548b31d414c2adbae06"
+    session-key: "610061860172d8cb9f255a51961f5d4885daaff6a5bad72738840638"
+
+
+quartz:
+  enabled: true
+
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false

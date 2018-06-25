@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function login(){
+            $.ajax({
+                url:'http://localhost:8000/auth',
+                contentType:"application/json",
+                type:'post',
+                data:'{"username":"test","password":"t123123"}',
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+        function register(){
+            $.ajax({
+                url:'http://localhost:8000/auth/register',
+                contentType:"application/json",
+                type:'post',
+                data:'{"username":"test","password":"t123123","email":"11111@153.com"}',
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                }
+            });
+        }
+        function refresh() {
+            alert('...');
+        }
+    </script>
+</head>
+<body>
+<h4>认证接口</h4>
+<button onclick="login()">登陆</button>
+<button onclick="register()">注册</button>
+<button onclick="refresh()">刷新令牌</button>
+<h4>其他接口</h4>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+./gradlew :orm-library:generateJOOQ --info

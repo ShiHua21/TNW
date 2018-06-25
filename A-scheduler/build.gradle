@@ -1,0 +1,27 @@
+
+plugins {
+	id "org.springframework.boot" version "1.5.8.RELEASE"
+}
+
+apply plugin: 'java'
+
+bootRepackage {
+	executable = true
+}
+
+dependencies {
+
+	compile project(':orm-library')
+	compile project(':third-library')
+	compile project(':task-service')
+
+	compile('org.quartz-scheduler:quartz')
+	compile('org.quartz-scheduler:quartz-jobs')
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+}

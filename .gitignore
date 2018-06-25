@@ -1,0 +1,39 @@
+.gradle
+/build/
+/**/out
+!gradle/wrapper/gradle-wrapper.jar
+/logs/
+/out/
+/.jooq_codegen/target
+/target
+.DS_Store
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.log
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+
+### JicAlpha ###
+*.jpg
+classes/
+*.zip
+

@@ -1,0 +1,30 @@
+
+
+#日志log4j2
+logging:
+  config: classpath:logging-config.xml
+
+#Spring配置
+spring:
+  redis:
+    database: 0
+    host: localhost
+    port: 40001
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
+  jackson:
+    serialization:
+      write_dates_as_timestamps : false
+
+
+taobao:
+  api:
+    url: "http://gw.api.taobao.com/router/rest"
+    app-key: "23279400"
+    app-secret: "7cb1d50fc70c7548b31d414c2adbae06"
+    session-key: "610061860172d8cb9f255a51961f5d4885daaff6a5bad72738840638"

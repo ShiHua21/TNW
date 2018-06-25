@@ -1,0 +1,61 @@
+server:
+  port: 8010
+
+spring:
+  #jOOQ Configuration
+  jooq:
+    sql-dialect: mysql
+  #redis
+  redis:
+      database: 0
+      host: 127.0.0.1
+      port: 40001
+      password:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+      timeout: 0
+  #数据库连接池
+  datasource:
+      url: jdbc:mysql://127.0.0.1:50005/ordercat2?useSSL=false
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      hikari:
+        auto-commit: true
+        connection-test-query: 'SELECT 1'
+        maximum-pool-size: 150
+        #minimum-idle: 100
+
+logging:
+  config: classpath:logging-config.xml
+
+# JWT
+jwt:
+  header: Authorization
+  secret: fmOp9wZ0GnPojrBT
+  expiration: 604800
+  tokenHead: "JA "
+  route:
+    authentication:
+      login: auth
+      refresh: "auth/refresh"
+      register: "auth/register"
+
+quartz:
+  enabled: true
+
+
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
+
+
+
+#security.basic.enabled=false
+#  management.security.enabled=false

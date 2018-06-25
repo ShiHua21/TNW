@@ -1,0 +1,16 @@
+//plugins { id "io.spring.dependency-management" version "1.0.3.RELEASE" }
+
+//ext { springBootVersion = '1.5.7.RELEASE' }
+
+apply plugin: 'java'
+
+
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile("io.jsonwebtoken:jjwt")
+    compile("com.googlecode.libphonenumber:libphonenumber")
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+    compile("org.springframework.boot:spring-boot-starter-security")
+}

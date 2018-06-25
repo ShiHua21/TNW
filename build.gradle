@@ -1,0 +1,152 @@
+plugins {
+    id 'org.asciidoctor.convert' version '1.5.3' apply false
+    id "io.freefair.javadoc-utf-8" version "2.0.1"
+//    https://github.com/spring-gradle-plugins/dependency-management-plugin
+    id "io.spring.dependency-management" version "1.0.3.RELEASE" apply false
+    //id "org.springframework.boot" version "1.5.7.RELEASE"
+}
+//plugins { id "io.spring.dependency-management" version "1.0.3.RELEASE" }
+
+
+ext {
+    springBootVersion = '1.5.8.RELEASE'
+    jooqVersion = '3.10.0'
+    jjwtVersion = '0.7.0'
+    swaggerVersion = '2.7.0'
+    hikariCPVersion = '2.7.2'
+    //version: '2.8.8'
+    jacksonDTjsr310Version = '2.8.8'
+    springMobileDeviceVersion = '1.1.5.RELEASE'
+    springDataCommonsVersion = '1.13.8.RELEASE'
+    springAdminVersion = '1.5.4'
+    springShellVersion = '2.0.0.M2'
+    okHttpVersion = '3.9.1'
+    commonsIoVersion = '2.5'
+    jacksonVersion = '2.8.10'
+    quartzVersion = '2.3.0'
+
+   // compile group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.8.10'
+    libphonenumberVersion = '8.8.10'
+    //compile group: 'me.gosimple', name: 'nbvcxz', version: '1.4.0'
+    nbvcxzVersion = '1.4.0'
+    //compile 'com.nulab-inc:zxcvbn:1.2.3'
+    zxcvbnVersion = '1.2.3'
+    flywayVersion = '5.0.7'
+    springHateoasVersion = '0.24.0.RELEASE'
+
+
+    //compile group: 'org.springframework.data', name: 'spring-data-commons', version: '1.13.8.RELEASE'
+
+}
+
+subprojects {
+    version = '0.0.3'
+}
+
+allprojects {
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "io.freefair.javadoc-utf-8"
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://central.maven.org/maven2/' }
+        maven { url 'https://repo.spring.io/libs-milestone' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+        dependencies {
+
+
+            dependency "org.quartz-scheduler:quartz:${quartzVersion}"
+            dependency "org.quartz-scheduler:quartz-jobs:${quartzVersion}"
+
+//            compile group: 'org.springframework.mobile', name: 'spring-mobile-device', version: '1.1.5.RELEASE'
+
+            dependency "org.springframework.mobile:spring-mobile-device:${springMobileDeviceVersion}"
+
+            dependency "org.jooq:jooq:${jooqVersion}"
+            dependency "com.zaxxer:HikariCP:${hikariCPVersion}"
+
+            dependency("org.springframework.boot:spring-boot-starter:${springBootVersion}") {
+                exclude 'org.springframework.boot:spring-boot-starter-logging'
+            }
+
+            dependency("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+                exclude 'org.springframework.boot:spring-boot-starter-tomcat'
+            }
+
+//            dependency("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+//                exclude 'org.springframework.boot:spring-boot-starter-tomcat'
+//            }
+
+            dependency("org.springframework.boot:spring-boot-starter-hateoas:${springBootVersion}") {
+                exclude 'org.springframework.hateoas:spring-hateoas'
+            }
+
+//            dependency("org.springframework.boot:spring-boot-starter-redis:${springBootVersion}")
+
+//            dependency("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDTjsr310Version}")
+
+
+            dependency("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+            dependency("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDTjsr310Version}")
+
+
+            dependency "io.jsonwebtoken:jjwt:${jjwtVersion}"
+            dependency "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
+            dependency "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+            dependency "io.springfox:springfox-swagger2:${swaggerVersion}"
+            dependency("de.codecentric:spring-boot-admin-server:${springAdminVersion}")
+            dependency("de.codecentric:spring-boot-admin-server-ui:${springAdminVersion}")
+            dependency("de.codecentric:spring-boot-admin-server-ui-login:${springAdminVersion}")
+            dependency("de.codecentric:spring-boot-admin-server-ui-activiti:${springAdminVersion}")
+            dependency("de.codecentric:spring-boot-admin-starter-client:${springAdminVersion}")
+            dependency("org.springframework.shell:spring-shell-starter:${springShellVersion}")
+            dependency("com.squareup.okhttp3:okhttp:${okHttpVersion}")
+            dependency("commons-io:commons-io:${commonsIoVersion}")
+            dependency("com.googlecode.libphonenumber:libphonenumber:${libphonenumberVersion}")
+            dependency("me.gosimple:nbvcxz:${nbvcxzVersion}")
+            dependency("com.nulab-inc:zxcvbn:${zxcvbnVersion}")
+
+            dependency("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
+
+            //https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+            dependency("org.flywaydb:flyway-core:${flywayVersion}")
+
+        }
+
+    }
+}
+
+
+
+configure(subprojects.findAll {
+            it.name == 'greeter' ||
+            it.name == 'greeting-library' ||
+            it.name == 'api' ||
+            it.name == 'scheduler' ||
+            it.name == 'task-service' ||
+            it.name == 'user-service' ||
+            it.name == 'third-library' ||
+            it.name == 'orm-library' ||
+            it.name == 'common-library' ||
+            it.name == 'shell-cli'
+}) {
+    apply plugin: 'groovy'
+    dependencies {
+        testCompile 'org.codehaus.groovy:groovy:2.4.10'
+
+        testCompile group: 'io.projectreactor', name: 'reactor-core', version: '3.1.6.RELEASE'
+
+        testCompile 'org.spockframework:spock-core:1.1-groovy-2.4', {
+            exclude module: 'groovy-all'
+        }
+        testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    }
+
+}

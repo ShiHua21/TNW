@@ -1,0 +1,38 @@
+//plugins { id "io.spring.dependency-management" version "1.0.3.RELEASE" }
+
+//ext { springBootVersion = '1.5.7.RELEASE' }
+
+apply plugin: 'java'
+
+
+
+dependencies {
+
+
+    compile project(':common-library')
+
+    compile("com.squareup.okhttp3:okhttp")
+    //compile('org.springframework.boot:spring-boot-starter')
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+
+
+
+    compile files('../Z-ext_libs/vaptcha/vaptcha-1.0.jar')
+    compile files('../Z-ext_libs/aliyun/aliyun-java-sdk-core-3.3.1.jar')
+    compile files('../Z-ext_libs/aliyun/aliyun-java-sdk-dysmsapi-1.0.0.jar')
+
+// https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j
+//    compile ("net.sourceforge.tess4j:tess4j:3.4.2"){
+//        exclude module: "logback-classic"
+//    }
+//    compile files('./lib_tb/taobao-sdk-java-auto_1497020479271-20170609.jar')
+
+    compile files('../lib_tb/taobao-sdk-java-auto_1497020479271-20170609.jar')
+
+    compile("commons-io:commons-io")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
