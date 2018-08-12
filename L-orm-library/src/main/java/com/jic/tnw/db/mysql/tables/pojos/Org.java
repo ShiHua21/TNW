@@ -4,10 +4,9 @@
 package com.jic.tnw.db.mysql.tables.pojos;
 
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.annotation.Generated;
 
 
 /**
@@ -23,72 +22,196 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Org implements Serializable {
 
-    private static final long serialVersionUID = 843541215;
+    private static final long serialVersionUID = 545196612;
 
     private Integer       id;
-    private String        name;
     private Integer       parentId;
     private Integer       childrenNum;
     private Integer       depth;
     private Integer       seq;
     private String        description;
-    private String        code;
+    private String        branchNo;
     private String        orgCode;
+    private String        branchNm;
     private Integer       createdUserId;
     private LocalDateTime createdTime;
     private Integer       lastUpdUserId;
     private LocalDateTime lastUpdTime;
     private Integer       syncId;
+    private String        txMt;
+    private String        txDt;
+    private String        branchNmShot;
+    private String        branchTyp;
+    private String        leadBranchNo;
+    private String        address;
+    private String        longitude;
+    private String        practiceDt;
+    private String        businessTm;
+    private String        decorateDt;
+    private String        branchArea;
+    private String        employeesNo;
+    private String        parkingNo;
+    private String        selfHelpEquipment;
+    private String        propertyRightsTyp;
+    private String        businessTyp;
+    private String        electronicEquipment;
+    private String        telNo;
+    private String        branchLead;
+    private String        yitiji;
+    private String        qukuanji;
+    private String        branchPic;
+    private String        branchSpecial;
+    private String        enabled;
+    private String        increacenum;
+    private String        branchTyp1;
+    private String        areaTyp;
+    private String        temporarily;
+    private String        dmeg;
+    private String        branchLeadNo;
+    private String        flag;
 
     public Org() {}
 
     public Org(Org value) {
         this.id = value.id;
-        this.name = value.name;
         this.parentId = value.parentId;
         this.childrenNum = value.childrenNum;
         this.depth = value.depth;
         this.seq = value.seq;
         this.description = value.description;
-        this.code = value.code;
+        this.branchNo = value.branchNo;
         this.orgCode = value.orgCode;
+        this.branchNm = value.branchNm;
         this.createdUserId = value.createdUserId;
         this.createdTime = value.createdTime;
         this.lastUpdUserId = value.lastUpdUserId;
         this.lastUpdTime = value.lastUpdTime;
         this.syncId = value.syncId;
+        this.txMt = value.txMt;
+        this.txDt = value.txDt;
+        this.branchNmShot = value.branchNmShot;
+        this.branchTyp = value.branchTyp;
+        this.leadBranchNo = value.leadBranchNo;
+        this.address = value.address;
+        this.longitude = value.longitude;
+        this.practiceDt = value.practiceDt;
+        this.businessTm = value.businessTm;
+        this.decorateDt = value.decorateDt;
+        this.branchArea = value.branchArea;
+        this.employeesNo = value.employeesNo;
+        this.parkingNo = value.parkingNo;
+        this.selfHelpEquipment = value.selfHelpEquipment;
+        this.propertyRightsTyp = value.propertyRightsTyp;
+        this.businessTyp = value.businessTyp;
+        this.electronicEquipment = value.electronicEquipment;
+        this.telNo = value.telNo;
+        this.branchLead = value.branchLead;
+        this.yitiji = value.yitiji;
+        this.qukuanji = value.qukuanji;
+        this.branchPic = value.branchPic;
+        this.branchSpecial = value.branchSpecial;
+        this.enabled = value.enabled;
+        this.increacenum = value.increacenum;
+        this.branchTyp1 = value.branchTyp1;
+        this.areaTyp = value.areaTyp;
+        this.temporarily = value.temporarily;
+        this.dmeg = value.dmeg;
+        this.branchLeadNo = value.branchLeadNo;
+        this.flag = value.flag;
     }
 
     public Org(
         Integer       id,
-        String        name,
         Integer       parentId,
         Integer       childrenNum,
         Integer       depth,
         Integer       seq,
         String        description,
-        String        code,
+        String        branchNo,
         String        orgCode,
+        String        branchNm,
         Integer       createdUserId,
         LocalDateTime createdTime,
         Integer       lastUpdUserId,
         LocalDateTime lastUpdTime,
-        Integer       syncId
+        Integer       syncId,
+        String        txMt,
+        String        txDt,
+        String        branchNmShot,
+        String        branchTyp,
+        String        leadBranchNo,
+        String        address,
+        String        longitude,
+        String        practiceDt,
+        String        businessTm,
+        String        decorateDt,
+        String        branchArea,
+        String        employeesNo,
+        String        parkingNo,
+        String        selfHelpEquipment,
+        String        propertyRightsTyp,
+        String        businessTyp,
+        String        electronicEquipment,
+        String        telNo,
+        String        branchLead,
+        String        yitiji,
+        String        qukuanji,
+        String        branchPic,
+        String        branchSpecial,
+        String        enabled,
+        String        increacenum,
+        String        branchTyp1,
+        String        areaTyp,
+        String        temporarily,
+        String        dmeg,
+        String        branchLeadNo,
+        String        flag
     ) {
         this.id = id;
-        this.name = name;
         this.parentId = parentId;
         this.childrenNum = childrenNum;
         this.depth = depth;
         this.seq = seq;
         this.description = description;
-        this.code = code;
+        this.branchNo = branchNo;
         this.orgCode = orgCode;
+        this.branchNm = branchNm;
         this.createdUserId = createdUserId;
         this.createdTime = createdTime;
         this.lastUpdUserId = lastUpdUserId;
         this.lastUpdTime = lastUpdTime;
         this.syncId = syncId;
+        this.txMt = txMt;
+        this.txDt = txDt;
+        this.branchNmShot = branchNmShot;
+        this.branchTyp = branchTyp;
+        this.leadBranchNo = leadBranchNo;
+        this.address = address;
+        this.longitude = longitude;
+        this.practiceDt = practiceDt;
+        this.businessTm = businessTm;
+        this.decorateDt = decorateDt;
+        this.branchArea = branchArea;
+        this.employeesNo = employeesNo;
+        this.parkingNo = parkingNo;
+        this.selfHelpEquipment = selfHelpEquipment;
+        this.propertyRightsTyp = propertyRightsTyp;
+        this.businessTyp = businessTyp;
+        this.electronicEquipment = electronicEquipment;
+        this.telNo = telNo;
+        this.branchLead = branchLead;
+        this.yitiji = yitiji;
+        this.qukuanji = qukuanji;
+        this.branchPic = branchPic;
+        this.branchSpecial = branchSpecial;
+        this.enabled = enabled;
+        this.increacenum = increacenum;
+        this.branchTyp1 = branchTyp1;
+        this.areaTyp = areaTyp;
+        this.temporarily = temporarily;
+        this.dmeg = dmeg;
+        this.branchLeadNo = branchLeadNo;
+        this.flag = flag;
     }
 
     public Integer getId() {
@@ -97,14 +220,6 @@ public class Org implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getParentId() {
@@ -147,12 +262,12 @@ public class Org implements Serializable {
         this.description = description;
     }
 
-    public String getCode() {
-        return this.code;
+    public String getBranchNo() {
+        return this.branchNo;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setBranchNo(String branchNo) {
+        this.branchNo = branchNo;
     }
 
     public String getOrgCode() {
@@ -161,6 +276,14 @@ public class Org implements Serializable {
 
     public void setOrgCode(String orgCode) {
         this.orgCode = orgCode;
+    }
+
+    public String getBranchNm() {
+        return this.branchNm;
+    }
+
+    public void setBranchNm(String branchNm) {
+        this.branchNm = branchNm;
     }
 
     public Integer getCreatedUserId() {
@@ -203,24 +326,303 @@ public class Org implements Serializable {
         this.syncId = syncId;
     }
 
+    public String getTxMt() {
+        return this.txMt;
+    }
+
+    public void setTxMt(String txMt) {
+        this.txMt = txMt;
+    }
+
+    public String getTxDt() {
+        return this.txDt;
+    }
+
+    public void setTxDt(String txDt) {
+        this.txDt = txDt;
+    }
+
+    public String getBranchNmShot() {
+        return this.branchNmShot;
+    }
+
+    public void setBranchNmShot(String branchNmShot) {
+        this.branchNmShot = branchNmShot;
+    }
+
+    public String getBranchTyp() {
+        return this.branchTyp;
+    }
+
+    public void setBranchTyp(String branchTyp) {
+        this.branchTyp = branchTyp;
+    }
+
+    public String getLeadBranchNo() {
+        return this.leadBranchNo;
+    }
+
+    public void setLeadBranchNo(String leadBranchNo) {
+        this.leadBranchNo = leadBranchNo;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getPracticeDt() {
+        return this.practiceDt;
+    }
+
+    public void setPracticeDt(String practiceDt) {
+        this.practiceDt = practiceDt;
+    }
+
+    public String getBusinessTm() {
+        return this.businessTm;
+    }
+
+    public void setBusinessTm(String businessTm) {
+        this.businessTm = businessTm;
+    }
+
+    public String getDecorateDt() {
+        return this.decorateDt;
+    }
+
+    public void setDecorateDt(String decorateDt) {
+        this.decorateDt = decorateDt;
+    }
+
+    public String getBranchArea() {
+        return this.branchArea;
+    }
+
+    public void setBranchArea(String branchArea) {
+        this.branchArea = branchArea;
+    }
+
+    public String getEmployeesNo() {
+        return this.employeesNo;
+    }
+
+    public void setEmployeesNo(String employeesNo) {
+        this.employeesNo = employeesNo;
+    }
+
+    public String getParkingNo() {
+        return this.parkingNo;
+    }
+
+    public void setParkingNo(String parkingNo) {
+        this.parkingNo = parkingNo;
+    }
+
+    public String getSelfHelpEquipment() {
+        return this.selfHelpEquipment;
+    }
+
+    public void setSelfHelpEquipment(String selfHelpEquipment) {
+        this.selfHelpEquipment = selfHelpEquipment;
+    }
+
+    public String getPropertyRightsTyp() {
+        return this.propertyRightsTyp;
+    }
+
+    public void setPropertyRightsTyp(String propertyRightsTyp) {
+        this.propertyRightsTyp = propertyRightsTyp;
+    }
+
+    public String getBusinessTyp() {
+        return this.businessTyp;
+    }
+
+    public void setBusinessTyp(String businessTyp) {
+        this.businessTyp = businessTyp;
+    }
+
+    public String getElectronicEquipment() {
+        return this.electronicEquipment;
+    }
+
+    public void setElectronicEquipment(String electronicEquipment) {
+        this.electronicEquipment = electronicEquipment;
+    }
+
+    public String getTelNo() {
+        return this.telNo;
+    }
+
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
+    }
+
+    public String getBranchLead() {
+        return this.branchLead;
+    }
+
+    public void setBranchLead(String branchLead) {
+        this.branchLead = branchLead;
+    }
+
+    public String getYitiji() {
+        return this.yitiji;
+    }
+
+    public void setYitiji(String yitiji) {
+        this.yitiji = yitiji;
+    }
+
+    public String getQukuanji() {
+        return this.qukuanji;
+    }
+
+    public void setQukuanji(String qukuanji) {
+        this.qukuanji = qukuanji;
+    }
+
+    public String getBranchPic() {
+        return this.branchPic;
+    }
+
+    public void setBranchPic(String branchPic) {
+        this.branchPic = branchPic;
+    }
+
+    public String getBranchSpecial() {
+        return this.branchSpecial;
+    }
+
+    public void setBranchSpecial(String branchSpecial) {
+        this.branchSpecial = branchSpecial;
+    }
+
+    public String getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getIncreacenum() {
+        return this.increacenum;
+    }
+
+    public void setIncreacenum(String increacenum) {
+        this.increacenum = increacenum;
+    }
+
+    public String getBranchTyp1() {
+        return this.branchTyp1;
+    }
+
+    public void setBranchTyp1(String branchTyp1) {
+        this.branchTyp1 = branchTyp1;
+    }
+
+    public String getAreaTyp() {
+        return this.areaTyp;
+    }
+
+    public void setAreaTyp(String areaTyp) {
+        this.areaTyp = areaTyp;
+    }
+
+    public String getTemporarily() {
+        return this.temporarily;
+    }
+
+    public void setTemporarily(String temporarily) {
+        this.temporarily = temporarily;
+    }
+
+    public String getDmeg() {
+        return this.dmeg;
+    }
+
+    public void setDmeg(String dmeg) {
+        this.dmeg = dmeg;
+    }
+
+    public String getBranchLeadNo() {
+        return this.branchLeadNo;
+    }
+
+    public void setBranchLeadNo(String branchLeadNo) {
+        this.branchLeadNo = branchLeadNo;
+    }
+
+    public String getFlag() {
+        return this.flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Org (");
 
         sb.append(id);
-        sb.append(", ").append(name);
         sb.append(", ").append(parentId);
         sb.append(", ").append(childrenNum);
         sb.append(", ").append(depth);
         sb.append(", ").append(seq);
         sb.append(", ").append(description);
-        sb.append(", ").append(code);
+        sb.append(", ").append(branchNo);
         sb.append(", ").append(orgCode);
+        sb.append(", ").append(branchNm);
         sb.append(", ").append(createdUserId);
         sb.append(", ").append(createdTime);
         sb.append(", ").append(lastUpdUserId);
         sb.append(", ").append(lastUpdTime);
         sb.append(", ").append(syncId);
+        sb.append(", ").append(txMt);
+        sb.append(", ").append(txDt);
+        sb.append(", ").append(branchNmShot);
+        sb.append(", ").append(branchTyp);
+        sb.append(", ").append(leadBranchNo);
+        sb.append(", ").append(address);
+        sb.append(", ").append(longitude);
+        sb.append(", ").append(practiceDt);
+        sb.append(", ").append(businessTm);
+        sb.append(", ").append(decorateDt);
+        sb.append(", ").append(branchArea);
+        sb.append(", ").append(employeesNo);
+        sb.append(", ").append(parkingNo);
+        sb.append(", ").append(selfHelpEquipment);
+        sb.append(", ").append(propertyRightsTyp);
+        sb.append(", ").append(businessTyp);
+        sb.append(", ").append(electronicEquipment);
+        sb.append(", ").append(telNo);
+        sb.append(", ").append(branchLead);
+        sb.append(", ").append(yitiji);
+        sb.append(", ").append(qukuanji);
+        sb.append(", ").append(branchPic);
+        sb.append(", ").append(branchSpecial);
+        sb.append(", ").append(enabled);
+        sb.append(", ").append(increacenum);
+        sb.append(", ").append(branchTyp1);
+        sb.append(", ").append(areaTyp);
+        sb.append(", ").append(temporarily);
+        sb.append(", ").append(dmeg);
+        sb.append(", ").append(branchLeadNo);
+        sb.append(", ").append(flag);
 
         sb.append(")");
         return sb.toString();

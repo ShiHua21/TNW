@@ -1,7 +1,7 @@
 package com.jic.tnw.web.api.vo.request;
 
-import com.jic.tnw.db.mysql.tables.pojos.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jic.tnw.db.mysql.tables.pojos.User;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,9 +29,9 @@ public class CreateUser {
 
     public User buildUser() {
         User user = new User();
-        user.setUsername(this.username);
-        user.setPassword(this.password);
-        user.setEmail(email);
+        user.setLuusername(this.username);
+        user.setLupwd(this.password);
+        user.setLuemail(email);
         return user;
     }
 

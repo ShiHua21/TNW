@@ -1,22 +1,24 @@
 package com.jic.tnw.web.api.controller.v1;
 
-import com.jic.tnw.db.mysql.tables.pojos.Org;
-import com.jic.tnw.db.mysql.tables.pojos.Post;
-import com.jic.tnw.db.mysql.tables.pojos.User;
+import com.google.i18n.phonenumbers.Phonenumber;
+import com.jic.tnw.common.exception.*;
+import com.jic.tnw.common.utils.PhoneUtils;
+import com.jic.tnw.db.mysql.tables.pojos.*;
+import com.jic.tnw.thrid.domain.VerifyCode;
+import com.jic.tnw.thrid.service.SMSCodeService;
+import com.jic.tnw.user.service.DwOrgcircleDynamicService;
 import com.jic.tnw.user.service.OrgService;
 import com.jic.tnw.user.service.PostService;
 import com.jic.tnw.user.service.UserService;
-import com.jic.tnw.user.service.dto.AddUserDTO;
-import com.jic.tnw.user.service.dto.UserSetRoleGroup;
-import com.jic.tnw.user.service.dto.user.EditUserInfoDTO;
 import com.jic.tnw.user.service.dto.user.JelUser;
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
-import com.jic.elearning.web.api.vo.response.user.JelUserResourceAssembler;
-import com.jic.elearning.web.api.vo.response.user.UserCountResource;
-import com.jic.elearning.web.api.vo.response.user.UserResource;
-import com.jic.elearning.web.api.vo.response.user.UserSetOrgResource;
-import com.jic.tnw.common.exception.*;
-import com.jic.tnw.web.api.vo.request.user.*;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
+import com.jic.tnw.web.api.service.FileService;
+import com.jic.tnw.web.api.vo.request.CheckCode;
+import com.jic.tnw.web.api.vo.request.MobileCheck;
+import com.jic.tnw.web.api.vo.request.user.UserSetPassWord;
+import com.jic.tnw.web.api.vo.response.*;
+import com.jic.tnw.web.api.vo.response.user.JelUserResourceAssembler;
+import com.jic.tnw.web.api.vo.response.user.UserResource;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,8 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,20 +36,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-/**
- * @author lee5hx
- */
+//@ApiIgnore
 @RestController
 @RequestMapping("/v1")
-@Api(description = "用户管理", tags = {"F-用户模块-1"})
+@Api(description = "用户管理", tags = {"C-用户模块-1"})
 public class UserController {
 
     private static final Log LOGGER = LogFactory.getLog(UserController.class);
@@ -58,9 +59,13 @@ public class UserController {
 
     private final UserService userService;
 
+    private final FileService fileService;
+
     private final PostService postService;
 
+    private final DwOrgcircleDynamicService dwOrgcircleDynamicService;
 
+    private final SMSCodeService smsCodeService;
     private final OrgService orgService;
     private final JelUserResourceAssembler jelUserResourceAssembler = new JelUserResourceAssembler(UserController.class, UserResource.class);
 
@@ -73,517 +78,528 @@ public class UserController {
     public UserController(
             LocaleMessageSourceService localeMessageSourceService,
             UserService userService,
+            SMSCodeService smsCodeService,
+            DwOrgcircleDynamicService dwOrgcircleDynamicService,
             PostService postService,
+            FileService fileService,
             OrgService orgService) {
         this.localeMessageSourceService = localeMessageSourceService;
         this.userService = userService;
         this.postService = postService;
+        this.fileService = fileService;
+        this.smsCodeService = smsCodeService;
+        this.dwOrgcircleDynamicService = dwOrgcircleDynamicService;
         this.orgService = orgService;
     }
 
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    @ApiOperation(value = "新增用户", notes = "新增用户")
+    /**
+     * WO个人首页
+     */
+    @RequestMapping(value = "/user/page/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：个人首页", notes = "我的：个人首页")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "addUser", value = "新增用户", required = true, dataType = "AddUser")
-
+//            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
     })
-    public ResponseEntity<?> addUser(@Validated @RequestBody AddUser addUser, @AuthenticationPrincipal UserDetails
-            user) throws Exception {
-        LOGGER.debug(String.format("%s", addUser.toString()));
-        if (!addUser.getQ2password().equals(addUser.getPassword())) {
-            //2次密码不一致
-            throw new TwoDifferentPasswordException();
+    public ResponseEntity<?> getUserPageById(@PathVariable String id) throws Exception {
+        JelUser jelUser = userService.findById(id);
+        User user = jelUser.getUser();
+        if (user == null) {
+            throw new UserNotExistsException();
+        }
+        UserPageResource userPage = new UserPageResource();
+
+        if (user.getLuorgid() == "ROLE_DEPARTMENT_ADMIN" || user.getLuorgid() == "ROLE_SUPER_ADMIN") { //部门管理员 //admin
+            userPage.add(linkTo(methodOn(UserController.class).getUserActivity(userPage.getLuuserid(), null, null)).withRel("patch_get_user_activity"));
+            userPage.add(linkTo(methodOn(UserController.class).getUserDynamic(userPage.getLuuserid(), null, null)).withRel("patch_get_user_dynamic"));
         }
 
-        User exUser = userService.findByName(addUser.getUsername());
-        if (exUser != null) {
-            throw new UserNameExistsException();
-        }
+        userPage.setStatus(200);
+        userPage.setMessage("我的个人首页");
+        userPage.setData(user);
 
-        exUser = userService.findByEmail(addUser.getEmail());
-        if (exUser != null) {
-            throw new UserEmailExistsException();
-        }
-//        AddUserResource addUserResource = new AddUserResource();
-        AddUserDTO addUserDTO = addUser.toDTO(source -> {
-            AddUserDTO aud = new AddUserDTO();
-            aud.setEmail(source.getEmail());
-            aud.setOrgIds(source.getOrgIds());
-            aud.setPassword(passwordEncoder.encode(source.getQ2password()));
-            aud.setPostId(source.getPostId());
-            aud.setUsername(source.getUsername());
-            aud.setTruename(source.getTruename());
-            aud.setRoles(source.getRoles());
-            aud.setUid(Integer.parseInt(user.getUsername()));
-            return aud;
-        });
-        addUserDTO.setType("admin_add");
-        JelUser jelUser = userService.add(addUserDTO);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
+        return ResponseEntity.ok(userPage);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    @ApiOperation(value = "返回用户列表", notes = "返回用户列表")
+
+    /**
+     * 我的留言
+     */
+    @RequestMapping(value = "/user/self/message", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：我的留言", notes = "我的：我的留言")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
             @ApiImplicitParam(name = "size", value = "分页大小", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "页码", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "排序字段", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "org", value = "机构", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "post", value = "岗位", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "role", value = "角色", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "trueName", value = "姓名", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "mobile", value = "手机", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "loginIp", value = "登陆IP", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "promoted", value = "是否推荐", dataType = "String", paramType = "query")
     })
-    public ResponseEntity<?> getUsers(
-            String org,
-            String post,
-            String role,
-            String userName,
-            String trueName,
-            String mobile,
-            String email,
-            String loginIp,
-            String promoted,
-            Pageable pageable,
-            PagedResourcesAssembler assembler) throws Exception {
-        Map<String, Object> conditionMap = new HashMap<>(10);
+    public ResponseEntity<?> getSelfMessage(@RequestParam String id, Pageable pageable, PagedResourcesAssembler assembler) throws Exception {
 
-        if (!StringUtils.isEmpty(org)) {
-            conditionMap.put("org", org);
-        }
-        if (!StringUtils.isEmpty(post)) {
-            conditionMap.put("post", post);
-        }
-        if (!StringUtils.isEmpty(role)) {
-            conditionMap.put("role", role);
-        }
-        if (!StringUtils.isEmpty(userName)) {
-            conditionMap.put("user_name", userName);
-        }
-        if (!StringUtils.isEmpty(trueName)) {
-            conditionMap.put("true_name", trueName);
-        }
-        if (!StringUtils.isEmpty(mobile)) {
-            conditionMap.put("mobile", mobile);
-        }
-        if (!StringUtils.isEmpty(email)) {
-            conditionMap.put("email", email);
-        }
-        if (!StringUtils.isEmpty(loginIp)) {
-            conditionMap.put("loginIp", loginIp);
-        }
-        if (!StringUtils.isEmpty(promoted)) {
-            conditionMap.put("promoted", promoted);
-        }
+        SelfMessageResource mobileCheckResource = new SelfMessageResource();
 
-        Map<Integer, Org> orgMap = orgService.getOrgMap();
-        Page<User> page = userService.findWithPageable(pageable, conditionMap);
+//        Map<String, Object> conditionMap = new HashMap<>(5);
+//        if (!StringUtils.isEmpty(id)) {
+//            conditionMap.put("id", id);
+//        }
 
-        Page<UserResource> newPage = page.map(source -> {
-            UserResource userResource = new UserResource();
-            userResource.setUserId(source.getId());
-            userResource.setUserName(source.getUsername());
-            userResource.setLastLoginIp(source.getLoginIp());
-            userResource.setLastLoginTime(source.getLoginTime());
-            userResource.setOrgIds(source.getOrgIds());
-            userResource.setLocked(source.getLocked());
+        Page<DwMyMessage> page = userService.selfMessagePageable(pageable, id);
 
-            String orgNames = Arrays.stream(userResource.getOrgIds().split("\\|"))
-                    .map(s -> {
-                        if (orgMap.containsKey(Integer.valueOf(s))) {
-                            return orgMap.get(Integer.valueOf(s)).getName();
-                        } else {
-                            return "0";
-                        }
-                    })
-                    .reduce((acc, item) -> String.format("%s|%s", acc, item)).get();
-
-            userResource.setOrgNames(orgNames);
-            userResource.setPostId(source.getPostId());
-            userResource.setRoles(source.getRoles());
-            userResource.setTrueName(source.getTruename());
-            userResource.setPromoted(source.getPromoted());
-            userResource.setPromotedSeq(source.getPromotedSeq());
-            userResource.setPromotedTime(source.getPromotedTime());
-            try {
-                userResource.add(linkTo(methodOn(UserController.class).getUserById(userResource.getUserId())).withSelfRel());
-                userResource.add(linkTo(methodOn(UserController.class).setUserOrg(userResource.getUserId(), null, null)).withRel("patch_set_user_org"));
-                userResource.add(linkTo(methodOn(UserController.class).setUserPost(userResource.getUserId(), null)).withRel("patch_set_user_post"));
-                userResource.add(linkTo(methodOn(UserController.class).setUserRoleGroup(userResource.getUserId(), null)).withRel("patch_set_user_role_group"));
-                userResource.add(linkTo(methodOn(UserController.class).setLock(userResource.getUserId())).withRel("patch_set_lock"));
-                userResource.add(linkTo(methodOn(UserController.class).setUnLock(userResource.getUserId())).withRel("patch_set_unlock"));
-                userResource.add(linkTo(methodOn(UserController.class).setPromotedTeacher(userResource.getUserId())).withRel("patch_set_promoted_teacher"));
-                userResource.add(linkTo(methodOn(UserController.class).cancelPromotedTeacher(userResource.getUserId())).withRel("patch_cancel_promoted_teacher"));
-                userResource.add(linkTo(methodOn(UserController.class).setPromotedSeq(userResource.getUserId(), null)).withRel("patch_set_promoted_seq"));
-                userResource.add(linkTo(methodOn(UserController.class).editUserName(null, userResource.getUserId())).withRel("patch_edit_user_name"));
-                userResource.add(linkTo(methodOn(UserController.class).editUserPassWord(null, userResource.getUserId())).withRel("patch_edit_user_password"));
-                userResource.add(linkTo(methodOn(UserController.class).editUserInfo(null, userResource.getUserId())).withRel("patch_edit_user_info"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return userResource;
-        });
-
-        PagedResources ok = assembler.toResource(newPage);
-        ok.add(linkTo(methodOn(UserController.class).addUser(null, null)).withRel("post_add_user"));
-        ok.add(linkTo(methodOn(UserController.class).setUserOrgByIds(null, null)).withRel("patch_set_org"));
-        ok.add(linkTo(methodOn(UserController.class).setUserPostByIds(null, null)).withRel("patch_set_post"));
-        ok.add(linkTo(methodOn(RoleController.class).getAllRoles()).withRel("get_role_list"));
-        return ResponseEntity.ok(ok);
+        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+            throw new UserMessageExistsException();
+        }
+        mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+        mobileCheckResource.setMessage("我的：我的留言");
+        mobileCheckResource.setData(page);
+        return ResponseEntity.ok(mobileCheckResource);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "根据ID获取用户信息", notes = "根据ID获取用户信息")
+    /**
+     * 删除我的留言
+     */
+    @RequestMapping(value = "/user/delete/self/message", method = RequestMethod.POST)
+    @ApiOperation(value = "我的：删除我的留言", notes = "我的：删除我的留言")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "id", value = "我的留言id", dataType = "int", paramType = "query"),
     })
-    public ResponseEntity<?> getUserById(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser.getUser() == null) {
-            throw new UserNotExistsException();
+    public ResponseEntity<?> deleteSelfMessage(@RequestParam Integer id) throws Exception {
+
+        SelfMessageResource mobileCheckResource = new SelfMessageResource();
+
+        DwMyMessage myMessage = userService.findMyMessageById(id);
+
+        if (StringUtils.isEmpty(myMessage)) {
+            throw new UserMessageExistsException();
         }
-        Map<Integer, Org> orgMap = orgService.getOrgMap();
 
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        String orgNames = Arrays.stream(userResource.getOrgIds().split("\\|"))
-                .map(s -> {
-                    if (orgMap.containsKey(Integer.valueOf(s))) {
-                        return orgMap.get(Integer.valueOf(s)).getName();
-                    } else {
-                        return "0";
-                    }
-                })
-                .reduce((acc, item) -> String.format("%s|%s", acc, item)).get();
-        userResource.setOrgNames(orgNames);
-        if (jelUser.getUser().getPostId() == null||jelUser.getUser().getPostId()==0) {
-            userResource.setPost("暂无");
-        } else {
-            Post post = postService.getPost(jelUser.getUser().getPostId());
-            userResource.setPost(post.getName());
+        String ludelete = myMessage.getLudelete();
+        if (ludelete.equals("0")) {
+            DwMyMessage message = userService.deleteMyMessage(ludelete, id);
+
+            mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+            mobileCheckResource.setMessage("我的：删除我的留言");
+            mobileCheckResource.setData(new DwMyMessage());
         }
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
+        return ResponseEntity.ok(mobileCheckResource);
     }
 
 
-    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String")
-    })
-    public ResponseEntity<?> getUserByCurrent(@AuthenticationPrincipal UserDetails principalUser) throws Exception {
-        Integer userId = Integer.parseInt(principalUser.getUsername());
-        JelUser jelUser = userService.findById(userId);
-        UserResource resource = jelUserResourceAssembler.toResource(jelUser);
-        Map<Integer, Org> orgMap = orgService.getOrgMap();
-        String orgNames = Arrays.stream(resource.getOrgIds().split("\\|"))
-                .map(s -> {
-                    if (orgMap.containsKey(Integer.valueOf(s))) {
-                        return orgMap.get(Integer.valueOf(s)).getName();
-                    } else {
-                        return "0";
-                    }
-                })
-                .reduce((acc, item) -> String.format("%s|%s", acc, item)).get();
-        resource.setOrgNames(orgNames);
-        return new ResponseEntity<>(resource, HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/user/{id}/setRoleGroup", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID设置角色信息", notes = "根据ID设置角色信息")
+    /**
+     * 他人留言
+     */
+    @RequestMapping(value = "/user/other/message", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：他人留言", notes = "我的：他人留言")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "userSetRoleGroup", value = "设置角色组", required = true, dataType = "UserSetRoleGroup")
-
+            @ApiImplicitParam(name = "size", value = "分页大小", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", dataType = "String", paramType = "query"),
     })
-    public ResponseEntity<?> setUserRoleGroup(@PathVariable Integer id, @Validated @RequestBody UserSetRoleGroup userSetRoleGroup) throws Exception {
-        JelUser jelUser = userService.updateUserByRoleId(userSetRoleGroup, id);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
-    }
+    public ResponseEntity<?> getOtherMessage(@RequestParam String id, Pageable pageable, PagedResourcesAssembler
+            assembler) throws Exception {
 
-    @RequestMapping(value = "/user/{id}/lock", method = RequestMethod.PATCH)
-    @ApiOperation(value = "封禁用户", notes = "根据ID设置封禁用户")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
-    })
-    public ResponseEntity<?> setLock(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser == null) {
-            throw new UserNotExistsException();
+        SelfMessageResource mobileCheckResource = new SelfMessageResource();
+
+        Map<String, Object> conditionMap = new HashMap<>(5);
+        if (!StringUtils.isEmpty(id)) {
+            conditionMap.put("id", id);
         }
-        userService.lock(id);
-        return ResponseEntity.ok("ok");
-    }
 
+        Page<DwOtherMessage> page = userService.otherMessagePageable(pageable, id);
 
-    @RequestMapping(value = "/user/{id}/unlock", method = RequestMethod.PATCH)
-    @ApiOperation(value = "解禁用户", notes = "根据ID设置解禁用户")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
-    })
-    public ResponseEntity<?> setUnLock(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser == null) {
-            throw new UserNotExistsException();
+        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+            throw new UserMessageExistsException();
         }
-        userService.unlock(id);
-        return ResponseEntity.ok("ok");
+        mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+        mobileCheckResource.setMessage("我的：他人留言");
+        mobileCheckResource.setData(page);
+        return ResponseEntity.ok(mobileCheckResource);
     }
 
 
-    @RequestMapping(value = "/user/{id}/resetPass", method = RequestMethod.PATCH)
-    @ApiOperation(value = "重置密码", notes = "根据ID重置密码")
+    /**
+     * 删除他人留言
+     */
+    @RequestMapping(value = "/user/delete/other/message", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：删除他人留言", notes = "我的：删除他人留言")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "int", paramType = "query"),
     })
-    public ResponseEntity<?> resetPass(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser == null) {
-            throw new UserNotExistsException();
+    public ResponseEntity<?> deleteOtherMessage(@RequestParam Integer id) throws Exception {
+
+        SelfMessageResource mobileCheckResource = new SelfMessageResource();
+
+        DwOtherMessage otherMessage = userService.findOtherMessageById(id);
+
+        if (StringUtils.isEmpty(otherMessage)) {
+            throw new UserMessageExistsException();
         }
-        return ResponseEntity.ok("ok");
-    }
 
+        String ludelete = otherMessage.getLudelete();
+        if (ludelete.equals("0")) {
+            DwOtherMessage message = userService.deleteOtherMessage(ludelete, id);
 
-    @RequestMapping(value = "/user/{id}/setPromotedTeacher", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID设置推荐老师", notes = "根据ID设置推荐老师")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
-    })
-    public ResponseEntity<?> setPromotedTeacher(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser.getUser() == null) {
-            throw new UserNotExistsException();
+            mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+            mobileCheckResource.setMessage("我的：删除他人留言");
+            mobileCheckResource.setData(new DwOtherMessage());
         }
-        userService.setPromotedTeacher(id, Boolean.TRUE);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(mobileCheckResource);
     }
 
-
-    @RequestMapping(value = "/user/{id}/cancelPromotedTeacher", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID取消推荐老师", notes = "根据ID取消推荐老师")
+    /**
+     * 我的：我的动态
+     */
+    @RequestMapping(value = "/user/dynamic", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：我的动态", notes = "我的：我的动态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "size", value = "分页大小", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", dataType = "String", paramType = "query"),
     })
-    public ResponseEntity<?> cancelPromotedTeacher(@PathVariable Integer id) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser.getUser() == null) {
-            throw new UserNotExistsException();
+    public ResponseEntity<?> getUserDynamic(@RequestParam String id, Pageable pageable, PagedResourcesAssembler
+            assembler) throws Exception {
+
+        OrgcircleDetailResource orgcircleDetail = new OrgcircleDetailResource();
+
+        Map<String, Object> conditionMap = new HashMap<>(5);
+        if (!StringUtils.isEmpty(id)) {
+            conditionMap.put("id", id);
         }
-        userService.setPromotedTeacher(id, Boolean.FALSE);
-        return ResponseEntity.ok("ok");
-    }
 
+        Page<DwOrgcircleDynamic> page = userService.findUserDynamicById(pageable, id);
 
-    @RequestMapping(value = "/user/{id}/setPromotedSeq", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID设置推荐老师排序号", notes = "根据ID设置推荐老师排序号")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "setPromotedSeq", value = "新增用户", required = true, dataType = "SetPromotedSeq")
-
-    })
-    public ResponseEntity<?> setPromotedSeq(@PathVariable Integer id, @Validated @RequestBody SetPromotedSeq setPromotedSeq) throws Exception {
-        JelUser jelUser = userService.findById(id);
-        if (jelUser.getUser() == null) {
-            throw new UserNotExistsException();
+        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+            throw new UserMessageExistsException();
         }
-        userService.setPromotedSeq(id, setPromotedSeq.getSeq());
-        return ResponseEntity.ok("ok");
+        orgcircleDetail.setStatus(HttpServletResponse.SC_OK);
+        orgcircleDetail.setMessage("我的：我的动态");
+        orgcircleDetail.setData(page);
+        return ResponseEntity.ok(orgcircleDetail);
     }
 
-
-    @RequestMapping(value = "/user/{id}/setPost", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID设置岗位信息", notes = "根据ID设置岗位信息")
+    /**
+     * 我的：我的活动
+     */
+    @RequestMapping(value = "/user/activity", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：我的活动", notes = "我的：我的活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "userSetPost", value = "分配岗位数据", required = true, dataType = "UserSetPost")
-
+            @ApiImplicitParam(name = "size", value = "分页大小", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", dataType = "String", paramType = "query"),
     })
-    public ResponseEntity<?> setUserPost(@PathVariable Integer id, @Validated @RequestBody UserSetPost userSetPost) throws Exception {
-        LOGGER.debug(String.format("UserSetPost.getpostid = %s", userSetPost.getPostid()));
-        JelUser jelUser = userService.findById(id);
-        if (jelUser == null) {
-            throw new UserNotExistsException();
+    public ResponseEntity<?> getUserActivity(@RequestParam String id, Pageable pageable, PagedResourcesAssembler
+            assembler) throws Exception {
+
+        OrgcircleActivityResource activity = new OrgcircleActivityResource();
+
+        Map<String, Object> conditionMap = new HashMap<>(5);
+        if (!StringUtils.isEmpty(id)) {
+            conditionMap.put("id", id);
         }
-        if (userSetPost.getPostid() != 0) {
-            Post post = postService.findByID(userSetPost.getPostid());
-            if (post == null) {
-                throw new PostNotFoundException();
-            }
+
+        Page<DwOrgcircleActivity> page = userService.findUserActivityById(pageable, id);
+
+        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+            throw new UserMessageExistsException();
         }
-        JelUser jelUser1 = userService.setPostByPostIdUpdatePostMember(userSetPost.getPostid(), id);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser1);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
+        activity.setStatus(HttpServletResponse.SC_OK);
+        activity.setMessage("我的：我的活动");
+        activity.setData(page);
+        return ResponseEntity.ok(activity);
     }
 
 
-    @RequestMapping(value = "/user/{id}/setOrg", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据ID设置组织机构信息", notes = "根据ID设置组织机构信息")
+    /**
+     * 编辑活动
+     */
+    @RequestMapping(value = "/user/update/activity", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：编辑活动", notes = "我的：编辑活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "userSetOrg", value = "设置机构", required = true, dataType = "UserSetOrg")
-
+            @ApiImplicitParam(name = "id", value = "活动id", dataType = "int", paramType = "query"),
     })
-    public ResponseEntity<?> setUserOrg(
-            @PathVariable Integer id,
-            @RequestBody UserSetOrg userSetOrg,
-            @AuthenticationPrincipal UserDetails principalUser
-    ) throws Exception {
-        UserSetOrgResource userSetOrgResource = new UserSetOrgResource();
+    public ResponseEntity<?> editUserActivity(@RequestParam Integer id, DwOrgcircleActivity dwactivity) throws Exception {
 
-        JelUser jelUser = userService.updateOrgByUserId(
-                id,
-                Integer.valueOf(principalUser.getUsername()),
-                userSetOrg.getOrgIds()
-        );
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
+        OrgcircleActivityResource activity = new OrgcircleActivityResource();
+
+        DwOrgcircleActivity orgcircleActivity = userService.findById(id);
+
+        if (!StringUtils.isEmpty(orgcircleActivity)) {
+
+            DwOrgcircleActivity updateActivity = userService.updateActivityById(dwactivity, id);
+            activity.setStatus(HttpServletResponse.SC_OK);
+            activity.setMessage("我的：我的活动");
+            activity.setData(updateActivity);
+        }
+
+//
+//        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+//            throw new UserMessageExistsException();
+//        }
+        return ResponseEntity.ok(activity);
     }
 
 
-    @RequestMapping(value = "/user/setOrg", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据Ids(批量)设置组织机构信息", notes = "根据Ids(批量)设置组织机构信息")
+    /**
+     * 已参与活动
+     */
+    @RequestMapping(value = "/user/old/activity", method = RequestMethod.GET)
+    @ApiOperation(value = "我的：已参与活动", notes = "我的：已参与活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "userSetOrg", value = "设置机构", required = true, dataType = "UserSetOrg")
-
+            @ApiImplicitParam(name = "size", value = "分页大小", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "用户id", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", dataType = "String", paramType = "query"),
     })
-    public ResponseEntity<?> setUserOrgByIds(
-            @RequestBody UserSetOrg userSetOrg,
-            @AuthenticationPrincipal UserDetails principalUser
-    ) throws Exception {
-        userService.updateOrgByUserIds(
-                userSetOrg.getIds(),
-                Integer.valueOf(principalUser.getUsername()),
-                userSetOrg.getOrgIds());
-        return ResponseEntity.ok("ok");
+    public ResponseEntity<?> getOldUserActivity(@RequestParam String id, Pageable pageable, PagedResourcesAssembler
+            assembler) throws Exception {
+
+        OrgcircleActivityResource activity = new OrgcircleActivityResource();
+
+        Map<String, Object> conditionMap = new HashMap<>(5);
+        if (!StringUtils.isEmpty(id)) {
+            conditionMap.put("id", id);
+        }
+
+        Page<DwOldActivity> page = userService.findOldUserActivityById(pageable, id);
+
+        if (page.getTotalElements() == 0 && page.getTotalPages() == 0) {
+            throw new ParticipatingActivitiesException();
+        }
+
+
+        activity.setStatus(HttpServletResponse.SC_OK);
+        activity.setMessage("我的：已参与活动");
+        activity.setData(page);
+        return ResponseEntity.ok(activity);
     }
 
-    @RequestMapping(value = "/user/setPost", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据Ids(批量)设置岗位信息", notes = "根据Ids(批量)设置岗位信息")
+    /**
+     * 删除动态
+     */
+    @RequestMapping(value = "/user/delete/dynamic", method = RequestMethod.POST)
+    @ApiOperation(value = "我的：删除动态", notes = "我的：删除动态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "userSetPostIDs", value = "设置岗位", required = true, dataType = "UserSetPostIDs")
-
+            @ApiImplicitParam(name = "id", value = "动态id", dataType = "int", paramType = "query"),
     })
-    public ResponseEntity<?> setUserPostByIds(
-            @RequestBody UserSetPostIDs userSetPostIDs,
-            @AuthenticationPrincipal UserDetails principalUser
-    ) throws Exception {
+    public ResponseEntity<?> deleteDynamic(@RequestParam Integer id) throws Exception {
 
-        userService.updatePostByUserIds(userSetPostIDs.getIds(), Integer.valueOf(principalUser.getUsername()), userSetPostIDs.getPostId());
+        OrgcircleDetailResource orgcircleDetail = new OrgcircleDetailResource();
 
-        return ResponseEntity.ok("ok");
+
+        DwOrgcircleDynamic orgcircle = userService.findDynamicById(id);
+
+        if (StringUtils.isEmpty(orgcircle)) {
+            throw new UserMessageExistsException();
+        }
+
+        String ludelete = orgcircle.getLudelete();
+        if (ludelete.equals("0")) {
+            //
+            DwOrgcircleDynamic dwOrgcircleDetail = userService.deleteDynamic(ludelete, id);
+
+
+            orgcircleDetail.setStatus(HttpServletResponse.SC_OK);
+            orgcircleDetail.setMessage("我的：删除动态");
+            orgcircleDetail.setData(dwOrgcircleDetail);
+        }
+        return ResponseEntity.ok(new DwOrgcircleDynamic());
     }
 
-    @RequestMapping(value = "/user/count", method = RequestMethod.GET)
-    @ApiOperation(value = "根据type获取用户统计数", notes = "根据type获取用户统计数")
+
+    //-============------------------------------
+
+    /**
+     * 我的：更改手机号
+     */
+    @RequestMapping(value = "user/mobile/send/code", method = RequestMethod.POST)
+    @ApiOperation(value = "我的：发送短信验证码", notes = "我的：发送短信验证码")
+    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
+    })
+    public ResponseEntity<?> sendCode(@Validated @RequestParam String country, @RequestParam String phoneNo) throws
+            Exception {
+
+        MobileCheckResource mobileCheckResource = new MobileCheckResource();
+        MobileCheck mobileCheck = new MobileCheck();
+        mobileCheck.setPhoneNo(phoneNo);
+        mobileCheck.setCountry(country);
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(phoneNo, country);
+
+        String countryCode = String.valueOf(number.getCountryCode());
+        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", countryCode));
+        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", nationalNumber));
+
+        String vcode = smsCodeService.sendCode(countryCode, nationalNumber, "AUTH_APP_REGISTER");
+        mobileCheck.setVcode(vcode);
+        mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+        mobileCheckResource.setMessage("发送短信验证码成功！");
+        mobileCheckResource.setData(mobileCheck);
+        return ResponseEntity.ok(mobileCheckResource);
+    }
+
+
+    @RequestMapping(value = "user/mobile/check/code", method = RequestMethod.POST)
+    @ApiOperation(value = "我的：更换手机号+code", notes = "我的：更换手机号+code")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-
     })
-    public ResponseEntity<?> getCountByType() throws Exception {
+    public ResponseEntity<?> checkCode(@Validated @RequestParam String id, @RequestParam String country, @RequestParam String phoneNo,
+                                       @RequestParam String vcode, @AuthenticationPrincipal UserDetails principalUser) throws Exception {
 
-        Integer integer = userService.countForLocked();
-        UserCountResource userCountResource = new UserCountResource();
-        userCountResource.setLockCount(integer);
-        Long all = userService.countByAllUser();
-        userCountResource.setAllCount(all);
-        return ResponseEntity.ok(userCountResource);
+        CheckCode checkCode = new CheckCode();
+        if (userService.existsPhoneNo(checkCode.getPhoneNo())) {
+            throw new UserMobileExistsException();
+        }
+
+        CheckCodeResource checkCodeResource = new CheckCodeResource();
+        checkCode.setCountry(country);
+        checkCode.setPhoneNo(phoneNo);
+        checkCode.setVcode(vcode);
+
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(checkCode.getPhoneNo(), checkCode.getCountry());
+        String countryCode = String.valueOf(number.getCountryCode());
+        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+
+        VerifyCode verifyCode = new VerifyCode();
+        verifyCode.setCountryCode(countryCode);
+        verifyCode.setPhoneNumber(nationalNumber);
+        verifyCode.setCode(checkCode.getVcode());
+        verifyCode.setScene("AUTH_APP_REGISTER");
+        if (smsCodeService.verifyCode(verifyCode)) {
+
+            JelUser jUser = userService.findById(id);
+            //根据id绑定手机号
+            JelUser jelUser = userService.userSetMobile(jUser.getUser().getLumobile(), id);
+
+            checkCodeResource.setStatus(HttpServletResponse.SC_OK);
+            checkCodeResource.setMessage("更换手机号成功！");
+            checkCodeResource.setData(verifyCode);
+            UserResource resource = jelUserResourceAssembler.toResource(jelUser);
+        }
+        return ResponseEntity.ok(checkCodeResource);
     }
 
-    @RequestMapping(value = "/user/{id}/editName", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据id修改用户名", notes = "根据id修改用户名")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "userSetName", value = "设置岗位", required = true, dataType = "UserSetName")
 
-    })
-    public ResponseEntity<?> editUserName(@RequestBody UserSetName userSetName,
-                                          @PathVariable Integer id
-    ) throws Exception {
-        JelUser jelUser = userService.editUserName(userSetName.getName(), id);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
-    }
-
-//    @RequestMapping(value = "/user/{id}/editPassWord", method = RequestMethod.POST)
-//    @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
-//=======
-//        JelUser jelUser = new JelUser();
-//        jelUser.setUser(user);
-//        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-//        return new ResponseEntity<>(userResource, HttpStatus.OK);
-//    }
-
-    @RequestMapping(value = "/user/{id}/editPassWord", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/user/{id}/editPassWord", method = RequestMethod.POST)
     @ApiOperation(value = "根据id修改用户密码", notes = "根据id修改用户密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "userSetPassWord", value = "确认用户密码", required = true, dataType = "UserSetPassWord")
-
     })
-    public ResponseEntity<?> editUserPassWord(@RequestBody UserSetPassWord userSetPassWord,
-                                              @PathVariable Integer id
-    ) throws Exception {
+    public ResponseEntity<?> editUserPassWord(UserSetPassWord userSetPassWord, @PathVariable String id) throws
+            Exception {
+
+        PwdCheckResource editPwd = new PwdCheckResource();
+
         if (!userSetPassWord.getQ2password().equals(userSetPassWord.getPassword())) {
             //2次密码不一致
             throw new TwoDifferentPasswordException();
         }
-        JelUser jelUser = userService.editUserPwd(passwordEncoder.encode(userSetPassWord.getPassword()), id);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "/user/{id}/editUserInfo", method = RequestMethod.PATCH)
-    @ApiOperation(value = "根据id编辑用户信息", notes = "根据id编辑用户信息")
+        JelUser User = userService.oldUserPwd(passwordEncoder.encode(userSetPassWord.getQ2password()), id);
+        String oldUserPwd = User.getUser().getLupwd();
+        String pwd = User.getUser().getLupwd();
+        if (oldUserPwd == pwd) {
+            JelUser jelUser = userService.editUserPwd(passwordEncoder.encode(userSetPassWord.getPassword()), id);
+            //        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
+            editPwd.setStatus(HttpServletResponse.SC_OK);
+            editPwd.setMessage("修改密码成功！");
+            editPwd.setData(new PwdCheckResource());
+        } else {
+            throw new TwoDifferentPasswordException();
+        }
+        return ResponseEntity.ok(editPwd);
+    }
+//    ---------------
+
+    /**
+     * 设置头像
+     */
+    @RequestMapping(value = "/user/{id}/setAvatar", method = RequestMethod.POST)
+    @ApiOperation(value = "设置用户头像", notes = "设置用户头像", produces = "application/hal+json")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String"),
-            @ApiImplicitParam(name = "userSetInfo", value = "用户编辑信息", required = true, dataType = "UserSetInfo"),
-            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "int"),
-
+            @ApiImplicitParam(name = "id", value = "用户id", required = true, paramType = "path", dataType = "String"),
     })
-    public ResponseEntity<?> editUserInfo(@RequestBody UserSetInfo userSetInfo,
-                                          @PathVariable Integer id
-    ) throws Exception {
+    public ResponseEntity<?> setAvatar2(
+            @PathVariable String id,
+            @RequestPart String group,
+            @RequestPart MultipartFile file,
+            @AuthenticationPrincipal UserDetails user) throws Exception {
+        LOGGER.debug(String.format("upload file group=%s file.size=%d", group, file.getSize()));
 
-        EditUserInfoDTO editUserInfoDTO = userSetInfo.toDTO(source -> {
-            EditUserInfoDTO edit = new EditUserInfoDTO();
-            edit.setIdcard(source.getIdcard());
-            edit.setAbout(source.getAbout());
-            edit.setMobile(source.getMobile());
-            edit.setQq(source.getQq());
-            edit.setSignature(source.getSignature());
-            edit.setGender(source.getGender());
-            edit.setIam(source.getIam());
-            edit.setWeibo(source.getWeibo());
-            edit.setSite(source.getSite());
-            edit.setWeixin(source.getWeixin());
-            edit.setTurename(source.getTurename());
-            return edit;
-        });
-        editUserInfoDTO.setUserId(id);
-        JelUser jelUser = userService.updateUserProfile(editUserInfoDTO);
-        UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
-        return new ResponseEntity<>(userResource, HttpStatus.OK);
+        UserListResource userListResource = new UserListResource();
+
+        Integer uId = Integer.parseInt(user.getUsername());
+        LOGGER.debug(String.format("userId=%d,upload file group=%s file.size=%d",
+                uId,
+                group,
+                file.getSize()));
+        //检查分组编码
+        Optional<FileStoreGroup> opt = fileService.getFileGroupByCode(group);
+        if (!opt.isPresent()) {
+            throw new FileGroupCodeErrorException();
+        }
+        //判断是否为图片
+        String image = "image";
+        //bmp jpg jpeg gif png ico
+        String[] imageExtensions = new String[]{"bmp", "jpg", "jpeg", "gif", "png", "ico"};
+        String extension;
+        if (file.getContentType().contains(image)) {
+            extension = file.getOriginalFilename().split("\\.", -1)[1];
+            if (!Arrays.asList(imageExtensions).contains(extension)) {
+                throw new ImageTypeSupportErrorException();
+            }
+        } else {
+            throw new UploadFileTypeErrorException();
+        }
+
+        JelUser jUser = userService.findById(id);
+        User users = jUser.getUser();
+        if (!StringUtils.isEmpty(users)) {
+
+
+//        Integer userId = Integer.parseInt(uId);
+            FileStore fileStore = fileService.uploadFile(uId, opt.get(), file);
+            String url = fileStore.getFileUri();
+            JelUser userPortrait = userService.portraitFile(uId.toString(), url);
+            userListResource.setStatus(HttpServletResponse.SC_OK);
+            userListResource.setMessage("修改头像成功！");
+            userListResource.setData(userPortrait);
+        }
+        return ResponseEntity.ok(userListResource);
     }
+
+/**
+ * 退出登陆
+ */
+
+//
+//    @ApiIgnore
+//    @RequestMapping(value = "auth/refresh", method = RequestMethod.GET)
+//    @ApiOperation(value = "登陆-验证-刷新-令牌", notes = "使用旧token换取新的Token.")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String")
+//    })
+//    public ResponseEntity<?> refreshAndGetAuthenticationToken(
+//            HttpServletRequest request) throws AuthenticationException {
+//        String token = request.getHeader(tokenHeader);
+//        String refreshedToken = authService.refresh(token);
+//        if (refreshedToken == null) {
+//            return ResponseEntity.badRequest().body(null);
+//        } else {
+//            return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
+//        }
+//    }
 }

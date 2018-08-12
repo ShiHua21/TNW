@@ -1,6 +1,6 @@
 package com.jic.tnw.web.api.secruity;
 
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

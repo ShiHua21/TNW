@@ -9,23 +9,14 @@ import com.jic.tnw.db.mysql.Indexes;
 import com.jic.tnw.db.mysql.Keys;
 import com.jic.tnw.db.mysql.Tnw;
 import com.jic.tnw.db.mysql.tables.records.OrgRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -41,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Org extends TableImpl<OrgRecord> {
 
-    private static final long serialVersionUID = -2130630683;
+    private static final long serialVersionUID = 562613742;
 
     /**
      * The reference instance of <code>TNW.org</code>
@@ -60,11 +51,6 @@ public class Org extends TableImpl<OrgRecord> {
      * The column <code>TNW.org.id</code>. ????ID
      */
     public final TableField<OrgRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "????ID");
-
-    /**
-     * The column <code>TNW.org.name</code>. ??
-     */
-    public final TableField<OrgRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "??");
 
     /**
      * The column <code>TNW.org.parent_id</code>. ?????ID
@@ -92,14 +78,19 @@ public class Org extends TableImpl<OrgRecord> {
     public final TableField<OrgRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this, "??");
 
     /**
-     * The column <code>TNW.org.code</code>. ????
+     * The column <code>TNW.org.branch_no</code>. ????
      */
-    public final TableField<OrgRecord, String> CODE = createField("code", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+    public final TableField<OrgRecord, String> BRANCH_NO = createField("branch_no", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
 
     /**
      * The column <code>TNW.org.org_code</code>. ????
      */
     public final TableField<OrgRecord, String> ORG_CODE = createField("org_code", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.branch_nm</code>. ????
+     */
+    public final TableField<OrgRecord, String> BRANCH_NM = createField("branch_nm", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "????");
 
     /**
      * The column <code>TNW.org.created_user_id</code>. ????ID
@@ -125,6 +116,161 @@ public class Org extends TableImpl<OrgRecord> {
      * The column <code>TNW.org.sync_id</code>. ????ID
      */
     public final TableField<OrgRecord, Integer> SYNC_ID = createField("sync_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "????ID");
+
+    /**
+     * The column <code>TNW.org.tx_mt</code>. ????
+     */
+    public final TableField<OrgRecord, String> TX_MT = createField("tx_mt", org.jooq.impl.SQLDataType.VARCHAR(8).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.tx_dt</code>. ????
+     */
+    public final TableField<OrgRecord, String> TX_DT = createField("tx_dt", org.jooq.impl.SQLDataType.VARCHAR(8).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.branch_nm_shot</code>. ??????
+     */
+    public final TableField<OrgRecord, String> BRANCH_NM_SHOT = createField("branch_nm_shot", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??????");
+
+    /**
+     * The column <code>TNW.org.branch_typ</code>. ????
+     */
+    public final TableField<OrgRecord, String> BRANCH_TYP = createField("branch_typ", org.jooq.impl.SQLDataType.VARCHAR(8).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.lead_branch_no</code>. ????
+     */
+    public final TableField<OrgRecord, String> LEAD_BRANCH_NO = createField("lead_branch_no", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.address</code>. ??
+     */
+    public final TableField<OrgRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.org.longitude</code>. ??
+     */
+    public final TableField<OrgRecord, String> LONGITUDE = createField("longitude", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.org.practice_dt</code>. ????
+     */
+    public final TableField<OrgRecord, String> PRACTICE_DT = createField("practice_dt", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.business_tm</code>. ????
+     */
+    public final TableField<OrgRecord, String> BUSINESS_TM = createField("business_tm", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.decorate_dt</code>. ????
+     */
+    public final TableField<OrgRecord, String> DECORATE_DT = createField("decorate_dt", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.branch_area</code>. ????
+     */
+    public final TableField<OrgRecord, String> BRANCH_AREA = createField("branch_area", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.employees_no</code>. ???
+     */
+    public final TableField<OrgRecord, String> EMPLOYEES_NO = createField("employees_no", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+
+    /**
+     * The column <code>TNW.org.parking_no</code>. ?????
+     */
+    public final TableField<OrgRecord, String> PARKING_NO = createField("parking_no", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "?????");
+
+    /**
+     * The column <code>TNW.org.self_help_equipment</code>.
+     */
+    public final TableField<OrgRecord, String> SELF_HELP_EQUIPMENT = createField("self_help_equipment", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.property_rights_typ</code>. ????
+     */
+    public final TableField<OrgRecord, String> PROPERTY_RIGHTS_TYP = createField("property_rights_typ", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.business_typ</code>. ????
+     */
+    public final TableField<OrgRecord, String> BUSINESS_TYP = createField("business_typ", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.electronic_equipment</code>. ????
+     */
+    public final TableField<OrgRecord, String> ELECTRONIC_EQUIPMENT = createField("electronic_equipment", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.tel_no</code>. ????
+     */
+    public final TableField<OrgRecord, String> TEL_NO = createField("tel_no", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.branch_lead</code>. ?????
+     */
+    public final TableField<OrgRecord, String> BRANCH_LEAD = createField("branch_lead", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "?????");
+
+    /**
+     * The column <code>TNW.org.yitiji</code>. ???
+     */
+    public final TableField<OrgRecord, String> YITIJI = createField("yitiji", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+
+    /**
+     * The column <code>TNW.org.qukuanji</code>. ???
+     */
+    public final TableField<OrgRecord, String> QUKUANJI = createField("qukuanji", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+
+    /**
+     * The column <code>TNW.org.branch_pic</code>. ??
+     */
+    public final TableField<OrgRecord, String> BRANCH_PIC = createField("branch_pic", org.jooq.impl.SQLDataType.VARCHAR(1000).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.org.branch_special</code>. ????
+     */
+    public final TableField<OrgRecord, String> BRANCH_SPECIAL = createField("branch_special", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.org.enabled</code>.
+     */
+    public final TableField<OrgRecord, String> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.VARCHAR(8).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.increacenum</code>.
+     */
+    public final TableField<OrgRecord, String> INCREACENUM = createField("increacenum", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.branch_typ1</code>.
+     */
+    public final TableField<OrgRecord, String> BRANCH_TYP1 = createField("branch_typ1", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.area_typ</code>. ??
+     */
+    public final TableField<OrgRecord, String> AREA_TYP = createField("area_typ", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.org.temporarily</code>.
+     */
+    public final TableField<OrgRecord, String> TEMPORARILY = createField("temporarily", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.dmeg</code>.
+     */
+    public final TableField<OrgRecord, String> DMEG = createField("dmeg", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>TNW.org.branch_lead_no</code>. ???????
+     */
+    public final TableField<OrgRecord, String> BRANCH_LEAD_NO = createField("branch_lead_no", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???????");
+
+    /**
+     * The column <code>TNW.org.flag</code>. ?????????C,4 |Y,1|Z,3|??Y,2 ?
+     */
+    public final TableField<OrgRecord, String> FLAG = createField("flag", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "?????????C,4 |Y,1|Z,3|??Y,2 ?");
 
     /**
      * Create a <code>TNW.org</code> table reference
@@ -168,7 +314,7 @@ public class Org extends TableImpl<OrgRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.ORG_CODE, Indexes.ORG_ORG_CODE, Indexes.ORG_PRIMARY);
+        return Arrays.<Index>asList(Indexes.ORG_BRANCH_NO, Indexes.ORG_ORG_CODE, Indexes.ORG_PRIMARY);
     }
 
     /**
@@ -192,7 +338,7 @@ public class Org extends TableImpl<OrgRecord> {
      */
     @Override
     public List<UniqueKey<OrgRecord>> getKeys() {
-        return Arrays.<UniqueKey<OrgRecord>>asList(Keys.KEY_ORG_PRIMARY, Keys.KEY_ORG_CODE, Keys.KEY_ORG_ORG_CODE);
+        return Arrays.<UniqueKey<OrgRecord>>asList(Keys.KEY_ORG_PRIMARY, Keys.KEY_ORG_BRANCH_NO, Keys.KEY_ORG_ORG_CODE);
     }
 
     /**

@@ -7,7 +7,7 @@
     <script type="text/javascript">
         function login(){
             $.ajax({
-                url:'http://localhost:8000/auth',
+                url:'http://localhost:8002/auth',
                 contentType:"application/json",
                 type:'post',
                 data:'{"username":"test","password":"t123123"}',
@@ -20,7 +20,7 @@
 
         function register(){
             $.ajax({
-                url:'http://localhost:8000/auth/register',
+                url:'http://localhost:8002/auth/register',
                 contentType:"application/json",
                 type:'post',
                 data:'{"username":"test","password":"t123123","email":"11111@153.com"}',

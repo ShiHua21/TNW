@@ -1,7 +1,7 @@
 package com.jic.tnw.web.api.secruity;
 
+import com.jic.tnw.db.mysql.tables.pojos.User;
 import com.jic.tnw.user.service.UserService;
-import com.jic.tnw.user.service.dto.user.JelUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,14 +27,15 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        JelUser jelUser = userService.findById(Integer.valueOf(username));
-        if (jelUser == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+    public UserDetails loadUserByUsername(String principal) throws UsernameNotFoundException {
+//        JelUser jelUser = userService.findById(username); //token传值 bu
+        User user = userService.findByPrincipal(principal);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", principal));
         }
-        if (jelUser.getUser().getLocked() == true) {
-            throw new UsernameNotFoundException(String.format("User is Lock with username '%s'.", username));
+        if (user.getLuactive() == true) {
+            throw new UsernameNotFoundException(String.format("User is Lock with username '%s'.", principal));
         }
-        return JwtUserFactory.create(jelUser.getUser());
+        return JwtUserFactory.create(user);
     }
 }

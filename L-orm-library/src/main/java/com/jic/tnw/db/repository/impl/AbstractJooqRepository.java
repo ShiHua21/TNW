@@ -5,11 +5,6 @@ import org.jooq.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @param <T>
- * @param <Z>
- * @author lee5hx
- */
 public abstract class AbstractJooqRepository<T, Z extends Record> {
 
 

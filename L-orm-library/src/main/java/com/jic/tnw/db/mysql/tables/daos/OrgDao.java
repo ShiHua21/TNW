@@ -6,16 +6,14 @@ package com.jic.tnw.db.mysql.tables.daos;
 
 import com.jic.tnw.db.mysql.tables.Org;
 import com.jic.tnw.db.mysql.tables.records.OrgRecord;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -70,13 +68,6 @@ public class OrgDao extends DAOImpl<OrgRecord, com.jic.tnw.db.mysql.tables.pojos
     }
 
     /**
-     * Fetch records that have <code>name IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByName(String... values) {
-        return fetch(Org.ORG.NAME, values);
-    }
-
-    /**
      * Fetch records that have <code>parent_id IN (values)</code>
      */
     public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByParentId(Integer... values) {
@@ -112,17 +103,17 @@ public class OrgDao extends DAOImpl<OrgRecord, com.jic.tnw.db.mysql.tables.pojos
     }
 
     /**
-     * Fetch records that have <code>code IN (values)</code>
+     * Fetch records that have <code>branch_no IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByCode(String... values) {
-        return fetch(Org.ORG.CODE, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchNo(String... values) {
+        return fetch(Org.ORG.BRANCH_NO, values);
     }
 
     /**
-     * Fetch a unique record that has <code>code = value</code>
+     * Fetch a unique record that has <code>branch_no = value</code>
      */
-    public com.jic.tnw.db.mysql.tables.pojos.Org fetchOneByCode(String value) {
-        return fetchOne(Org.ORG.CODE, value);
+    public com.jic.tnw.db.mysql.tables.pojos.Org fetchOneByBranchNo(String value) {
+        return fetchOne(Org.ORG.BRANCH_NO, value);
     }
 
     /**
@@ -137,6 +128,13 @@ public class OrgDao extends DAOImpl<OrgRecord, com.jic.tnw.db.mysql.tables.pojos
      */
     public com.jic.tnw.db.mysql.tables.pojos.Org fetchOneByOrgCode(String value) {
         return fetchOne(Org.ORG.ORG_CODE, value);
+    }
+
+    /**
+     * Fetch records that have <code>branch_nm IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchNm(String... values) {
+        return fetch(Org.ORG.BRANCH_NM, values);
     }
 
     /**
@@ -172,5 +170,222 @@ public class OrgDao extends DAOImpl<OrgRecord, com.jic.tnw.db.mysql.tables.pojos
      */
     public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchBySyncId(Integer... values) {
         return fetch(Org.ORG.SYNC_ID, values);
+    }
+
+    /**
+     * Fetch records that have <code>tx_mt IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByTxMt(String... values) {
+        return fetch(Org.ORG.TX_MT, values);
+    }
+
+    /**
+     * Fetch records that have <code>tx_dt IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByTxDt(String... values) {
+        return fetch(Org.ORG.TX_DT, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_nm_shot IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchNmShot(String... values) {
+        return fetch(Org.ORG.BRANCH_NM_SHOT, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_typ IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchTyp(String... values) {
+        return fetch(Org.ORG.BRANCH_TYP, values);
+    }
+
+    /**
+     * Fetch records that have <code>lead_branch_no IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByLeadBranchNo(String... values) {
+        return fetch(Org.ORG.LEAD_BRANCH_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>address IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByAddress(String... values) {
+        return fetch(Org.ORG.ADDRESS, values);
+    }
+
+    /**
+     * Fetch records that have <code>longitude IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByLongitude(String... values) {
+        return fetch(Org.ORG.LONGITUDE, values);
+    }
+
+    /**
+     * Fetch records that have <code>practice_dt IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByPracticeDt(String... values) {
+        return fetch(Org.ORG.PRACTICE_DT, values);
+    }
+
+    /**
+     * Fetch records that have <code>business_tm IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBusinessTm(String... values) {
+        return fetch(Org.ORG.BUSINESS_TM, values);
+    }
+
+    /**
+     * Fetch records that have <code>decorate_dt IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByDecorateDt(String... values) {
+        return fetch(Org.ORG.DECORATE_DT, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_area IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchArea(String... values) {
+        return fetch(Org.ORG.BRANCH_AREA, values);
+    }
+
+    /**
+     * Fetch records that have <code>employees_no IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByEmployeesNo(String... values) {
+        return fetch(Org.ORG.EMPLOYEES_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>parking_no IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByParkingNo(String... values) {
+        return fetch(Org.ORG.PARKING_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>self_help_equipment IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchBySelfHelpEquipment(String... values) {
+        return fetch(Org.ORG.SELF_HELP_EQUIPMENT, values);
+    }
+
+    /**
+     * Fetch records that have <code>property_rights_typ IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByPropertyRightsTyp(String... values) {
+        return fetch(Org.ORG.PROPERTY_RIGHTS_TYP, values);
+    }
+
+    /**
+     * Fetch records that have <code>business_typ IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBusinessTyp(String... values) {
+        return fetch(Org.ORG.BUSINESS_TYP, values);
+    }
+
+    /**
+     * Fetch records that have <code>electronic_equipment IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByElectronicEquipment(String... values) {
+        return fetch(Org.ORG.ELECTRONIC_EQUIPMENT, values);
+    }
+
+    /**
+     * Fetch records that have <code>tel_no IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByTelNo(String... values) {
+        return fetch(Org.ORG.TEL_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_lead IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchLead(String... values) {
+        return fetch(Org.ORG.BRANCH_LEAD, values);
+    }
+
+    /**
+     * Fetch records that have <code>yitiji IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByYitiji(String... values) {
+        return fetch(Org.ORG.YITIJI, values);
+    }
+
+    /**
+     * Fetch records that have <code>qukuanji IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByQukuanji(String... values) {
+        return fetch(Org.ORG.QUKUANJI, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_pic IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchPic(String... values) {
+        return fetch(Org.ORG.BRANCH_PIC, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_special IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchSpecial(String... values) {
+        return fetch(Org.ORG.BRANCH_SPECIAL, values);
+    }
+
+    /**
+     * Fetch records that have <code>enabled IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByEnabled(String... values) {
+        return fetch(Org.ORG.ENABLED, values);
+    }
+
+    /**
+     * Fetch records that have <code>increacenum IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByIncreacenum(String... values) {
+        return fetch(Org.ORG.INCREACENUM, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_typ1 IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchTyp1(String... values) {
+        return fetch(Org.ORG.BRANCH_TYP1, values);
+    }
+
+    /**
+     * Fetch records that have <code>area_typ IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByAreaTyp(String... values) {
+        return fetch(Org.ORG.AREA_TYP, values);
+    }
+
+    /**
+     * Fetch records that have <code>temporarily IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByTemporarily(String... values) {
+        return fetch(Org.ORG.TEMPORARILY, values);
+    }
+
+    /**
+     * Fetch records that have <code>dmeg IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByDmeg(String... values) {
+        return fetch(Org.ORG.DMEG, values);
+    }
+
+    /**
+     * Fetch records that have <code>branch_lead_no IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByBranchLeadNo(String... values) {
+        return fetch(Org.ORG.BRANCH_LEAD_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>flag IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.Org> fetchByFlag(String... values) {
+        return fetch(Org.ORG.FLAG, values);
     }
 }

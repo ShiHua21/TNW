@@ -25,7 +25,7 @@ ext {
     jacksonVersion = '2.8.10'
     quartzVersion = '2.3.0'
 
-   // compile group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.8.10'
+    // compile group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.8.10'
     libphonenumberVersion = '8.8.10'
     //compile group: 'me.gosimple', name: 'nbvcxz', version: '1.4.0'
     nbvcxzVersion = '1.4.0'
@@ -33,7 +33,7 @@ ext {
     zxcvbnVersion = '1.2.3'
     flywayVersion = '5.0.7'
     springHateoasVersion = '0.24.0.RELEASE'
-
+    thumbnailatorVersion = '0.4.8'
 
     //compile group: 'org.springframework.data', name: 'spring-data-commons', version: '1.13.8.RELEASE'
 
@@ -98,25 +98,27 @@ allprojects {
 
 
             dependency "io.jsonwebtoken:jjwt:${jjwtVersion}"
-            dependency "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
+            dependency "org.springframework.data:spring-data-commons:${springDataCommonsVersion}" //简化数据库访问
             dependency "io.springfox:springfox-swagger-ui:${swaggerVersion}"
             dependency "io.springfox:springfox-swagger2:${swaggerVersion}"
-            dependency("de.codecentric:spring-boot-admin-server:${springAdminVersion}")
+            dependency("de.codecentric:spring-boot-admin-server:${springAdminVersion}") //servle监控
             dependency("de.codecentric:spring-boot-admin-server-ui:${springAdminVersion}")
             dependency("de.codecentric:spring-boot-admin-server-ui-login:${springAdminVersion}")
             dependency("de.codecentric:spring-boot-admin-server-ui-activiti:${springAdminVersion}")
             dependency("de.codecentric:spring-boot-admin-starter-client:${springAdminVersion}")
-            dependency("org.springframework.shell:spring-shell-starter:${springShellVersion}")
-            dependency("com.squareup.okhttp3:okhttp:${okHttpVersion}")
-            dependency("commons-io:commons-io:${commonsIoVersion}")
-            dependency("com.googlecode.libphonenumber:libphonenumber:${libphonenumberVersion}")
-            dependency("me.gosimple:nbvcxz:${nbvcxzVersion}")
+            dependency("org.springframework.shell:spring-shell-starter:${springShellVersion}") //shell脚本
+            dependency("com.squareup.okhttp3:okhttp:${okHttpVersion}") //强大高效的Java网络请求库
+            dependency("commons-io:commons-io:${commonsIoVersion}") //io
+            dependency("com.googlecode.libphonenumber:libphonenumber:${libphonenumberVersion}")//号码归属地
+            dependency("me.gosimple:nbvcxz:${nbvcxzVersion}")  //x序列化
             dependency("com.nulab-inc:zxcvbn:${zxcvbnVersion}")
 
-            dependency("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
+            dependency("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}") //restfull
 
             //https://mvnrepository.com/artifact/org.flywaydb/flyway-core
-            dependency("org.flywaydb:flyway-core:${flywayVersion}")
+            dependency("org.flywaydb:flyway-core:${flywayVersion}") //数据库版本管理
+
+            dependency("net.coobird:thumbnailator:${thumbnailatorVersion}")
 
         }
 
@@ -126,7 +128,7 @@ allprojects {
 
 
 configure(subprojects.findAll {
-            it.name == 'greeter' ||
+    it.name == 'greeter' ||
             it.name == 'greeting-library' ||
             it.name == 'api' ||
             it.name == 'scheduler' ||

@@ -1,7 +1,6 @@
 package com.jic.tnw.web.api.vo.response.role;
 
 import com.jic.tnw.db.mysql.tables.pojos.Role;
-import com.jic.elearning.web.api.controller.v1.RoleController;
 import com.jic.tnw.web.api.controller.v1.RoleController;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;

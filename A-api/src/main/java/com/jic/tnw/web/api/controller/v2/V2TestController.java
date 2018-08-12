@@ -1,7 +1,7 @@
 package com.jic.tnw.web.api.controller.v2;
 
 
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

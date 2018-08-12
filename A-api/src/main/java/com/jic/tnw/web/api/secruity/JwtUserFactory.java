@@ -23,10 +23,11 @@ final class JwtUserFactory {
 
 
         return new JwtUser(
-                user.getId(),
-                String.valueOf(user.getId()),
-                user.getPassword(),
-                stringToGrantedAuthorities(user.getRoles()),
+                user.getLuuserid(),
+                user.getLumobile(),
+                String.valueOf(user.getLuuserid()),
+                user.getLupwd(),
+                stringToGrantedAuthorities(user.getLuorgid()),
                 ldt
         );
     }

@@ -23,7 +23,7 @@ public class LocaleMessageSourceService {
     
     /**
      *
-     * @param code ：对应messages配置的key.
+     * @PARAM CODE ：对应MESSAGES配置的KEY.
      * @param args : 数组参数.
      * @return
      */

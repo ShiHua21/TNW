@@ -1,61 +1,105 @@
+
 server:
-  port: 8010
+  port: 8000
 
 spring:
+  thymeleaf:
+    cache: false
+  output:
+    ansi:
+      enabled: detect
   #jOOQ Configuration
   jooq:
     sql-dialect: mysql
+  #spring.jackson.serialization.write_dates_as_timestamps=false
+  jackson:
+    serialization:
+      write_dates_as_timestamps : false
+  #spring.mobile.sitepreference.enabled: true
+  mobile:
+    sitepreference:
+      enabled: true
+  #cache
+  cache:
+    type: redis
+
   #redis
   redis:
-      database: 0
-      host: 127.0.0.1
-      port: 40001
-      password:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 8
-        min-idle: 0
-      timeout: 0
+    database: 0
+    host: 127.0.0.1
+    port: 40001
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
+
   #数据库连接池
   datasource:
-      url: jdbc:mysql://127.0.0.1:50005/ordercat2?useSSL=false
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.jdbc.Driver
-      hikari:
-        auto-commit: true
-        connection-test-query: 'SELECT 1'
-        maximum-pool-size: 150
-        #minimum-idle: 100
+#    url: jdbc:mysql://127.0.0.1:50005/TNW?useSSL=false
+#    username: root
+#    password: 123456
+    url: jdbc:mysql://47.92.54.37:3306/tnw?useSSL=false
+    username: zpzb
+    password: abc123
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      auto-commit: true
+      connection-test-query: 'SELECT 1'
+      maximum-pool-size: 150
+      #minimum-idle: 100
 
+  #国际化
+  messages:
+    basename: i18n/messages
+    cache-seconds: 3600
+  boot:
+    admin:
+      url: http://localhost:8080
+  hateoas:
+    use-hal-as-default-json-media-type: true
+
+#日志log4j2
 logging:
   config: classpath:logging-config.xml
+
 
 # JWT
 jwt:
   header: Authorization
   secret: fmOp9wZ0GnPojrBT
   expiration: 604800
-  tokenHead: "JA "
+  tokenHead: "TNW "
   route:
     authentication:
       login: auth
       refresh: "auth/refresh"
       register: "auth/register"
 
-quartz:
-  enabled: true
-
-
-security:
-  basic:
-    enabled: false
+# management
 management:
+  port: 11111
+  context-path: /admin
   security:
     enabled: false
+    roles:
 
 
+#短信
+aliyunsms:
+  api:
+    accesskey-id: "LTAIv341Y5S9RGTu"
+    accesskey-secret: "DASITPBgQ1Ao5ovRpWlqmkxLVaumLr"
+    product: "Dysmsapi"
+    domain: "dysmsapi.aliyuncs.com"
 
-#security.basic.enabled=false
-#  management.security.enabled=false
+
+vaptcha:
+  vid: "5a5822e6a48617214c19eb07"
+  key: "6940042c97b646988f428ed0087059e5"
+
+flyway:
+  locations: classpath:/db/migration
+

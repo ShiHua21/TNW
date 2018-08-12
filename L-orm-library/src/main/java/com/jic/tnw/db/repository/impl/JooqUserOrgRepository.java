@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by lee5hx on 2017/10/30.
- */
+
 @Repository
 public class JooqUserOrgRepository extends AbstractJooqRepository<UserOrg, UserOrgRecord> implements UserOrgRepository {
 
@@ -56,7 +54,7 @@ public class JooqUserOrgRepository extends AbstractJooqRepository<UserOrg, UserO
     }
 
     @Override
-    public UserOrg delete(Integer id) {
+    public UserOrg delete(String id) {
         return null;
     }
 
@@ -66,8 +64,10 @@ public class JooqUserOrgRepository extends AbstractJooqRepository<UserOrg, UserO
     }
 
     @Override
-    public UserOrg findById(Integer id) {
-        UserOrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.UserOrg.USER_ORG).where(com.jic.tnw.db.mysql.tables.UserOrg.USER_ORG.ID.eq(id))
+    public UserOrg findById(String id) {
+        int iid = Integer.parseInt(id);
+
+        UserOrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.UserOrg.USER_ORG).where(com.jic.tnw.db.mysql.tables.UserOrg.USER_ORG.ID.eq(iid))
                 .fetchOne();
         return convertQueryResultToPojo(queryResult);
     }

@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @author lee5hx
- */
+
 @Repository
 public class JooqUserGroupRepository extends AbstractJooqRepository<UserGroup, UserGroupRecord> implements UserGroupRepository {
 
@@ -50,11 +48,13 @@ public class JooqUserGroupRepository extends AbstractJooqRepository<UserGroup, U
     }
 
     @Override
-    public UserGroup delete(Integer id) {
+    public UserGroup delete(String id) {
         LOGGER.info(String.format("Deleting UserGroup entry by id: [%d]", id));
+        int iid = Integer.parseInt(id);
+
         UserGroup deleted = findById(id);
         int deletedRecordCount = jooq.delete(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP)
-                .where(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP.ID.equal(iid))
                 .execute();
         LOGGER.debug(String.format("Deleted [%d] UserGroup entries", deletedRecordCount));
         LOGGER.info(String.format("Returning deleted UserGroup entry:%s ", deleted));
@@ -71,9 +71,11 @@ public class JooqUserGroupRepository extends AbstractJooqRepository<UserGroup, U
     }
 
     @Override
-    public UserGroup findById(Integer id) {
+    public UserGroup findById(String id) {
+        int iid = Integer.parseInt(id);
+
         UserGroupRecord result = jooq.selectFrom(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP)
-                .where(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP.ID.eq(id))
+                .where(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP.ID.eq(iid))
                 .fetchOne();
         return convertQueryResultToPojo(result);
     }
@@ -97,7 +99,7 @@ public class JooqUserGroupRepository extends AbstractJooqRepository<UserGroup, U
                 .where(com.jic.tnw.db.mysql.tables.UserGroup.USER_GROUP.ID.equal(entry.getId()))
                 .execute();
         LOGGER.debug(String.format("Updated %d UserGroup entry.", updatedRecordCount));
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
     @Override

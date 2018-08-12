@@ -20,9 +20,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-/**
- * Created by lee5hx on 2017/10/30.
- */
+
 @Repository
 public class JooqTasksRepository extends AbstractJooqRepository<Tasks, TasksRecord> implements TasksRepository {
 
@@ -61,7 +59,7 @@ public class JooqTasksRepository extends AbstractJooqRepository<Tasks, TasksReco
 
 
     @Override
-    public Tasks delete(Integer id) {
+    public Tasks delete(String id) {
         return null;
     }
 
@@ -71,10 +69,12 @@ public class JooqTasksRepository extends AbstractJooqRepository<Tasks, TasksReco
     }
 
     @Override
-    public Tasks findById(Integer id) {
+    public Tasks findById(String id) {
+        int iid = Integer.parseInt(id);
+
         LOGGER.info(String.format("Finding tasks entry by id: {%d}", id));
         TasksRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Tasks.TASKS)
-                .where(com.jic.tnw.db.mysql.tables.Tasks.TASKS.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.Tasks.TASKS.ID.equal(iid))
                 .fetchOne();
         if (queryResult == null) {
             throw new DataNotFoundException("No tasks entry found with id: " + id);
@@ -98,7 +98,7 @@ public class JooqTasksRepository extends AbstractJooqRepository<Tasks, TasksReco
 
         LOGGER.debug(String.format("Updated [%d] todo entry.", updatedRecordCount));
 
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
 

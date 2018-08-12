@@ -3,14 +3,17 @@ package com.jic.tnw.web.api.controller.v1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jic.tnw.db.mysql.tables.pojos.Post;
 import com.jic.tnw.db.mysql.tables.pojos.PostGroup;
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.user.service.PostGroupService;
 import com.jic.tnw.user.service.PostService;
 import com.jic.tnw.user.service.dto.post.*;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.web.api.vo.request.post.AddPost;
 import com.jic.tnw.web.api.vo.request.post.CreatePostGroup;
 import com.jic.tnw.web.api.vo.request.post.EditPost;
 import com.jic.tnw.web.api.vo.request.post.EditPostGroup;
+import com.jic.tnw.web.api.vo.response.GetPostListResource;
+import com.jic.tnw.web.api.vo.response.PostGroupMessageResource;
+import com.jic.tnw.web.api.vo.response.post.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,6 +28,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Created by lee5hx on 2017/12/10.
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/v1")
 @Api(description = "岗位管理", tags = {"F-用户模块-3"})

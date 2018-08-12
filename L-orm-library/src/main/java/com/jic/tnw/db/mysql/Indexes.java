@@ -4,25 +4,12 @@
 package com.jic.tnw.db.mysql;
 
 
-import com.jic.tnw.db.mysql.tables.Log;
-import com.jic.tnw.db.mysql.tables.Org;
-import com.jic.tnw.db.mysql.tables.Post;
-import com.jic.tnw.db.mysql.tables.PostGroup;
-import com.jic.tnw.db.mysql.tables.PostMember;
-import com.jic.tnw.db.mysql.tables.Role;
-import com.jic.tnw.db.mysql.tables.Tasks;
-import com.jic.tnw.db.mysql.tables.User;
-import com.jic.tnw.db.mysql.tables.UserGroup;
-import com.jic.tnw.db.mysql.tables.UserGroupMember;
-import com.jic.tnw.db.mysql.tables.UserOrg;
-import com.jic.tnw.db.mysql.tables.UserProfile;
-import com.jic.tnw.db.mysql.tables.WebUrlResource;
-
-import javax.annotation.Generated;
-
+import com.jic.tnw.db.mysql.tables.*;
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -42,9 +29,18 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
+    public static final Index DW_COMMENT_PRIMARY = Indexes0.DW_COMMENT_PRIMARY;
+    public static final Index DW_FABULOUS_PRIMARY = Indexes0.DW_FABULOUS_PRIMARY;
+    public static final Index DW_MY_MESSAGE_PRIMARY = Indexes0.DW_MY_MESSAGE_PRIMARY;
+    public static final Index DW_OLD_ACTIVITY_PRIMARY = Indexes0.DW_OLD_ACTIVITY_PRIMARY;
+    public static final Index DW_ORGCIRCLE_ACTIVITY_PRIMARY = Indexes0.DW_ORGCIRCLE_ACTIVITY_PRIMARY;
+    public static final Index DW_ORGCIRCLE_DYNAMIC_PRIMARY = Indexes0.DW_ORGCIRCLE_DYNAMIC_PRIMARY;
+    public static final Index DW_OTHER_MESSAGE_PRIMARY = Indexes0.DW_OTHER_MESSAGE_PRIMARY;
+    public static final Index FILE_STORE_PRIMARY = Indexes0.FILE_STORE_PRIMARY;
+    public static final Index FILE_STORE_GROUP_PRIMARY = Indexes0.FILE_STORE_GROUP_PRIMARY;
     public static final Index LOG_PRIMARY = Indexes0.LOG_PRIMARY;
     public static final Index LOG_USERID = Indexes0.LOG_USERID;
-    public static final Index ORG_CODE = Indexes0.ORG_CODE;
+    public static final Index ORG_BRANCH_NO = Indexes0.ORG_BRANCH_NO;
     public static final Index ORG_ORG_CODE = Indexes0.ORG_ORG_CODE;
     public static final Index ORG_PRIMARY = Indexes0.ORG_PRIMARY;
     public static final Index POST_PRIMARY = Indexes0.POST_PRIMARY;
@@ -55,15 +51,13 @@ public class Indexes {
     public static final Index TASKS_TASKS_NAME_INDEX = Indexes0.TASKS_TASKS_NAME_INDEX;
     public static final Index TASKS_TASKS_STATUS_INDEX = Indexes0.TASKS_TASKS_STATUS_INDEX;
     public static final Index TASKS_TASKS_TRIGGED_USER_NAME_INDEX = Indexes0.TASKS_TASKS_TRIGGED_USER_NAME_INDEX;
-    public static final Index USER_EMAIL_INDEX = Indexes0.USER_EMAIL_INDEX;
-    public static final Index USER_MOBILE_INDEX = Indexes0.USER_MOBILE_INDEX;
-    public static final Index USER_ORG_CODES_INDEX = Indexes0.USER_ORG_CODES_INDEX;
-    public static final Index USER_ORG_POST_ID_INDEX = Indexes0.USER_ORG_POST_ID_INDEX;
+    public static final Index USER_LUEMAIL_INDEX = Indexes0.USER_LUEMAIL_INDEX;
+    public static final Index USER_LUMOBILE_INDEX = Indexes0.USER_LUMOBILE_INDEX;
+    public static final Index USER_LUUSERNAME = Indexes0.USER_LUUSERNAME;
+    public static final Index USER_ORGANIZATION_ID_INDEX = Indexes0.USER_ORGANIZATION_ID_INDEX;
+    public static final Index USER_ORG_POSITION_ID_INDEX = Indexes0.USER_ORG_POSITION_ID_INDEX;
     public static final Index USER_PRIMARY = Indexes0.USER_PRIMARY;
-    public static final Index USER_PROMOTED = Indexes0.USER_PROMOTED;
     public static final Index USER_UPDATEDTIME = Indexes0.USER_UPDATEDTIME;
-    public static final Index USER_USERNAME = Indexes0.USER_USERNAME;
-    public static final Index USER_USER_TYPE_INDEX = Indexes0.USER_USER_TYPE_INDEX;
     public static final Index USER_GROUP_CODE = Indexes0.USER_GROUP_CODE;
     public static final Index USER_GROUP_PRIMARY = Indexes0.USER_GROUP_PRIMARY;
     public static final Index USER_GROUP_MEMBER_PRIMARY = Indexes0.USER_GROUP_MEMBER_PRIMARY;
@@ -79,9 +73,18 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     private static class Indexes0 extends AbstractKeys {
+        public static Index DW_COMMENT_PRIMARY = createIndex("PRIMARY", DwComment.DW_COMMENT, new OrderField[] { DwComment.DW_COMMENT.ID }, true);
+        public static Index DW_FABULOUS_PRIMARY = createIndex("PRIMARY", DwFabulous.DW_FABULOUS, new OrderField[] { DwFabulous.DW_FABULOUS.ID }, true);
+        public static Index DW_MY_MESSAGE_PRIMARY = createIndex("PRIMARY", DwMyMessage.DW_MY_MESSAGE, new OrderField[] { DwMyMessage.DW_MY_MESSAGE.ID }, true);
+        public static Index DW_OLD_ACTIVITY_PRIMARY = createIndex("PRIMARY", DwOldActivity.DW_OLD_ACTIVITY, new OrderField[] { DwOldActivity.DW_OLD_ACTIVITY.ID }, true);
+        public static Index DW_ORGCIRCLE_ACTIVITY_PRIMARY = createIndex("PRIMARY", DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY, new OrderField[] { DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY.ID }, true);
+        public static Index DW_ORGCIRCLE_DYNAMIC_PRIMARY = createIndex("PRIMARY", DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC, new OrderField[] { DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC.ID }, true);
+        public static Index DW_OTHER_MESSAGE_PRIMARY = createIndex("PRIMARY", DwOtherMessage.DW_OTHER_MESSAGE, new OrderField[] { DwOtherMessage.DW_OTHER_MESSAGE.ID }, true);
+        public static Index FILE_STORE_PRIMARY = createIndex("PRIMARY", FileStore.FILE_STORE, new OrderField[] { FileStore.FILE_STORE.ID }, true);
+        public static Index FILE_STORE_GROUP_PRIMARY = createIndex("PRIMARY", FileStoreGroup.FILE_STORE_GROUP, new OrderField[] { FileStoreGroup.FILE_STORE_GROUP.ID }, true);
         public static Index LOG_PRIMARY = createIndex("PRIMARY", Log.LOG, new OrderField[] { Log.LOG.ID }, true);
         public static Index LOG_USERID = createIndex("userId", Log.LOG, new OrderField[] { Log.LOG.USER_ID }, false);
-        public static Index ORG_CODE = createIndex("code", Org.ORG, new OrderField[] { Org.ORG.CODE }, true);
+        public static Index ORG_BRANCH_NO = createIndex("branch_no", Org.ORG, new OrderField[] { Org.ORG.BRANCH_NO }, true);
         public static Index ORG_ORG_CODE = createIndex("org_code", Org.ORG, new OrderField[] { Org.ORG.ORG_CODE }, true);
         public static Index ORG_PRIMARY = createIndex("PRIMARY", Org.ORG, new OrderField[] { Org.ORG.ID }, true);
         public static Index POST_PRIMARY = createIndex("PRIMARY", Post.POST, new OrderField[] { Post.POST.ID }, true);
@@ -92,15 +95,13 @@ public class Indexes {
         public static Index TASKS_TASKS_NAME_INDEX = createIndex("tasks_name_index", Tasks.TASKS, new OrderField[] { Tasks.TASKS.NAME }, false);
         public static Index TASKS_TASKS_STATUS_INDEX = createIndex("tasks_status_index", Tasks.TASKS, new OrderField[] { Tasks.TASKS.STATUS }, false);
         public static Index TASKS_TASKS_TRIGGED_USER_NAME_INDEX = createIndex("tasks_trigged_user_name_index", Tasks.TASKS, new OrderField[] { Tasks.TASKS.TRIGGED_USER_NAME }, false);
-        public static Index USER_EMAIL_INDEX = createIndex("email_index", User.USER, new OrderField[] { User.USER.EMAIL }, false);
-        public static Index USER_MOBILE_INDEX = createIndex("mobile_index", User.USER, new OrderField[] { User.USER.MOBILE }, false);
-        public static Index USER_ORG_CODES_INDEX = createIndex("org_codes_index", User.USER, new OrderField[] { User.USER.ORG_CODES }, false);
-        public static Index USER_ORG_POST_ID_INDEX = createIndex("org_post_id_index", User.USER, new OrderField[] { User.USER.POST_ID }, false);
-        public static Index USER_PRIMARY = createIndex("PRIMARY", User.USER, new OrderField[] { User.USER.ID }, true);
-        public static Index USER_PROMOTED = createIndex("promoted", User.USER, new OrderField[] { User.USER.PROMOTED }, false);
+        public static Index USER_LUEMAIL_INDEX = createIndex("luemail_index", User.USER, new OrderField[] { User.USER.LUEMAIL }, false);
+        public static Index USER_LUMOBILE_INDEX = createIndex("lumobile_index", User.USER, new OrderField[] { User.USER.LUMOBILE }, false);
+        public static Index USER_LUUSERNAME = createIndex("luusername", User.USER, new OrderField[] { User.USER.LUUSERNAME }, true);
+        public static Index USER_ORGANIZATION_ID_INDEX = createIndex("organization_id_index", User.USER, new OrderField[] { User.USER.ORGANIZATION_ID }, false);
+        public static Index USER_ORG_POSITION_ID_INDEX = createIndex("org_position_id_index", User.USER, new OrderField[] { User.USER.POSITION_ID }, false);
+        public static Index USER_PRIMARY = createIndex("PRIMARY", User.USER, new OrderField[] { User.USER.LUUSERID }, true);
         public static Index USER_UPDATEDTIME = createIndex("updatedTime", User.USER, new OrderField[] { User.USER.UPDATED_TIME }, false);
-        public static Index USER_USERNAME = createIndex("username", User.USER, new OrderField[] { User.USER.USERNAME }, true);
-        public static Index USER_USER_TYPE_INDEX = createIndex("user_type_index", User.USER, new OrderField[] { User.USER.TYPE }, false);
         public static Index USER_GROUP_CODE = createIndex("code", UserGroup.USER_GROUP, new OrderField[] { UserGroup.USER_GROUP.CODE }, true);
         public static Index USER_GROUP_PRIMARY = createIndex("PRIMARY", UserGroup.USER_GROUP, new OrderField[] { UserGroup.USER_GROUP.ID }, true);
         public static Index USER_GROUP_MEMBER_PRIMARY = createIndex("PRIMARY", UserGroupMember.USER_GROUP_MEMBER, new OrderField[] { UserGroupMember.USER_GROUP_MEMBER.ID }, true);

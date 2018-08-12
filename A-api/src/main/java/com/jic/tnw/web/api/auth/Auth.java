@@ -1,8 +1,6 @@
 package com.jic.tnw.web.api.auth;
 
 
-
-import com.jic.elearning.web.api.vo.request.LoginUser;
 import com.jic.tnw.web.api.vo.request.LoginUser;
 
 /**

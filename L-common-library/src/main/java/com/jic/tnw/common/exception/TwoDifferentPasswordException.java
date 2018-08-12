@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 
 
-@ResponseStatus(code= HttpStatus.BAD_REQUEST,reason="user.two.different.password")
+@ResponseStatus(code= HttpStatus.BAD_REQUEST,reason="输入密码不一致，请重新输入")
 public class TwoDifferentPasswordException extends RuntimeException {
 
 //    public UserNameExistsException() {

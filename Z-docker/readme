@@ -9,7 +9,7 @@ docker run --name lsdp-mysql -p localhost:50005:3306 -v /Users/lee5hx/docker/mys
 
 docker run --name lsdp-mysql -p 50005:3306 -v ~/docker/mysql/data:/var/lib/mysql -v ~/docker/mysql/conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
 
-mysql -uroot -p'211212' -e "create database JicELearning;grant all on JicElearning.* to 'el'@'%' identified by 'el123';"
+mysql -uroot -p'211212' -e "create database TNW;grant all on TNW.* to 'el'@'%' identified by 'el123';"
 
 
 scp ./L-orm-library/src/main/resources/db/migration/*.sql root@121.42.251.128:/opt/jic-el/flyway/flyway-5.0.7/sql/

@@ -28,11 +28,11 @@ public class JooqPostGroupRepository extends AbstractJooqRepository<PostGroup, P
     }
 
     @Override
-    public PostGroup delete(Integer id) {
-
+    public PostGroup delete(String id) {
         PostGroup deleted = findById(id);
+        int iid = Integer.parseInt(id);
         int delCount = jooq.delete(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP)
-                .where(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP.ID.equal(iid))
                 .execute();
         LOGGER.info(String.format("DEL_Group_ID_Count ==== %S", delCount));
         return deleted;
@@ -72,10 +72,10 @@ public class JooqPostGroupRepository extends AbstractJooqRepository<PostGroup, P
 
 
     @Override
-    public PostGroup findById(Integer id) {
-
+    public PostGroup findById(String id) {
+        int iid = Integer.parseInt(id);
         PostGroupRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP)
-                .where(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP.ID.equal(iid))
                 .fetchOne();
 
         return convertQueryResultToPojo(queryResult);
@@ -91,7 +91,7 @@ public class JooqPostGroupRepository extends AbstractJooqRepository<PostGroup, P
                 .where(com.jic.tnw.db.mysql.tables.PostGroup.POST_GROUP.ID.equal(entry.getId()))
                 .execute();
         LOGGER.debug(String.format("PostGroup update_time =====%s", updateCount));
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
     @Override

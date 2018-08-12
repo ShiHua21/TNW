@@ -7,16 +7,14 @@ package com.jic.tnw.db.mysql.tables.daos;
 import com.jic.tnw.db.mysql.enums.UserApprovalStatus;
 import com.jic.tnw.db.mysql.tables.User;
 import com.jic.tnw.db.mysql.tables.records.UserRecord;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -31,7 +29,7 @@ import org.springframework.stereotype.Repository;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Repository
-public class UserDao extends DAOImpl<UserRecord, com.jic.tnw.db.mysql.tables.pojos.User, Integer> {
+public class UserDao extends DAOImpl<UserRecord, com.jic.tnw.db.mysql.tables.pojos.User, String> {
 
     /**
      * Create a new UserDao without any configuration
@@ -52,204 +50,274 @@ public class UserDao extends DAOImpl<UserRecord, com.jic.tnw.db.mysql.tables.poj
      * {@inheritDoc}
      */
     @Override
-    protected Integer getId(com.jic.tnw.db.mysql.tables.pojos.User object) {
-        return object.getId();
+    protected String getId(com.jic.tnw.db.mysql.tables.pojos.User object) {
+        return object.getLuuserid();
     }
 
     /**
-     * Fetch records that have <code>id IN (values)</code>
+     * Fetch records that have <code>luuserid IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchById(Integer... values) {
-        return fetch(User.USER.ID, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuuserid(String... values) {
+        return fetch(User.USER.LUUSERID, values);
     }
 
     /**
-     * Fetch a unique record that has <code>id = value</code>
+     * Fetch a unique record that has <code>luuserid = value</code>
      */
-    public com.jic.tnw.db.mysql.tables.pojos.User fetchOneById(Integer value) {
-        return fetchOne(User.USER.ID, value);
+    public com.jic.tnw.db.mysql.tables.pojos.User fetchOneByLuuserid(String value) {
+        return fetchOne(User.USER.LUUSERID, value);
     }
 
     /**
-     * Fetch records that have <code>email IN (values)</code>
+     * Fetch records that have <code>luusername IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByEmail(String... values) {
-        return fetch(User.USER.EMAIL, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuusername(String... values) {
+        return fetch(User.USER.LUUSERNAME, values);
     }
 
     /**
-     * Fetch records that have <code>mobile IN (values)</code>
+     * Fetch a unique record that has <code>luusername = value</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByMobile(String... values) {
-        return fetch(User.USER.MOBILE, values);
+    public com.jic.tnw.db.mysql.tables.pojos.User fetchOneByLuusername(String value) {
+        return fetchOne(User.USER.LUUSERNAME, value);
     }
 
     /**
-     * Fetch records that have <code>password IN (values)</code>
+     * Fetch records that have <code>luemail IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPassword(String... values) {
-        return fetch(User.USER.PASSWORD, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuemail(String... values) {
+        return fetch(User.USER.LUEMAIL, values);
     }
 
     /**
-     * Fetch records that have <code>pay_password IN (values)</code>
+     * Fetch records that have <code>lupwd IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPayPassword(String... values) {
-        return fetch(User.USER.PAY_PASSWORD, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLupwd(String... values) {
+        return fetch(User.USER.LUPWD, values);
     }
 
     /**
-     * Fetch records that have <code>locale IN (values)</code>
+     * Fetch records that have <code>luoldpwd IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLocale(String... values) {
-        return fetch(User.USER.LOCALE, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuoldpwd(String... values) {
+        return fetch(User.USER.LUOLDPWD, values);
     }
 
     /**
-     * Fetch records that have <code>uri IN (values)</code>
+     * Fetch records that have <code>lumobile IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByUri(String... values) {
-        return fetch(User.USER.URI, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLumobile(String... values) {
+        return fetch(User.USER.LUMOBILE, values);
     }
 
     /**
-     * Fetch records that have <code>username IN (values)</code>
+     * Fetch records that have <code>luphone IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByUsername(String... values) {
-        return fetch(User.USER.USERNAME, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuphone(String... values) {
+        return fetch(User.USER.LUPHONE, values);
     }
 
     /**
-     * Fetch a unique record that has <code>username = value</code>
+     * Fetch records that have <code>luworkercode IN (values)</code>
      */
-    public com.jic.tnw.db.mysql.tables.pojos.User fetchOneByUsername(String value) {
-        return fetchOne(User.USER.USERNAME, value);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuworkercode(String... values) {
+        return fetch(User.USER.LUWORKERCODE, values);
     }
 
     /**
-     * Fetch records that have <code>truename IN (values)</code>
+     * Fetch records that have <code>luusertype IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByTruename(String... values) {
-        return fetch(User.USER.TRUENAME, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuusertype(String... values) {
+        return fetch(User.USER.LUUSERTYPE, values);
     }
 
     /**
-     * Fetch records that have <code>title IN (values)</code>
+     * Fetch records that have <code>luregtime IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByTitle(String... values) {
-        return fetch(User.USER.TITLE, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuregtime(LocalDateTime... values) {
+        return fetch(User.USER.LUREGTIME, values);
     }
 
     /**
-     * Fetch records that have <code>tags IN (values)</code>
+     * Fetch records that have <code>lulastlogtime IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByTags(String... values) {
-        return fetch(User.USER.TAGS, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLulastlogtime(LocalDateTime... values) {
+        return fetch(User.USER.LULASTLOGTIME, values);
     }
 
     /**
-     * Fetch records that have <code>type IN (values)</code>
+     * Fetch records that have <code>lulastlogip IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByType(String... values) {
-        return fetch(User.USER.TYPE, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLulastlogip(String... values) {
+        return fetch(User.USER.LULASTLOGIP, values);
     }
 
     /**
-     * Fetch records that have <code>point IN (values)</code>
+     * Fetch records that have <code>luheadpic IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPoint(Integer... values) {
-        return fetch(User.USER.POINT, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuheadpic(String... values) {
+        return fetch(User.USER.LUHEADPIC, values);
     }
 
     /**
-     * Fetch records that have <code>coin IN (values)</code>
+     * Fetch records that have <code>position_id IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByCoin(Integer... values) {
-        return fetch(User.USER.COIN, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPositionId(String... values) {
+        return fetch(User.USER.POSITION_ID, values);
     }
 
     /**
-     * Fetch records that have <code>small_avatar IN (values)</code>
+     * Fetch records that have <code>position_name IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchBySmallAvatar(String... values) {
-        return fetch(User.USER.SMALL_AVATAR, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPositionName(String... values) {
+        return fetch(User.USER.POSITION_NAME, values);
     }
 
     /**
-     * Fetch records that have <code>medium_avatar IN (values)</code>
+     * Fetch records that have <code>branch_no IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByMediumAvatar(String... values) {
-        return fetch(User.USER.MEDIUM_AVATAR, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByBranchNo(String... values) {
+        return fetch(User.USER.BRANCH_NO, values);
     }
 
     /**
-     * Fetch records that have <code>large_avatar IN (values)</code>
+     * Fetch records that have <code>branch_nm IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLargeAvatar(String... values) {
-        return fetch(User.USER.LARGE_AVATAR, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByBranchNm(String... values) {
+        return fetch(User.USER.BRANCH_NM, values);
     }
 
     /**
-     * Fetch records that have <code>email_verified IN (values)</code>
+     * Fetch records that have <code>pointpraise_no IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByEmailVerified(Boolean... values) {
-        return fetch(User.USER.EMAIL_VERIFIED, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPointpraiseNo(String... values) {
+        return fetch(User.USER.POINTPRAISE_NO, values);
     }
 
     /**
-     * Fetch records that have <code>setup IN (values)</code>
+     * Fetch records that have <code>message_no IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchBySetup(Boolean... values) {
-        return fetch(User.USER.SETUP, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByMessageNo(String... values) {
+        return fetch(User.USER.MESSAGE_NO, values);
     }
 
     /**
-     * Fetch records that have <code>roles IN (values)</code>
+     * Fetch records that have <code>comment_no IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByRoles(String... values) {
-        return fetch(User.USER.ROLES, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByCommentNo(String... values) {
+        return fetch(User.USER.COMMENT_NO, values);
     }
 
     /**
-     * Fetch records that have <code>promoted IN (values)</code>
+     * Fetch records that have <code>lubrowsertype IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPromoted(Boolean... values) {
-        return fetch(User.USER.PROMOTED, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLubrowsertype(String... values) {
+        return fetch(User.USER.LUBROWSERTYPE, values);
     }
 
     /**
-     * Fetch records that have <code>promoted_seq IN (values)</code>
+     * Fetch records that have <code>luflag IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPromotedSeq(Integer... values) {
-        return fetch(User.USER.PROMOTED_SEQ, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuflag(String... values) {
+        return fetch(User.USER.LUFLAG, values);
     }
 
     /**
-     * Fetch records that have <code>promoted_time IN (values)</code>
+     * Fetch records that have <code>luactive IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPromotedTime(LocalDateTime... values) {
-        return fetch(User.USER.PROMOTED_TIME, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuactive(Boolean... values) {
+        return fetch(User.USER.LUACTIVE, values);
     }
 
     /**
-     * Fetch records that have <code>locked IN (values)</code>
+     * Fetch records that have <code>lusex IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLocked(Boolean... values) {
-        return fetch(User.USER.LOCKED, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLusex(String... values) {
+        return fetch(User.USER.LUSEX, values);
     }
 
     /**
-     * Fetch records that have <code>lock_deadline IN (values)</code>
+     * Fetch records that have <code>lulogintoken IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLockDeadline(Integer... values) {
-        return fetch(User.USER.LOCK_DEADLINE, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLulogintoken(String... values) {
+        return fetch(User.USER.LULOGINTOKEN, values);
     }
 
     /**
-     * Fetch records that have <code>consecutive_password_error_times IN (values)</code>
+     * Fetch records that have <code>token IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByConsecutivePasswordErrorTimes(Integer... values) {
-        return fetch(User.USER.CONSECUTIVE_PASSWORD_ERROR_TIMES, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByToken(String... values) {
+        return fetch(User.USER.TOKEN, values);
+    }
+
+    /**
+     * Fetch records that have <code>luenabled IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuenabled(String... values) {
+        return fetch(User.USER.LUENABLED, values);
+    }
+
+    /**
+     * Fetch records that have <code>lubrowserpath IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLubrowserpath(String... values) {
+        return fetch(User.USER.LUBROWSERPATH, values);
+    }
+
+    /**
+     * Fetch records that have <code>luhomepage IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuhomepage(String... values) {
+        return fetch(User.USER.LUHOMEPAGE, values);
+    }
+
+    /**
+     * Fetch records that have <code>lucorpid IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLucorpid(String... values) {
+        return fetch(User.USER.LUCORPID, values);
+    }
+
+    /**
+     * Fetch records that have <code>lushopseq IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLushopseq(Integer... values) {
+        return fetch(User.USER.LUSHOPSEQ, values);
+    }
+
+    /**
+     * Fetch records that have <code>luorgid IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLuorgid(String... values) {
+        return fetch(User.USER.LUORGID, values);
+    }
+
+    /**
+     * Fetch records that have <code>lumodiuserid IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLumodiuserid(String... values) {
+        return fetch(User.USER.LUMODIUSERID, values);
+    }
+
+    /**
+     * Fetch records that have <code>organization_id IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByOrganizationId(String... values) {
+        return fetch(User.USER.ORGANIZATION_ID, values);
+    }
+
+    /**
+     * Fetch records that have <code>lupagerows IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLupagerows(Integer... values) {
+        return fetch(User.USER.LUPAGEROWS, values);
+    }
+
+    /**
+     * Fetch records that have <code>lugxtime IN (values)</code>
+     */
+    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLugxtime(LocalDateTime... values) {
+        return fetch(User.USER.LUGXTIME, values);
     }
 
     /**
@@ -267,34 +335,6 @@ public class UserDao extends DAOImpl<UserRecord, com.jic.tnw.db.mysql.tables.poj
     }
 
     /**
-     * Fetch records that have <code>login_time IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLoginTime(LocalDateTime... values) {
-        return fetch(User.USER.LOGIN_TIME, values);
-    }
-
-    /**
-     * Fetch records that have <code>login_ip IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLoginIp(String... values) {
-        return fetch(User.USER.LOGIN_IP, values);
-    }
-
-    /**
-     * Fetch records that have <code>login_session_id IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByLoginSessionId(String... values) {
-        return fetch(User.USER.LOGIN_SESSION_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>approval_time IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByApprovalTime(LocalDateTime... values) {
-        return fetch(User.USER.APPROVAL_TIME, values);
-    }
-
-    /**
      * Fetch records that have <code>approval_status IN (values)</code>
      */
     public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByApprovalStatus(UserApprovalStatus... values) {
@@ -302,86 +342,9 @@ public class UserDao extends DAOImpl<UserRecord, com.jic.tnw.db.mysql.tables.poj
     }
 
     /**
-     * Fetch records that have <code>new_message_num IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByNewMessageNum(Integer... values) {
-        return fetch(User.USER.NEW_MESSAGE_NUM, values);
-    }
-
-    /**
-     * Fetch records that have <code>new_notification_num IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByNewNotificationNum(Integer... values) {
-        return fetch(User.USER.NEW_NOTIFICATION_NUM, values);
-    }
-
-    /**
-     * Fetch records that have <code>created_ip IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByCreatedIp(String... values) {
-        return fetch(User.USER.CREATED_IP, values);
-    }
-
-    /**
-     * Fetch records that have <code>created_time IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByCreatedTime(LocalDateTime... values) {
-        return fetch(User.USER.CREATED_TIME, values);
-    }
-
-    /**
      * Fetch records that have <code>updated_time IN (values)</code>
      */
     public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByUpdatedTime(LocalDateTime... values) {
         return fetch(User.USER.UPDATED_TIME, values);
-    }
-
-    /**
-     * Fetch records that have <code>invite_code IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByInviteCode(String... values) {
-        return fetch(User.USER.INVITE_CODE, values);
-    }
-
-    /**
-     * Fetch records that have <code>registered_way IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByRegisteredWay(String... values) {
-        return fetch(User.USER.REGISTERED_WAY, values);
-    }
-
-    /**
-     * Fetch records that have <code>pwd_init IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPwdInit(Boolean... values) {
-        return fetch(User.USER.PWD_INIT, values);
-    }
-
-    /**
-     * Fetch records that have <code>post_id IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByPostId(Integer... values) {
-        return fetch(User.USER.POST_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>read_guide IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByReadGuide(Boolean... values) {
-        return fetch(User.USER.READ_GUIDE, values);
-    }
-
-    /**
-     * Fetch records that have <code>org_ids IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByOrgIds(String... values) {
-        return fetch(User.USER.ORG_IDS, values);
-    }
-
-    /**
-     * Fetch records that have <code>org_codes IN (values)</code>
-     */
-    public List<com.jic.tnw.db.mysql.tables.pojos.User> fetchByOrgCodes(String... values) {
-        return fetch(User.USER.ORG_CODES, values);
     }
 }

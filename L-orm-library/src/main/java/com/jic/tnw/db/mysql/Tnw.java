@@ -4,29 +4,15 @@
 package com.jic.tnw.db.mysql;
 
 
-import com.jic.tnw.db.mysql.tables.Log;
-import com.jic.tnw.db.mysql.tables.Org;
-import com.jic.tnw.db.mysql.tables.Post;
-import com.jic.tnw.db.mysql.tables.PostGroup;
-import com.jic.tnw.db.mysql.tables.PostMember;
-import com.jic.tnw.db.mysql.tables.Role;
-import com.jic.tnw.db.mysql.tables.Tasks;
-import com.jic.tnw.db.mysql.tables.User;
-import com.jic.tnw.db.mysql.tables.UserGroup;
-import com.jic.tnw.db.mysql.tables.UserGroupMember;
-import com.jic.tnw.db.mysql.tables.UserOrg;
-import com.jic.tnw.db.mysql.tables.UserProfile;
-import com.jic.tnw.db.mysql.tables.WebUrlResource;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
+import com.jic.tnw.db.mysql.tables.*;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import javax.annotation.Generated;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -42,12 +28,77 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tnw extends SchemaImpl {
 
-    private static final long serialVersionUID = 442894412;
+    private static final long serialVersionUID = -1862559616;
 
     /**
      * The reference instance of <code>TNW</code>
      */
     public static final Tnw TNW = new Tnw();
+
+    /**
+     * ????
+     */
+    public final DwComment DW_COMMENT = com.jic.tnw.db.mysql.tables.DwComment.DW_COMMENT;
+
+    /**
+     * ????
+     */
+    public final DwFabulous DW_FABULOUS = com.jic.tnw.db.mysql.tables.DwFabulous.DW_FABULOUS;
+
+    /**
+     * ???
+     */
+    public final DwMyMessage DW_MY_MESSAGE = com.jic.tnw.db.mysql.tables.DwMyMessage.DW_MY_MESSAGE;
+
+    /**
+     * ?????
+     */
+    public final DwOldActivity DW_OLD_ACTIVITY = com.jic.tnw.db.mysql.tables.DwOldActivity.DW_OLD_ACTIVITY;
+
+    /**
+     * ?????
+     */
+    public final DwOrgcircleActivity DW_ORGCIRCLE_ACTIVITY = com.jic.tnw.db.mysql.tables.DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY;
+
+    /**
+     * ?????
+     */
+    public final DwOrgcircleDynamic DW_ORGCIRCLE_DYNAMIC = com.jic.tnw.db.mysql.tables.DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC;
+
+    /**
+     * ???
+     */
+    public final DwOtherMessage DW_OTHER_MESSAGE = com.jic.tnw.db.mysql.tables.DwOtherMessage.DW_OTHER_MESSAGE;
+
+    /**
+     * The table <code>TNW.dw_ranking_compete</code>.
+     */
+    public final DwRankingCompete DW_RANKING_COMPETE = com.jic.tnw.db.mysql.tables.DwRankingCompete.DW_RANKING_COMPETE;
+
+    /**
+     * The table <code>TNW.dw_ranking_comprehensive</code>.
+     */
+    public final DwRankingComprehensive DW_RANKING_COMPREHENSIVE = com.jic.tnw.db.mysql.tables.DwRankingComprehensive.DW_RANKING_COMPREHENSIVE;
+
+    /**
+     * The table <code>TNW.dw_ranking_detail</code>.
+     */
+    public final DwRankingDetail DW_RANKING_DETAIL = com.jic.tnw.db.mysql.tables.DwRankingDetail.DW_RANKING_DETAIL;
+
+    /**
+     * The table <code>TNW.dw_ranking_profit</code>.
+     */
+    public final DwRankingProfit DW_RANKING_PROFIT = com.jic.tnw.db.mysql.tables.DwRankingProfit.DW_RANKING_PROFIT;
+
+    /**
+     * ????
+     */
+    public final FileStore FILE_STORE = com.jic.tnw.db.mysql.tables.FileStore.FILE_STORE;
+
+    /**
+     * ???
+     */
+    public final FileStoreGroup FILE_STORE_GROUP = com.jic.tnw.db.mysql.tables.FileStoreGroup.FILE_STORE_GROUP;
 
     /**
      * ???????
@@ -139,6 +190,19 @@ public class Tnw extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            DwComment.DW_COMMENT,
+            DwFabulous.DW_FABULOUS,
+            DwMyMessage.DW_MY_MESSAGE,
+            DwOldActivity.DW_OLD_ACTIVITY,
+            DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY,
+            DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC,
+            DwOtherMessage.DW_OTHER_MESSAGE,
+            DwRankingCompete.DW_RANKING_COMPETE,
+            DwRankingComprehensive.DW_RANKING_COMPREHENSIVE,
+            DwRankingDetail.DW_RANKING_DETAIL,
+            DwRankingProfit.DW_RANKING_PROFIT,
+            FileStore.FILE_STORE,
+            FileStoreGroup.FILE_STORE_GROUP,
             Log.LOG,
             Org.ORG,
             Post.POST,

@@ -4,38 +4,13 @@
 package com.jic.tnw.db.mysql;
 
 
-import com.jic.tnw.db.mysql.tables.Log;
-import com.jic.tnw.db.mysql.tables.Org;
-import com.jic.tnw.db.mysql.tables.Post;
-import com.jic.tnw.db.mysql.tables.PostGroup;
-import com.jic.tnw.db.mysql.tables.PostMember;
-import com.jic.tnw.db.mysql.tables.Role;
-import com.jic.tnw.db.mysql.tables.Tasks;
-import com.jic.tnw.db.mysql.tables.User;
-import com.jic.tnw.db.mysql.tables.UserGroup;
-import com.jic.tnw.db.mysql.tables.UserGroupMember;
-import com.jic.tnw.db.mysql.tables.UserOrg;
-import com.jic.tnw.db.mysql.tables.UserProfile;
-import com.jic.tnw.db.mysql.tables.WebUrlResource;
-import com.jic.tnw.db.mysql.tables.records.LogRecord;
-import com.jic.tnw.db.mysql.tables.records.OrgRecord;
-import com.jic.tnw.db.mysql.tables.records.PostGroupRecord;
-import com.jic.tnw.db.mysql.tables.records.PostMemberRecord;
-import com.jic.tnw.db.mysql.tables.records.PostRecord;
-import com.jic.tnw.db.mysql.tables.records.RoleRecord;
-import com.jic.tnw.db.mysql.tables.records.TasksRecord;
-import com.jic.tnw.db.mysql.tables.records.UserGroupMemberRecord;
-import com.jic.tnw.db.mysql.tables.records.UserGroupRecord;
-import com.jic.tnw.db.mysql.tables.records.UserOrgRecord;
-import com.jic.tnw.db.mysql.tables.records.UserProfileRecord;
-import com.jic.tnw.db.mysql.tables.records.UserRecord;
-import com.jic.tnw.db.mysql.tables.records.WebUrlResourceRecord;
-
-import javax.annotation.Generated;
-
+import com.jic.tnw.db.mysql.tables.*;
+import com.jic.tnw.db.mysql.tables.records.*;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -56,6 +31,15 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<DwCommentRecord, Integer> IDENTITY_DW_COMMENT = Identities0.IDENTITY_DW_COMMENT;
+    public static final Identity<DwFabulousRecord, Integer> IDENTITY_DW_FABULOUS = Identities0.IDENTITY_DW_FABULOUS;
+    public static final Identity<DwMyMessageRecord, Integer> IDENTITY_DW_MY_MESSAGE = Identities0.IDENTITY_DW_MY_MESSAGE;
+    public static final Identity<DwOldActivityRecord, Integer> IDENTITY_DW_OLD_ACTIVITY = Identities0.IDENTITY_DW_OLD_ACTIVITY;
+    public static final Identity<DwOrgcircleActivityRecord, Integer> IDENTITY_DW_ORGCIRCLE_ACTIVITY = Identities0.IDENTITY_DW_ORGCIRCLE_ACTIVITY;
+    public static final Identity<DwOrgcircleDynamicRecord, Integer> IDENTITY_DW_ORGCIRCLE_DYNAMIC = Identities0.IDENTITY_DW_ORGCIRCLE_DYNAMIC;
+    public static final Identity<DwOtherMessageRecord, Integer> IDENTITY_DW_OTHER_MESSAGE = Identities0.IDENTITY_DW_OTHER_MESSAGE;
+    public static final Identity<FileStoreRecord, Integer> IDENTITY_FILE_STORE = Identities0.IDENTITY_FILE_STORE;
+    public static final Identity<FileStoreGroupRecord, Integer> IDENTITY_FILE_STORE_GROUP = Identities0.IDENTITY_FILE_STORE_GROUP;
     public static final Identity<LogRecord, Integer> IDENTITY_LOG = Identities0.IDENTITY_LOG;
     public static final Identity<OrgRecord, Integer> IDENTITY_ORG = Identities0.IDENTITY_ORG;
     public static final Identity<PostRecord, Integer> IDENTITY_POST = Identities0.IDENTITY_POST;
@@ -63,7 +47,6 @@ public class Keys {
     public static final Identity<PostMemberRecord, Integer> IDENTITY_POST_MEMBER = Identities0.IDENTITY_POST_MEMBER;
     public static final Identity<RoleRecord, Integer> IDENTITY_ROLE = Identities0.IDENTITY_ROLE;
     public static final Identity<TasksRecord, Integer> IDENTITY_TASKS = Identities0.IDENTITY_TASKS;
-    public static final Identity<UserRecord, Integer> IDENTITY_USER = Identities0.IDENTITY_USER;
     public static final Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = Identities0.IDENTITY_USER_GROUP;
     public static final Identity<UserGroupMemberRecord, Integer> IDENTITY_USER_GROUP_MEMBER = Identities0.IDENTITY_USER_GROUP_MEMBER;
     public static final Identity<UserOrgRecord, Integer> IDENTITY_USER_ORG = Identities0.IDENTITY_USER_ORG;
@@ -73,9 +56,18 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<DwCommentRecord> KEY_DW_COMMENT_PRIMARY = UniqueKeys0.KEY_DW_COMMENT_PRIMARY;
+    public static final UniqueKey<DwFabulousRecord> KEY_DW_FABULOUS_PRIMARY = UniqueKeys0.KEY_DW_FABULOUS_PRIMARY;
+    public static final UniqueKey<DwMyMessageRecord> KEY_DW_MY_MESSAGE_PRIMARY = UniqueKeys0.KEY_DW_MY_MESSAGE_PRIMARY;
+    public static final UniqueKey<DwOldActivityRecord> KEY_DW_OLD_ACTIVITY_PRIMARY = UniqueKeys0.KEY_DW_OLD_ACTIVITY_PRIMARY;
+    public static final UniqueKey<DwOrgcircleActivityRecord> KEY_DW_ORGCIRCLE_ACTIVITY_PRIMARY = UniqueKeys0.KEY_DW_ORGCIRCLE_ACTIVITY_PRIMARY;
+    public static final UniqueKey<DwOrgcircleDynamicRecord> KEY_DW_ORGCIRCLE_DYNAMIC_PRIMARY = UniqueKeys0.KEY_DW_ORGCIRCLE_DYNAMIC_PRIMARY;
+    public static final UniqueKey<DwOtherMessageRecord> KEY_DW_OTHER_MESSAGE_PRIMARY = UniqueKeys0.KEY_DW_OTHER_MESSAGE_PRIMARY;
+    public static final UniqueKey<FileStoreRecord> KEY_FILE_STORE_PRIMARY = UniqueKeys0.KEY_FILE_STORE_PRIMARY;
+    public static final UniqueKey<FileStoreGroupRecord> KEY_FILE_STORE_GROUP_PRIMARY = UniqueKeys0.KEY_FILE_STORE_GROUP_PRIMARY;
     public static final UniqueKey<LogRecord> KEY_LOG_PRIMARY = UniqueKeys0.KEY_LOG_PRIMARY;
     public static final UniqueKey<OrgRecord> KEY_ORG_PRIMARY = UniqueKeys0.KEY_ORG_PRIMARY;
-    public static final UniqueKey<OrgRecord> KEY_ORG_CODE = UniqueKeys0.KEY_ORG_CODE;
+    public static final UniqueKey<OrgRecord> KEY_ORG_BRANCH_NO = UniqueKeys0.KEY_ORG_BRANCH_NO;
     public static final UniqueKey<OrgRecord> KEY_ORG_ORG_CODE = UniqueKeys0.KEY_ORG_ORG_CODE;
     public static final UniqueKey<PostRecord> KEY_POST_PRIMARY = UniqueKeys0.KEY_POST_PRIMARY;
     public static final UniqueKey<PostGroupRecord> KEY_POST_GROUP_PRIMARY = UniqueKeys0.KEY_POST_GROUP_PRIMARY;
@@ -83,7 +75,7 @@ public class Keys {
     public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = UniqueKeys0.KEY_ROLE_PRIMARY;
     public static final UniqueKey<TasksRecord> KEY_TASKS_PRIMARY = UniqueKeys0.KEY_TASKS_PRIMARY;
     public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = UniqueKeys0.KEY_USER_PRIMARY;
-    public static final UniqueKey<UserRecord> KEY_USER_USERNAME = UniqueKeys0.KEY_USER_USERNAME;
+    public static final UniqueKey<UserRecord> KEY_USER_LUUSERNAME = UniqueKeys0.KEY_USER_LUUSERNAME;
     public static final UniqueKey<UserGroupRecord> KEY_USER_GROUP_PRIMARY = UniqueKeys0.KEY_USER_GROUP_PRIMARY;
     public static final UniqueKey<UserGroupRecord> KEY_USER_GROUP_CODE = UniqueKeys0.KEY_USER_GROUP_CODE;
     public static final UniqueKey<UserGroupMemberRecord> KEY_USER_GROUP_MEMBER_PRIMARY = UniqueKeys0.KEY_USER_GROUP_MEMBER_PRIMARY;
@@ -101,6 +93,15 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
+        public static Identity<DwCommentRecord, Integer> IDENTITY_DW_COMMENT = createIdentity(DwComment.DW_COMMENT, DwComment.DW_COMMENT.ID);
+        public static Identity<DwFabulousRecord, Integer> IDENTITY_DW_FABULOUS = createIdentity(DwFabulous.DW_FABULOUS, DwFabulous.DW_FABULOUS.ID);
+        public static Identity<DwMyMessageRecord, Integer> IDENTITY_DW_MY_MESSAGE = createIdentity(DwMyMessage.DW_MY_MESSAGE, DwMyMessage.DW_MY_MESSAGE.ID);
+        public static Identity<DwOldActivityRecord, Integer> IDENTITY_DW_OLD_ACTIVITY = createIdentity(DwOldActivity.DW_OLD_ACTIVITY, DwOldActivity.DW_OLD_ACTIVITY.ID);
+        public static Identity<DwOrgcircleActivityRecord, Integer> IDENTITY_DW_ORGCIRCLE_ACTIVITY = createIdentity(DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY, DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY.ID);
+        public static Identity<DwOrgcircleDynamicRecord, Integer> IDENTITY_DW_ORGCIRCLE_DYNAMIC = createIdentity(DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC, DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC.ID);
+        public static Identity<DwOtherMessageRecord, Integer> IDENTITY_DW_OTHER_MESSAGE = createIdentity(DwOtherMessage.DW_OTHER_MESSAGE, DwOtherMessage.DW_OTHER_MESSAGE.ID);
+        public static Identity<FileStoreRecord, Integer> IDENTITY_FILE_STORE = createIdentity(FileStore.FILE_STORE, FileStore.FILE_STORE.ID);
+        public static Identity<FileStoreGroupRecord, Integer> IDENTITY_FILE_STORE_GROUP = createIdentity(FileStoreGroup.FILE_STORE_GROUP, FileStoreGroup.FILE_STORE_GROUP.ID);
         public static Identity<LogRecord, Integer> IDENTITY_LOG = createIdentity(Log.LOG, Log.LOG.ID);
         public static Identity<OrgRecord, Integer> IDENTITY_ORG = createIdentity(Org.ORG, Org.ORG.ID);
         public static Identity<PostRecord, Integer> IDENTITY_POST = createIdentity(Post.POST, Post.POST.ID);
@@ -108,7 +109,6 @@ public class Keys {
         public static Identity<PostMemberRecord, Integer> IDENTITY_POST_MEMBER = createIdentity(PostMember.POST_MEMBER, PostMember.POST_MEMBER.ID);
         public static Identity<RoleRecord, Integer> IDENTITY_ROLE = createIdentity(Role.ROLE, Role.ROLE.ID);
         public static Identity<TasksRecord, Integer> IDENTITY_TASKS = createIdentity(Tasks.TASKS, Tasks.TASKS.ID);
-        public static Identity<UserRecord, Integer> IDENTITY_USER = createIdentity(User.USER, User.USER.ID);
         public static Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = createIdentity(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
         public static Identity<UserGroupMemberRecord, Integer> IDENTITY_USER_GROUP_MEMBER = createIdentity(UserGroupMember.USER_GROUP_MEMBER, UserGroupMember.USER_GROUP_MEMBER.ID);
         public static Identity<UserOrgRecord, Integer> IDENTITY_USER_ORG = createIdentity(UserOrg.USER_ORG, UserOrg.USER_ORG.ID);
@@ -116,17 +116,26 @@ public class Keys {
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
+        public static final UniqueKey<DwCommentRecord> KEY_DW_COMMENT_PRIMARY = createUniqueKey(DwComment.DW_COMMENT, "KEY_dw_comment_PRIMARY", DwComment.DW_COMMENT.ID);
+        public static final UniqueKey<DwFabulousRecord> KEY_DW_FABULOUS_PRIMARY = createUniqueKey(DwFabulous.DW_FABULOUS, "KEY_dw_fabulous_PRIMARY", DwFabulous.DW_FABULOUS.ID);
+        public static final UniqueKey<DwMyMessageRecord> KEY_DW_MY_MESSAGE_PRIMARY = createUniqueKey(DwMyMessage.DW_MY_MESSAGE, "KEY_dw_my_message_PRIMARY", DwMyMessage.DW_MY_MESSAGE.ID);
+        public static final UniqueKey<DwOldActivityRecord> KEY_DW_OLD_ACTIVITY_PRIMARY = createUniqueKey(DwOldActivity.DW_OLD_ACTIVITY, "KEY_dw_old_activity_PRIMARY", DwOldActivity.DW_OLD_ACTIVITY.ID);
+        public static final UniqueKey<DwOrgcircleActivityRecord> KEY_DW_ORGCIRCLE_ACTIVITY_PRIMARY = createUniqueKey(DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY, "KEY_dw_orgcircle_activity_PRIMARY", DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY.ID);
+        public static final UniqueKey<DwOrgcircleDynamicRecord> KEY_DW_ORGCIRCLE_DYNAMIC_PRIMARY = createUniqueKey(DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC, "KEY_dw_orgcircle_dynamic_PRIMARY", DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC.ID);
+        public static final UniqueKey<DwOtherMessageRecord> KEY_DW_OTHER_MESSAGE_PRIMARY = createUniqueKey(DwOtherMessage.DW_OTHER_MESSAGE, "KEY_dw_other_message_PRIMARY", DwOtherMessage.DW_OTHER_MESSAGE.ID);
+        public static final UniqueKey<FileStoreRecord> KEY_FILE_STORE_PRIMARY = createUniqueKey(FileStore.FILE_STORE, "KEY_file_store_PRIMARY", FileStore.FILE_STORE.ID);
+        public static final UniqueKey<FileStoreGroupRecord> KEY_FILE_STORE_GROUP_PRIMARY = createUniqueKey(FileStoreGroup.FILE_STORE_GROUP, "KEY_file_store_group_PRIMARY", FileStoreGroup.FILE_STORE_GROUP.ID);
         public static final UniqueKey<LogRecord> KEY_LOG_PRIMARY = createUniqueKey(Log.LOG, "KEY_log_PRIMARY", Log.LOG.ID);
         public static final UniqueKey<OrgRecord> KEY_ORG_PRIMARY = createUniqueKey(Org.ORG, "KEY_org_PRIMARY", Org.ORG.ID);
-        public static final UniqueKey<OrgRecord> KEY_ORG_CODE = createUniqueKey(Org.ORG, "KEY_org_code", Org.ORG.CODE);
+        public static final UniqueKey<OrgRecord> KEY_ORG_BRANCH_NO = createUniqueKey(Org.ORG, "KEY_org_branch_no", Org.ORG.BRANCH_NO);
         public static final UniqueKey<OrgRecord> KEY_ORG_ORG_CODE = createUniqueKey(Org.ORG, "KEY_org_org_code", Org.ORG.ORG_CODE);
         public static final UniqueKey<PostRecord> KEY_POST_PRIMARY = createUniqueKey(Post.POST, "KEY_post_PRIMARY", Post.POST.ID);
         public static final UniqueKey<PostGroupRecord> KEY_POST_GROUP_PRIMARY = createUniqueKey(PostGroup.POST_GROUP, "KEY_post_group_PRIMARY", PostGroup.POST_GROUP.ID);
         public static final UniqueKey<PostMemberRecord> KEY_POST_MEMBER_PRIMARY = createUniqueKey(PostMember.POST_MEMBER, "KEY_post_member_PRIMARY", PostMember.POST_MEMBER.ID);
         public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = createUniqueKey(Role.ROLE, "KEY_role_PRIMARY", Role.ROLE.ID);
         public static final UniqueKey<TasksRecord> KEY_TASKS_PRIMARY = createUniqueKey(Tasks.TASKS, "KEY_tasks_PRIMARY", Tasks.TASKS.ID);
-        public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = createUniqueKey(User.USER, "KEY_user_PRIMARY", User.USER.ID);
-        public static final UniqueKey<UserRecord> KEY_USER_USERNAME = createUniqueKey(User.USER, "KEY_user_username", User.USER.USERNAME);
+        public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = createUniqueKey(User.USER, "KEY_user_PRIMARY", User.USER.LUUSERID);
+        public static final UniqueKey<UserRecord> KEY_USER_LUUSERNAME = createUniqueKey(User.USER, "KEY_user_luusername", User.USER.LUUSERNAME);
         public static final UniqueKey<UserGroupRecord> KEY_USER_GROUP_PRIMARY = createUniqueKey(UserGroup.USER_GROUP, "KEY_user_group_PRIMARY", UserGroup.USER_GROUP.ID);
         public static final UniqueKey<UserGroupRecord> KEY_USER_GROUP_CODE = createUniqueKey(UserGroup.USER_GROUP, "KEY_user_group_code", UserGroup.USER_GROUP.CODE);
         public static final UniqueKey<UserGroupMemberRecord> KEY_USER_GROUP_MEMBER_PRIMARY = createUniqueKey(UserGroupMember.USER_GROUP_MEMBER, "KEY_user_group_member_PRIMARY", UserGroupMember.USER_GROUP_MEMBER.ID);

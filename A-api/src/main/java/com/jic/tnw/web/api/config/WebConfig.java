@@ -1,6 +1,5 @@
 package com.jic.tnw.web.api.config;
 
-import com.jic.elearning.web.api.Intercptor.UserLoggerInterceptor;
 import com.jic.tnw.web.api.Intercptor.UserLoggerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

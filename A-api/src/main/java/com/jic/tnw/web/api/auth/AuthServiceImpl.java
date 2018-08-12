@@ -1,10 +1,8 @@
 package com.jic.tnw.web.api.auth;
 
 
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.common.secruity.jwt.JwtTokenUtil;
 import com.jic.tnw.common.secruity.jwt.JwtUser;
-import com.jic.elearning.web.api.secruity.JelAuthenticationToken;
 import com.jic.tnw.user.service.UserService;
 import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.web.api.secruity.JelAuthenticationToken;

@@ -30,7 +30,7 @@ public class JelAuthenticationProvider implements AuthenticationProvider {
         if(user == null){
             throw new BadCredentialsException("");
         }
-        if(!passwordEncoder.matches(password,user.getPassword())){
+        if(!passwordEncoder.matches(password,user.getLupwd())){
             throw new BadCredentialsException("");
         }
         UserDetails userDetails = JwtUserFactory.create(user);

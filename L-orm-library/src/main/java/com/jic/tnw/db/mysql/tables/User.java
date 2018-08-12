@@ -10,23 +10,14 @@ import com.jic.tnw.db.mysql.Keys;
 import com.jic.tnw.db.mysql.Tnw;
 import com.jic.tnw.db.mysql.enums.UserApprovalStatus;
 import com.jic.tnw.db.mysql.tables.records.UserRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -42,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = -1390973341;
+    private static final long serialVersionUID = 1452117020;
 
     /**
      * The reference instance of <code>TNW.user</code>
@@ -58,134 +49,184 @@ public class User extends TableImpl<UserRecord> {
     }
 
     /**
-     * The column <code>TNW.user.id</code>. ??ID
+     * The column <code>TNW.user.luuserid</code>. ??ID--??
      */
-    public final TableField<UserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "??ID");
+    public final TableField<UserRecord, String> LUUSERID = createField("luuserid", org.jooq.impl.SQLDataType.VARCHAR(37).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??ID--??");
 
     /**
-     * The column <code>TNW.user.email</code>. ????
+     * The column <code>TNW.user.luusername</code>. ???
      */
-    public final TableField<UserRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR(128), this, "????");
+    public final TableField<UserRecord, String> LUUSERNAME = createField("luusername", org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.mobile</code>. ??
+     * The column <code>TNW.user.luemail</code>. ????
      */
-    public final TableField<UserRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+    public final TableField<UserRecord, String> LUEMAIL = createField("luemail", org.jooq.impl.SQLDataType.VARCHAR(67).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
 
     /**
-     * The column <code>TNW.user.password</code>. ????
+     * The column <code>TNW.user.lupwd</code>. ????
      */
-    public final TableField<UserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR(80).nullable(false), this, "????");
+    public final TableField<UserRecord, String> LUPWD = createField("lupwd", org.jooq.impl.SQLDataType.VARCHAR(80).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
 
     /**
-     * The column <code>TNW.user.pay_password</code>. ????
+     * The column <code>TNW.user.luoldpwd</code>. old??
      */
-    public final TableField<UserRecord, String> PAY_PASSWORD = createField("pay_password", org.jooq.impl.SQLDataType.VARCHAR(80).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+    public final TableField<UserRecord, String> LUOLDPWD = createField("luoldpwd", org.jooq.impl.SQLDataType.VARCHAR(80).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "old??");
 
     /**
-     * The column <code>TNW.user.locale</code>.
+     * The column <code>TNW.user.lumobile</code>. ??
      */
-    public final TableField<UserRecord, String> LOCALE = createField("locale", org.jooq.impl.SQLDataType.VARCHAR(20), this, "");
+    public final TableField<UserRecord, String> LUMOBILE = createField("lumobile", org.jooq.impl.SQLDataType.VARCHAR(90).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
 
     /**
-     * The column <code>TNW.user.uri</code>. ??URI
+     * The column <code>TNW.user.luphone</code>. ??
      */
-    public final TableField<UserRecord, String> URI = createField("uri", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??URI");
+    public final TableField<UserRecord, String> LUPHONE = createField("luphone", org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
 
     /**
-     * The column <code>TNW.user.username</code>. ???
+     * The column <code>TNW.user.luworkercode</code>. ???
      */
-    public final TableField<UserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "???");
+    public final TableField<UserRecord, String> LUWORKERCODE = createField("luworkercode", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.truename</code>. ????
+     * The column <code>TNW.user.luusertype</code>. ????
      */
-    public final TableField<UserRecord, String> TRUENAME = createField("truename", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+    public final TableField<UserRecord, String> LUUSERTYPE = createField("luusertype", org.jooq.impl.SQLDataType.VARCHAR(1).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
 
     /**
-     * The column <code>TNW.user.title</code>. ??
+     * The column <code>TNW.user.luregtime</code>. ????
      */
-    public final TableField<UserRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+    public final TableField<UserRecord, LocalDateTime> LUREGTIME = createField("luregtime", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "????", new LocalDateTimeConverter1());
 
     /**
-     * The column <code>TNW.user.tags</code>. ??
+     * The column <code>TNW.user.lulastlogtime</code>. ??????
      */
-    public final TableField<UserRecord, String> TAGS = createField("tags", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+    public final TableField<UserRecord, LocalDateTime> LULASTLOGTIME = createField("lulastlogtime", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????", new LocalDateTimeConverter1());
 
     /**
-     * The column <code>TNW.user.type</code>. default???????, weibo??????
+     * The column <code>TNW.user.lulastlogip</code>. ????IP
      */
-    public final TableField<UserRecord, String> TYPE = createField("type", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false), this, "default???????, weibo??????");
+    public final TableField<UserRecord, String> LULASTLOGIP = createField("lulastlogip", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????IP");
 
     /**
-     * The column <code>TNW.user.point</code>. ??
+     * The column <code>TNW.user.luheadpic</code>. ??
      */
-    public final TableField<UserRecord, Integer> POINT = createField("point", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??");
+    public final TableField<UserRecord, String> LUHEADPIC = createField("luheadpic", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
 
     /**
-     * The column <code>TNW.user.coin</code>. ??
+     * The column <code>TNW.user.position_id</code>. ??id
      */
-    public final TableField<UserRecord, Integer> COIN = createField("coin", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??");
+    public final TableField<UserRecord, String> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "??id");
 
     /**
-     * The column <code>TNW.user.small_avatar</code>. ???
+     * The column <code>TNW.user.position_name</code>. ????
      */
-    public final TableField<UserRecord, String> SMALL_AVATAR = createField("small_avatar", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+    public final TableField<UserRecord, String> POSITION_NAME = createField("position_name", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "????");
 
     /**
-     * The column <code>TNW.user.medium_avatar</code>. ???
+     * The column <code>TNW.user.branch_no</code>. ???
      */
-    public final TableField<UserRecord, String> MEDIUM_AVATAR = createField("medium_avatar", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+    public final TableField<UserRecord, String> BRANCH_NO = createField("branch_no", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.large_avatar</code>. ???
+     * The column <code>TNW.user.branch_nm</code>. ????
      */
-    public final TableField<UserRecord, String> LARGE_AVATAR = createField("large_avatar", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+    public final TableField<UserRecord, String> BRANCH_NM = createField("branch_nm", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "????");
 
     /**
-     * The column <code>TNW.user.email_verified</code>. ????????
+     * The column <code>TNW.user.pointpraise_no</code>. ???
      */
-    public final TableField<UserRecord, Boolean> EMAIL_VERIFIED = createField("email_verified", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "????????");
+    public final TableField<UserRecord, String> POINTPRAISE_NO = createField("pointpraise_no", org.jooq.impl.SQLDataType.VARCHAR(8).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.setup</code>. ?????????????????????????
+     * The column <code>TNW.user.message_no</code>. ???
      */
-    public final TableField<UserRecord, Boolean> SETUP = createField("setup", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("1", org.jooq.impl.SQLDataType.BOOLEAN)), this, "?????????????????????????");
+    public final TableField<UserRecord, String> MESSAGE_NO = createField("message_no", org.jooq.impl.SQLDataType.VARCHAR(8).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.roles</code>. ????
+     * The column <code>TNW.user.comment_no</code>. ???
      */
-    public final TableField<UserRecord, String> ROLES = createField("roles", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "????");
+    public final TableField<UserRecord, String> COMMENT_NO = createField("comment_no", org.jooq.impl.SQLDataType.VARCHAR(8).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
 
     /**
-     * The column <code>TNW.user.promoted</code>. ?????
+     * The column <code>TNW.user.lubrowsertype</code>.
      */
-    public final TableField<UserRecord, Boolean> PROMOTED = createField("promoted", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "?????");
+    public final TableField<UserRecord, String> LUBROWSERTYPE = createField("lubrowsertype", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
-     * The column <code>TNW.user.promoted_seq</code>.
+     * The column <code>TNW.user.luflag</code>. ??
      */
-    public final TableField<UserRecord, Integer> PROMOTED_SEQ = createField("promoted_seq", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<UserRecord, String> LUFLAG = createField("luflag", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
 
     /**
-     * The column <code>TNW.user.promoted_time</code>. ????
+     * The column <code>TNW.user.luactive</code>. ?????
      */
-    public final TableField<UserRecord, LocalDateTime> PROMOTED_TIME = createField("promoted_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "????", new LocalDateTimeConverter1());
+    public final TableField<UserRecord, Boolean> LUACTIVE = createField("luactive", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "?????");
 
     /**
-     * The column <code>TNW.user.locked</code>. ?????
+     * The column <code>TNW.user.lusex</code>. ??
      */
-    public final TableField<UserRecord, Boolean> LOCKED = createField("locked", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "?????");
+    public final TableField<UserRecord, String> LUSEX = createField("lusex", org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
 
     /**
-     * The column <code>TNW.user.lock_deadline</code>. ??????
+     * The column <code>TNW.user.lulogintoken</code>. ??token
      */
-    public final TableField<UserRecord, Integer> LOCK_DEADLINE = createField("lock_deadline", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????");
+    public final TableField<UserRecord, String> LULOGINTOKEN = createField("lulogintoken", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??token");
 
     /**
-     * The column <code>TNW.user.consecutive_password_error_times</code>. ????????
+     * The column <code>TNW.user.token</code>. token
      */
-    public final TableField<UserRecord, Integer> CONSECUTIVE_PASSWORD_ERROR_TIMES = createField("consecutive_password_error_times", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "????????");
+    public final TableField<UserRecord, String> TOKEN = createField("token", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "token");
+
+    /**
+     * The column <code>TNW.user.luenabled</code>. ??
+     */
+    public final TableField<UserRecord, String> LUENABLED = createField("luenabled", org.jooq.impl.SQLDataType.VARCHAR(1).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.user.lubrowserpath</code>. ??
+     */
+    public final TableField<UserRecord, String> LUBROWSERPATH = createField("lubrowserpath", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.user.luhomepage</code>. ??
+     */
+    public final TableField<UserRecord, String> LUHOMEPAGE = createField("luhomepage", org.jooq.impl.SQLDataType.VARCHAR(150).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??");
+
+    /**
+     * The column <code>TNW.user.lucorpid</code>. ??id
+     */
+    public final TableField<UserRecord, String> LUCORPID = createField("lucorpid", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??id");
+
+    /**
+     * The column <code>TNW.user.lushopseq</code>.
+     */
+    public final TableField<UserRecord, Integer> LUSHOPSEQ = createField("lushopseq", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>TNW.user.luorgid</code>. ????
+     */
+    public final TableField<UserRecord, String> LUORGID = createField("luorgid", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.user.lumodiuserid</code>. ????
+     */
+    public final TableField<UserRecord, String> LUMODIUSERID = createField("lumodiuserid", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????");
+
+    /**
+     * The column <code>TNW.user.organization_id</code>. ???
+     */
+    public final TableField<UserRecord, String> ORGANIZATION_ID = createField("organization_id", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "???");
+
+    /**
+     * The column <code>TNW.user.lupagerows</code>. ??id
+     */
+    public final TableField<UserRecord, Integer> LUPAGEROWS = createField("lupagerows", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??id");
+
+    /**
+     * The column <code>TNW.user.lugxtime</code>.
+     */
+    public final TableField<UserRecord, LocalDateTime> LUGXTIME = createField("lugxtime", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "", new LocalDateTimeConverter1());
 
     /**
      * The column <code>TNW.user.last_password_fail_time</code>. ??????????
@@ -198,89 +239,14 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, LocalDateTime> LAST_PASSWORD_RESET_TIME = createField("last_password_reset_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????????", new LocalDateTimeConverter1());
 
     /**
-     * The column <code>TNW.user.login_time</code>. ??????
-     */
-    public final TableField<UserRecord, LocalDateTime> LOGIN_TIME = createField("login_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????", new LocalDateTimeConverter1());
-
-    /**
-     * The column <code>TNW.user.login_ip</code>. ????IP
-     */
-    public final TableField<UserRecord, String> LOGIN_IP = createField("login_ip", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "????IP");
-
-    /**
-     * The column <code>TNW.user.login_session_id</code>. ??????ID
-     */
-    public final TableField<UserRecord, String> LOGIN_SESSION_ID = createField("login_session_id", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??????ID");
-
-    /**
-     * The column <code>TNW.user.approval_time</code>. ??????
-     */
-    public final TableField<UserRecord, LocalDateTime> APPROVAL_TIME = createField("approval_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????", new LocalDateTimeConverter1());
-
-    /**
      * The column <code>TNW.user.approval_status</code>. ??????
      */
     public final TableField<UserRecord, UserApprovalStatus> APPROVAL_STATUS = createField("approval_status", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(com.jic.tnw.db.mysql.enums.UserApprovalStatus.class), this, "??????");
 
     /**
-     * The column <code>TNW.user.new_message_num</code>. ?????
-     */
-    public final TableField<UserRecord, Integer> NEW_MESSAGE_NUM = createField("new_message_num", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "?????");
-
-    /**
-     * The column <code>TNW.user.new_notification_num</code>. ?????
-     */
-    public final TableField<UserRecord, Integer> NEW_NOTIFICATION_NUM = createField("new_notification_num", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "?????");
-
-    /**
-     * The column <code>TNW.user.created_ip</code>. ??IP
-     */
-    public final TableField<UserRecord, String> CREATED_IP = createField("created_ip", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??IP");
-
-    /**
-     * The column <code>TNW.user.created_time</code>. ????
-     */
-    public final TableField<UserRecord, LocalDateTime> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "????", new LocalDateTimeConverter1());
-
-    /**
      * The column <code>TNW.user.updated_time</code>. ??????
      */
     public final TableField<UserRecord, LocalDateTime> UPDATED_TIME = createField("updated_time", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??????", new LocalDateTimeConverter1());
-
-    /**
-     * The column <code>TNW.user.invite_code</code>. ???
-     */
-    public final TableField<UserRecord, String> INVITE_CODE = createField("invite_code", org.jooq.impl.SQLDataType.VARCHAR(255), this, "???");
-
-    /**
-     * The column <code>TNW.user.registered_way</code>. ??????(web/ios/android)
-     */
-    public final TableField<UserRecord, String> REGISTERED_WAY = createField("registered_way", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "??????(web/ios/android)");
-
-    /**
-     * The column <code>TNW.user.pwd_init</code>. ?????
-     */
-    public final TableField<UserRecord, Boolean> PWD_INIT = createField("pwd_init", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "?????");
-
-    /**
-     * The column <code>TNW.user.post_id</code>. ??id
-     */
-    public final TableField<UserRecord, Integer> POST_ID = createField("post_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??id");
-
-    /**
-     * The column <code>TNW.user.read_guide</code>. ????????
-     */
-    public final TableField<UserRecord, Boolean> READ_GUIDE = createField("read_guide", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.BOOLEAN)), this, "????????");
-
-    /**
-     * The column <code>TNW.user.org_ids</code>. ??ID
-     */
-    public final TableField<UserRecord, String> ORG_IDS = createField("org_ids", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "??ID");
-
-    /**
-     * The column <code>TNW.user.org_codes</code>. ??ID
-     */
-    public final TableField<UserRecord, String> ORG_CODES = createField("org_codes", org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.VARCHAR)), this, "??ID");
 
     /**
      * Create a <code>TNW.user</code> table reference
@@ -324,15 +290,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.USER_EMAIL_INDEX, Indexes.USER_MOBILE_INDEX, Indexes.USER_ORG_CODES_INDEX, Indexes.USER_ORG_POST_ID_INDEX, Indexes.USER_PRIMARY, Indexes.USER_PROMOTED, Indexes.USER_UPDATEDTIME, Indexes.USER_USERNAME, Indexes.USER_USER_TYPE_INDEX);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Identity<UserRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_USER;
+        return Arrays.<Index>asList(Indexes.USER_LUEMAIL_INDEX, Indexes.USER_LUMOBILE_INDEX, Indexes.USER_LUUSERNAME, Indexes.USER_ORGANIZATION_ID_INDEX, Indexes.USER_ORG_POSITION_ID_INDEX, Indexes.USER_PRIMARY, Indexes.USER_UPDATEDTIME);
     }
 
     /**
@@ -348,7 +306,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public List<UniqueKey<UserRecord>> getKeys() {
-        return Arrays.<UniqueKey<UserRecord>>asList(Keys.KEY_USER_PRIMARY, Keys.KEY_USER_USERNAME);
+        return Arrays.<UniqueKey<UserRecord>>asList(Keys.KEY_USER_PRIMARY, Keys.KEY_USER_LUUSERNAME);
     }
 
     /**

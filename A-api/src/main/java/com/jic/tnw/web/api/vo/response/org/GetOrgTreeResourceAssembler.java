@@ -1,6 +1,5 @@
 package com.jic.tnw.web.api.vo.response.org;
 
-import com.jic.elearning.web.api.controller.v1.OrgController;
 import com.jic.tnw.user.service.dto.OrgTree;
 import com.jic.tnw.web.api.controller.v1.OrgController;
 import org.springframework.hateoas.Link;

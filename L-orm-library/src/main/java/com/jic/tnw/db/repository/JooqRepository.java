@@ -2,9 +2,8 @@ package com.jic.tnw.db.repository;
 
 import java.util.List;
 
-/**
- * @author lee5hx
- */
+
+
 public interface JooqRepository<T> {
     /**
      * add
@@ -18,7 +17,7 @@ public interface JooqRepository<T> {
      * @param id
      * @return
      */
-    T delete(Integer id);
+    T delete(String id);
 
     /**
      * findAll
@@ -31,7 +30,7 @@ public interface JooqRepository<T> {
      * @param id
      * @return
      */
-    T findById(Integer id);
+    T findById(String id);
 
     /**
      * update

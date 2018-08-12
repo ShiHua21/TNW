@@ -1,15 +1,14 @@
 package com.jic.tnw.db.repository.impl;
 
 import com.jic.tnw.db.mysql.tables.pojos.Post;
-
 import com.jic.tnw.db.mysql.tables.records.PostRecord;
 import com.jic.tnw.db.repository.PostRepository;
-import org.jooq.Table;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jooq.DSLContext;
+import org.jooq.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,10 +27,12 @@ public class JooqPostRepository extends AbstractJooqRepository<Post,PostRecord> 
         this.jooq = jooq;
     }
     @Override
-    public Post delete(Integer id) {
+    public Post delete(String id) {
         Post deleted = findById(id);
+        int iid = Integer.parseInt(id);
+
         int delCount = jooq.delete(com.jic.tnw.db.mysql.tables.Post.POST)
-                .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(iid))
                 .execute();
         LOGGER.info(String.format("DEL_Group_ID_Count ==== %S",delCount));
         return deleted;
@@ -81,9 +82,11 @@ public class JooqPostRepository extends AbstractJooqRepository<Post,PostRecord> 
         return record;
     }
     @Override
-    public Post findById(Integer id) {
+    public Post findById(String id) {
+        int iid = Integer.parseInt(id);
+
         PostRecord result = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Post.POST)
-                .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(iid))
                 .fetchOne();
 
         return convertQueryResultToPojo(result);
@@ -101,7 +104,7 @@ public class JooqPostRepository extends AbstractJooqRepository<Post,PostRecord> 
                 .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(entry.getId()))
                 .execute();
         LOGGER.debug(String.format("PostGroup update_time =====%s",updateCount));
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
     @Override
@@ -167,7 +170,7 @@ public class JooqPostRepository extends AbstractJooqRepository<Post,PostRecord> 
                 .set(com.jic.tnw.db.mysql.tables.Post.POST.LAST_UPD_USER_ID,entry.getLastUpdUserId())
                 .where(com.jic.tnw.db.mysql.tables.Post.POST.ID.equal(entry.getId()))
                 .execute();
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
     @Override

@@ -11,11 +11,11 @@ import com.jic.tnw.user.service.dto.WurTree;
 import com.jic.tnw.user.service.dto.role.AddRoleDTO;
 import com.jic.tnw.user.service.dto.role.EditRoleDTO;
 import com.jic.tnw.user.service.dto.user.JelUser;
-import com.jic.elearning.web.api.vo.response.role.RoleResource;
-import com.jic.elearning.web.api.vo.response.role.RoleResourceAssembler;
-import com.jic.elearning.web.api.vo.response.role.WurTreeResource;
-import com.jic.elearning.web.api.vo.response.role.WurTreeResourceAssembler;
 import com.jic.tnw.web.api.vo.request.role.*;
+import com.jic.tnw.web.api.vo.response.role.RoleResource;
+import com.jic.tnw.web.api.vo.response.role.RoleResourceAssembler;
+import com.jic.tnw.web.api.vo.response.role.WurTreeResource;
+import com.jic.tnw.web.api.vo.response.role.WurTreeResourceAssembler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,6 +49,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @author gtp
  * @date 2018/3/21
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/v1")
 @Api(description = "角色管理", tags = {"F-用户模块-5"})
@@ -96,8 +97,8 @@ public class RoleController {
             roleResource.setCode(source.getCode());
             roleResource.setName(source.getName());
             roleResource.setRoleId(source.getId());
-            JelUser jelUser = userService.findById(source.getCreatedUserId());
-            roleResource.setCreateName(jelUser.getUser().getUsername());
+            JelUser jelUser = userService.findById(source.getCreatedUserId().toString());
+            roleResource.setCreateName(jelUser.getUser().getLuusername());
             try {
                 roleResource.add(linkTo(methodOn(RoleController.class).getUserById(source.getId())).withSelfRel());
             } catch (Exception e) {
@@ -127,8 +128,8 @@ public class RoleController {
         List<Role> list = roleService.findAll();
         List<RoleResource> resources = roleResourceAssembler.toResources(list);
         Resources<RoleResource> wrapped = new Resources<>(
-                resources,
-                linkTo(methodOn(UserGroupController.class).addUserGroup(null, null)).withRel("post_add_user_group")
+                resources
+//                linkTo(methodOn(UserGroupController.class).addUserGroup(null, null)).withRel("post_add_user_group")
         );
 
         return new ResponseEntity<>(wrapped, HttpStatus.OK);

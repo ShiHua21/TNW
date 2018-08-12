@@ -6,13 +6,11 @@ package com.jic.tnw.db.mysql.tables.records;
 
 import com.jic.tnw.db.mysql.enums.UserApprovalStatus;
 import com.jic.tnw.db.mysql.tables.User;
-
-import java.time.LocalDateTime;
-
-import javax.annotation.Generated;
-
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
 
 
 /**
@@ -28,636 +26,566 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> {
 
-    private static final long serialVersionUID = -60865559;
+    private static final long serialVersionUID = -1967136277;
 
     /**
-     * Setter for <code>TNW.user.id</code>. ??ID
+     * Setter for <code>TNW.user.luuserid</code>. ??ID--??
      */
-    public void setId(Integer value) {
+    public void setLuuserid(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>TNW.user.id</code>. ??ID
+     * Getter for <code>TNW.user.luuserid</code>. ??ID--??
      */
-    public Integer getId() {
-        return (Integer) get(0);
+    public String getLuuserid() {
+        return (String) get(0);
     }
 
     /**
-     * Setter for <code>TNW.user.email</code>. ????
+     * Setter for <code>TNW.user.luusername</code>. ???
      */
-    public void setEmail(String value) {
+    public void setLuusername(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>TNW.user.email</code>. ????
+     * Getter for <code>TNW.user.luusername</code>. ???
      */
-    public String getEmail() {
+    public String getLuusername() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>TNW.user.mobile</code>. ??
+     * Setter for <code>TNW.user.luemail</code>. ????
      */
-    public void setMobile(String value) {
+    public void setLuemail(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>TNW.user.mobile</code>. ??
+     * Getter for <code>TNW.user.luemail</code>. ????
      */
-    public String getMobile() {
+    public String getLuemail() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>TNW.user.password</code>. ????
+     * Setter for <code>TNW.user.lupwd</code>. ????
      */
-    public void setPassword(String value) {
+    public void setLupwd(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>TNW.user.password</code>. ????
+     * Getter for <code>TNW.user.lupwd</code>. ????
      */
-    public String getPassword() {
+    public String getLupwd() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>TNW.user.pay_password</code>. ????
+     * Setter for <code>TNW.user.luoldpwd</code>. old??
      */
-    public void setPayPassword(String value) {
+    public void setLuoldpwd(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>TNW.user.pay_password</code>. ????
+     * Getter for <code>TNW.user.luoldpwd</code>. old??
      */
-    public String getPayPassword() {
+    public String getLuoldpwd() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>TNW.user.locale</code>.
+     * Setter for <code>TNW.user.lumobile</code>. ??
      */
-    public void setLocale(String value) {
+    public void setLumobile(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>TNW.user.locale</code>.
+     * Getter for <code>TNW.user.lumobile</code>. ??
      */
-    public String getLocale() {
+    public String getLumobile() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>TNW.user.uri</code>. ??URI
+     * Setter for <code>TNW.user.luphone</code>. ??
      */
-    public void setUri(String value) {
+    public void setLuphone(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>TNW.user.uri</code>. ??URI
+     * Getter for <code>TNW.user.luphone</code>. ??
      */
-    public String getUri() {
+    public String getLuphone() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>TNW.user.username</code>. ???
+     * Setter for <code>TNW.user.luworkercode</code>. ???
      */
-    public void setUsername(String value) {
+    public void setLuworkercode(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>TNW.user.username</code>. ???
+     * Getter for <code>TNW.user.luworkercode</code>. ???
      */
-    public String getUsername() {
+    public String getLuworkercode() {
         return (String) get(7);
     }
 
     /**
-     * Setter for <code>TNW.user.truename</code>. ????
+     * Setter for <code>TNW.user.luusertype</code>. ????
      */
-    public void setTruename(String value) {
+    public void setLuusertype(String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>TNW.user.truename</code>. ????
+     * Getter for <code>TNW.user.luusertype</code>. ????
      */
-    public String getTruename() {
+    public String getLuusertype() {
         return (String) get(8);
     }
 
     /**
-     * Setter for <code>TNW.user.title</code>. ??
+     * Setter for <code>TNW.user.luregtime</code>. ????
      */
-    public void setTitle(String value) {
+    public void setLuregtime(LocalDateTime value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>TNW.user.title</code>. ??
+     * Getter for <code>TNW.user.luregtime</code>. ????
      */
-    public String getTitle() {
-        return (String) get(9);
+    public LocalDateTime getLuregtime() {
+        return (LocalDateTime) get(9);
     }
 
     /**
-     * Setter for <code>TNW.user.tags</code>. ??
+     * Setter for <code>TNW.user.lulastlogtime</code>. ??????
      */
-    public void setTags(String value) {
+    public void setLulastlogtime(LocalDateTime value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>TNW.user.tags</code>. ??
+     * Getter for <code>TNW.user.lulastlogtime</code>. ??????
      */
-    public String getTags() {
-        return (String) get(10);
+    public LocalDateTime getLulastlogtime() {
+        return (LocalDateTime) get(10);
     }
 
     /**
-     * Setter for <code>TNW.user.type</code>. default???????, weibo??????
+     * Setter for <code>TNW.user.lulastlogip</code>. ????IP
      */
-    public void setType(String value) {
+    public void setLulastlogip(String value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>TNW.user.type</code>. default???????, weibo??????
+     * Getter for <code>TNW.user.lulastlogip</code>. ????IP
      */
-    public String getType() {
+    public String getLulastlogip() {
         return (String) get(11);
     }
 
     /**
-     * Setter for <code>TNW.user.point</code>. ??
+     * Setter for <code>TNW.user.luheadpic</code>. ??
      */
-    public void setPoint(Integer value) {
+    public void setLuheadpic(String value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>TNW.user.point</code>. ??
+     * Getter for <code>TNW.user.luheadpic</code>. ??
      */
-    public Integer getPoint() {
-        return (Integer) get(12);
+    public String getLuheadpic() {
+        return (String) get(12);
     }
 
     /**
-     * Setter for <code>TNW.user.coin</code>. ??
+     * Setter for <code>TNW.user.position_id</code>. ??id
      */
-    public void setCoin(Integer value) {
+    public void setPositionId(String value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>TNW.user.coin</code>. ??
+     * Getter for <code>TNW.user.position_id</code>. ??id
      */
-    public Integer getCoin() {
-        return (Integer) get(13);
+    public String getPositionId() {
+        return (String) get(13);
     }
 
     /**
-     * Setter for <code>TNW.user.small_avatar</code>. ???
+     * Setter for <code>TNW.user.position_name</code>. ????
      */
-    public void setSmallAvatar(String value) {
+    public void setPositionName(String value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>TNW.user.small_avatar</code>. ???
+     * Getter for <code>TNW.user.position_name</code>. ????
      */
-    public String getSmallAvatar() {
+    public String getPositionName() {
         return (String) get(14);
     }
 
     /**
-     * Setter for <code>TNW.user.medium_avatar</code>. ???
+     * Setter for <code>TNW.user.branch_no</code>. ???
      */
-    public void setMediumAvatar(String value) {
+    public void setBranchNo(String value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>TNW.user.medium_avatar</code>. ???
+     * Getter for <code>TNW.user.branch_no</code>. ???
      */
-    public String getMediumAvatar() {
+    public String getBranchNo() {
         return (String) get(15);
     }
 
     /**
-     * Setter for <code>TNW.user.large_avatar</code>. ???
+     * Setter for <code>TNW.user.branch_nm</code>. ????
      */
-    public void setLargeAvatar(String value) {
+    public void setBranchNm(String value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>TNW.user.large_avatar</code>. ???
+     * Getter for <code>TNW.user.branch_nm</code>. ????
      */
-    public String getLargeAvatar() {
+    public String getBranchNm() {
         return (String) get(16);
     }
 
     /**
-     * Setter for <code>TNW.user.email_verified</code>. ????????
+     * Setter for <code>TNW.user.pointpraise_no</code>. ???
      */
-    public void setEmailVerified(Boolean value) {
+    public void setPointpraiseNo(String value) {
         set(17, value);
     }
 
     /**
-     * Getter for <code>TNW.user.email_verified</code>. ????????
+     * Getter for <code>TNW.user.pointpraise_no</code>. ???
      */
-    public Boolean getEmailVerified() {
-        return (Boolean) get(17);
+    public String getPointpraiseNo() {
+        return (String) get(17);
     }
 
     /**
-     * Setter for <code>TNW.user.setup</code>. ?????????????????????????
+     * Setter for <code>TNW.user.message_no</code>. ???
      */
-    public void setSetup(Boolean value) {
+    public void setMessageNo(String value) {
         set(18, value);
     }
 
     /**
-     * Getter for <code>TNW.user.setup</code>. ?????????????????????????
+     * Getter for <code>TNW.user.message_no</code>. ???
      */
-    public Boolean getSetup() {
-        return (Boolean) get(18);
+    public String getMessageNo() {
+        return (String) get(18);
     }
 
     /**
-     * Setter for <code>TNW.user.roles</code>. ????
+     * Setter for <code>TNW.user.comment_no</code>. ???
      */
-    public void setRoles(String value) {
+    public void setCommentNo(String value) {
         set(19, value);
     }
 
     /**
-     * Getter for <code>TNW.user.roles</code>. ????
+     * Getter for <code>TNW.user.comment_no</code>. ???
      */
-    public String getRoles() {
+    public String getCommentNo() {
         return (String) get(19);
     }
 
     /**
-     * Setter for <code>TNW.user.promoted</code>. ?????
+     * Setter for <code>TNW.user.lubrowsertype</code>.
      */
-    public void setPromoted(Boolean value) {
+    public void setLubrowsertype(String value) {
         set(20, value);
     }
 
     /**
-     * Getter for <code>TNW.user.promoted</code>. ?????
+     * Getter for <code>TNW.user.lubrowsertype</code>.
      */
-    public Boolean getPromoted() {
-        return (Boolean) get(20);
+    public String getLubrowsertype() {
+        return (String) get(20);
     }
 
     /**
-     * Setter for <code>TNW.user.promoted_seq</code>.
+     * Setter for <code>TNW.user.luflag</code>. ??
      */
-    public void setPromotedSeq(Integer value) {
+    public void setLuflag(String value) {
         set(21, value);
     }
 
     /**
-     * Getter for <code>TNW.user.promoted_seq</code>.
+     * Getter for <code>TNW.user.luflag</code>. ??
      */
-    public Integer getPromotedSeq() {
-        return (Integer) get(21);
+    public String getLuflag() {
+        return (String) get(21);
     }
 
     /**
-     * Setter for <code>TNW.user.promoted_time</code>. ????
+     * Setter for <code>TNW.user.luactive</code>. ?????
      */
-    public void setPromotedTime(LocalDateTime value) {
+    public void setLuactive(Boolean value) {
         set(22, value);
     }
 
     /**
-     * Getter for <code>TNW.user.promoted_time</code>. ????
+     * Getter for <code>TNW.user.luactive</code>. ?????
      */
-    public LocalDateTime getPromotedTime() {
-        return (LocalDateTime) get(22);
+    public Boolean getLuactive() {
+        return (Boolean) get(22);
     }
 
     /**
-     * Setter for <code>TNW.user.locked</code>. ?????
+     * Setter for <code>TNW.user.lusex</code>. ??
      */
-    public void setLocked(Boolean value) {
+    public void setLusex(String value) {
         set(23, value);
     }
 
     /**
-     * Getter for <code>TNW.user.locked</code>. ?????
+     * Getter for <code>TNW.user.lusex</code>. ??
      */
-    public Boolean getLocked() {
-        return (Boolean) get(23);
+    public String getLusex() {
+        return (String) get(23);
     }
 
     /**
-     * Setter for <code>TNW.user.lock_deadline</code>. ??????
+     * Setter for <code>TNW.user.lulogintoken</code>. ??token
      */
-    public void setLockDeadline(Integer value) {
+    public void setLulogintoken(String value) {
         set(24, value);
     }
 
     /**
-     * Getter for <code>TNW.user.lock_deadline</code>. ??????
+     * Getter for <code>TNW.user.lulogintoken</code>. ??token
      */
-    public Integer getLockDeadline() {
-        return (Integer) get(24);
+    public String getLulogintoken() {
+        return (String) get(24);
     }
 
     /**
-     * Setter for <code>TNW.user.consecutive_password_error_times</code>. ????????
+     * Setter for <code>TNW.user.token</code>. token
      */
-    public void setConsecutivePasswordErrorTimes(Integer value) {
+    public void setToken(String value) {
         set(25, value);
     }
 
     /**
-     * Getter for <code>TNW.user.consecutive_password_error_times</code>. ????????
+     * Getter for <code>TNW.user.token</code>. token
      */
-    public Integer getConsecutivePasswordErrorTimes() {
-        return (Integer) get(25);
+    public String getToken() {
+        return (String) get(25);
+    }
+
+    /**
+     * Setter for <code>TNW.user.luenabled</code>. ??
+     */
+    public void setLuenabled(String value) {
+        set(26, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.luenabled</code>. ??
+     */
+    public String getLuenabled() {
+        return (String) get(26);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lubrowserpath</code>. ??
+     */
+    public void setLubrowserpath(String value) {
+        set(27, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lubrowserpath</code>. ??
+     */
+    public String getLubrowserpath() {
+        return (String) get(27);
+    }
+
+    /**
+     * Setter for <code>TNW.user.luhomepage</code>. ??
+     */
+    public void setLuhomepage(String value) {
+        set(28, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.luhomepage</code>. ??
+     */
+    public String getLuhomepage() {
+        return (String) get(28);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lucorpid</code>. ??id
+     */
+    public void setLucorpid(String value) {
+        set(29, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lucorpid</code>. ??id
+     */
+    public String getLucorpid() {
+        return (String) get(29);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lushopseq</code>.
+     */
+    public void setLushopseq(Integer value) {
+        set(30, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lushopseq</code>.
+     */
+    public Integer getLushopseq() {
+        return (Integer) get(30);
+    }
+
+    /**
+     * Setter for <code>TNW.user.luorgid</code>. ????
+     */
+    public void setLuorgid(String value) {
+        set(31, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.luorgid</code>. ????
+     */
+    public String getLuorgid() {
+        return (String) get(31);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lumodiuserid</code>. ????
+     */
+    public void setLumodiuserid(String value) {
+        set(32, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lumodiuserid</code>. ????
+     */
+    public String getLumodiuserid() {
+        return (String) get(32);
+    }
+
+    /**
+     * Setter for <code>TNW.user.organization_id</code>. ???
+     */
+    public void setOrganizationId(String value) {
+        set(33, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.organization_id</code>. ???
+     */
+    public String getOrganizationId() {
+        return (String) get(33);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lupagerows</code>. ??id
+     */
+    public void setLupagerows(Integer value) {
+        set(34, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lupagerows</code>. ??id
+     */
+    public Integer getLupagerows() {
+        return (Integer) get(34);
+    }
+
+    /**
+     * Setter for <code>TNW.user.lugxtime</code>.
+     */
+    public void setLugxtime(LocalDateTime value) {
+        set(35, value);
+    }
+
+    /**
+     * Getter for <code>TNW.user.lugxtime</code>.
+     */
+    public LocalDateTime getLugxtime() {
+        return (LocalDateTime) get(35);
     }
 
     /**
      * Setter for <code>TNW.user.last_password_fail_time</code>. ??????????
      */
     public void setLastPasswordFailTime(LocalDateTime value) {
-        set(26, value);
+        set(36, value);
     }
 
     /**
      * Getter for <code>TNW.user.last_password_fail_time</code>. ??????????
      */
     public LocalDateTime getLastPasswordFailTime() {
-        return (LocalDateTime) get(26);
+        return (LocalDateTime) get(36);
     }
 
     /**
      * Setter for <code>TNW.user.last_password_reset_time</code>. ??????????
      */
     public void setLastPasswordResetTime(LocalDateTime value) {
-        set(27, value);
+        set(37, value);
     }
 
     /**
      * Getter for <code>TNW.user.last_password_reset_time</code>. ??????????
      */
     public LocalDateTime getLastPasswordResetTime() {
-        return (LocalDateTime) get(27);
-    }
-
-    /**
-     * Setter for <code>TNW.user.login_time</code>. ??????
-     */
-    public void setLoginTime(LocalDateTime value) {
-        set(28, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.login_time</code>. ??????
-     */
-    public LocalDateTime getLoginTime() {
-        return (LocalDateTime) get(28);
-    }
-
-    /**
-     * Setter for <code>TNW.user.login_ip</code>. ????IP
-     */
-    public void setLoginIp(String value) {
-        set(29, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.login_ip</code>. ????IP
-     */
-    public String getLoginIp() {
-        return (String) get(29);
-    }
-
-    /**
-     * Setter for <code>TNW.user.login_session_id</code>. ??????ID
-     */
-    public void setLoginSessionId(String value) {
-        set(30, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.login_session_id</code>. ??????ID
-     */
-    public String getLoginSessionId() {
-        return (String) get(30);
-    }
-
-    /**
-     * Setter for <code>TNW.user.approval_time</code>. ??????
-     */
-    public void setApprovalTime(LocalDateTime value) {
-        set(31, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.approval_time</code>. ??????
-     */
-    public LocalDateTime getApprovalTime() {
-        return (LocalDateTime) get(31);
+        return (LocalDateTime) get(37);
     }
 
     /**
      * Setter for <code>TNW.user.approval_status</code>. ??????
      */
     public void setApprovalStatus(UserApprovalStatus value) {
-        set(32, value);
+        set(38, value);
     }
 
     /**
      * Getter for <code>TNW.user.approval_status</code>. ??????
      */
     public UserApprovalStatus getApprovalStatus() {
-        return (UserApprovalStatus) get(32);
-    }
-
-    /**
-     * Setter for <code>TNW.user.new_message_num</code>. ?????
-     */
-    public void setNewMessageNum(Integer value) {
-        set(33, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.new_message_num</code>. ?????
-     */
-    public Integer getNewMessageNum() {
-        return (Integer) get(33);
-    }
-
-    /**
-     * Setter for <code>TNW.user.new_notification_num</code>. ?????
-     */
-    public void setNewNotificationNum(Integer value) {
-        set(34, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.new_notification_num</code>. ?????
-     */
-    public Integer getNewNotificationNum() {
-        return (Integer) get(34);
-    }
-
-    /**
-     * Setter for <code>TNW.user.created_ip</code>. ??IP
-     */
-    public void setCreatedIp(String value) {
-        set(35, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.created_ip</code>. ??IP
-     */
-    public String getCreatedIp() {
-        return (String) get(35);
-    }
-
-    /**
-     * Setter for <code>TNW.user.created_time</code>. ????
-     */
-    public void setCreatedTime(LocalDateTime value) {
-        set(36, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.created_time</code>. ????
-     */
-    public LocalDateTime getCreatedTime() {
-        return (LocalDateTime) get(36);
+        return (UserApprovalStatus) get(38);
     }
 
     /**
      * Setter for <code>TNW.user.updated_time</code>. ??????
      */
     public void setUpdatedTime(LocalDateTime value) {
-        set(37, value);
+        set(39, value);
     }
 
     /**
      * Getter for <code>TNW.user.updated_time</code>. ??????
      */
     public LocalDateTime getUpdatedTime() {
-        return (LocalDateTime) get(37);
-    }
-
-    /**
-     * Setter for <code>TNW.user.invite_code</code>. ???
-     */
-    public void setInviteCode(String value) {
-        set(38, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.invite_code</code>. ???
-     */
-    public String getInviteCode() {
-        return (String) get(38);
-    }
-
-    /**
-     * Setter for <code>TNW.user.registered_way</code>. ??????(web/ios/android)
-     */
-    public void setRegisteredWay(String value) {
-        set(39, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.registered_way</code>. ??????(web/ios/android)
-     */
-    public String getRegisteredWay() {
-        return (String) get(39);
-    }
-
-    /**
-     * Setter for <code>TNW.user.pwd_init</code>. ?????
-     */
-    public void setPwdInit(Boolean value) {
-        set(40, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.pwd_init</code>. ?????
-     */
-    public Boolean getPwdInit() {
-        return (Boolean) get(40);
-    }
-
-    /**
-     * Setter for <code>TNW.user.post_id</code>. ??id
-     */
-    public void setPostId(Integer value) {
-        set(41, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.post_id</code>. ??id
-     */
-    public Integer getPostId() {
-        return (Integer) get(41);
-    }
-
-    /**
-     * Setter for <code>TNW.user.read_guide</code>. ????????
-     */
-    public void setReadGuide(Boolean value) {
-        set(42, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.read_guide</code>. ????????
-     */
-    public Boolean getReadGuide() {
-        return (Boolean) get(42);
-    }
-
-    /**
-     * Setter for <code>TNW.user.org_ids</code>. ??ID
-     */
-    public void setOrgIds(String value) {
-        set(43, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.org_ids</code>. ??ID
-     */
-    public String getOrgIds() {
-        return (String) get(43);
-    }
-
-    /**
-     * Setter for <code>TNW.user.org_codes</code>. ??ID
-     */
-    public void setOrgCodes(String value) {
-        set(44, value);
-    }
-
-    /**
-     * Getter for <code>TNW.user.org_codes</code>. ??ID
-     */
-    public String getOrgCodes() {
-        return (String) get(44);
+        return (LocalDateTime) get(39);
     }
 
     // -------------------------------------------------------------------------
@@ -668,7 +596,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Record1<Integer> key() {
+    public Record1<String> key() {
         return (Record1) super.key();
     }
 
@@ -686,53 +614,48 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     /**
      * Create a detached, initialised UserRecord
      */
-    public UserRecord(Integer id, String email, String mobile, String password, String payPassword, String locale, String uri, String username, String truename, String title, String tags, String type, Integer point, Integer coin, String smallAvatar, String mediumAvatar, String largeAvatar, Boolean emailVerified, Boolean setup, String roles, Boolean promoted, Integer promotedSeq, LocalDateTime promotedTime, Boolean locked, Integer lockDeadline, Integer consecutivePasswordErrorTimes, LocalDateTime lastPasswordFailTime, LocalDateTime lastPasswordResetTime, LocalDateTime loginTime, String loginIp, String loginSessionId, LocalDateTime approvalTime, UserApprovalStatus approvalStatus, Integer newMessageNum, Integer newNotificationNum, String createdIp, LocalDateTime createdTime, LocalDateTime updatedTime, String inviteCode, String registeredWay, Boolean pwdInit, Integer postId, Boolean readGuide, String orgIds, String orgCodes) {
+    public UserRecord(String luuserid, String luusername, String luemail, String lupwd, String luoldpwd, String lumobile, String luphone, String luworkercode, String luusertype, LocalDateTime luregtime, LocalDateTime lulastlogtime, String lulastlogip, String luheadpic, String positionId, String positionName, String branchNo, String branchNm, String pointpraiseNo, String messageNo, String commentNo, String lubrowsertype, String luflag, Boolean luactive, String lusex, String lulogintoken, String token, String luenabled, String lubrowserpath, String luhomepage, String lucorpid, Integer lushopseq, String luorgid, String lumodiuserid, String organizationId, Integer lupagerows, LocalDateTime lugxtime, LocalDateTime lastPasswordFailTime, LocalDateTime lastPasswordResetTime, UserApprovalStatus approvalStatus, LocalDateTime updatedTime) {
         super(User.USER);
 
-        set(0, id);
-        set(1, email);
-        set(2, mobile);
-        set(3, password);
-        set(4, payPassword);
-        set(5, locale);
-        set(6, uri);
-        set(7, username);
-        set(8, truename);
-        set(9, title);
-        set(10, tags);
-        set(11, type);
-        set(12, point);
-        set(13, coin);
-        set(14, smallAvatar);
-        set(15, mediumAvatar);
-        set(16, largeAvatar);
-        set(17, emailVerified);
-        set(18, setup);
-        set(19, roles);
-        set(20, promoted);
-        set(21, promotedSeq);
-        set(22, promotedTime);
-        set(23, locked);
-        set(24, lockDeadline);
-        set(25, consecutivePasswordErrorTimes);
-        set(26, lastPasswordFailTime);
-        set(27, lastPasswordResetTime);
-        set(28, loginTime);
-        set(29, loginIp);
-        set(30, loginSessionId);
-        set(31, approvalTime);
-        set(32, approvalStatus);
-        set(33, newMessageNum);
-        set(34, newNotificationNum);
-        set(35, createdIp);
-        set(36, createdTime);
-        set(37, updatedTime);
-        set(38, inviteCode);
-        set(39, registeredWay);
-        set(40, pwdInit);
-        set(41, postId);
-        set(42, readGuide);
-        set(43, orgIds);
-        set(44, orgCodes);
+        set(0, luuserid);
+        set(1, luusername);
+        set(2, luemail);
+        set(3, lupwd);
+        set(4, luoldpwd);
+        set(5, lumobile);
+        set(6, luphone);
+        set(7, luworkercode);
+        set(8, luusertype);
+        set(9, luregtime);
+        set(10, lulastlogtime);
+        set(11, lulastlogip);
+        set(12, luheadpic);
+        set(13, positionId);
+        set(14, positionName);
+        set(15, branchNo);
+        set(16, branchNm);
+        set(17, pointpraiseNo);
+        set(18, messageNo);
+        set(19, commentNo);
+        set(20, lubrowsertype);
+        set(21, luflag);
+        set(22, luactive);
+        set(23, lusex);
+        set(24, lulogintoken);
+        set(25, token);
+        set(26, luenabled);
+        set(27, lubrowserpath);
+        set(28, luhomepage);
+        set(29, lucorpid);
+        set(30, lushopseq);
+        set(31, luorgid);
+        set(32, lumodiuserid);
+        set(33, organizationId);
+        set(34, lupagerows);
+        set(35, lugxtime);
+        set(36, lastPasswordFailTime);
+        set(37, lastPasswordResetTime);
+        set(38, approvalStatus);
+        set(39, updatedTime);
     }
 }

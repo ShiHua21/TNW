@@ -2,15 +2,14 @@ package com.jic.tnw.web.api.controller.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jic.tnw.db.mysql.tables.pojos.Org;
+import com.jic.tnw.user.service.OrgService;
 import com.jic.tnw.user.service.dto.AddOrgDTO;
 import com.jic.tnw.user.service.dto.EditOrgDTO;
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.user.service.dto.OrgTree;
-import com.jic.elearning.web.api.vo.request.org.AddOrg;
-import com.jic.elearning.web.api.vo.request.org.EditOrg;
-import com.jic.tnw.user.service.OrgService;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import com.jic.tnw.web.api.vo.request.org.AddOrg;
 import com.jic.tnw.web.api.vo.request.org.EditOrg;
+import com.jic.tnw.web.api.vo.response.org.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,6 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Created by lee5hx on 2017/12/10.
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/v1")
 @Api(description = "机构管理", tags = {"F-用户模块-2"})
@@ -96,8 +97,8 @@ public class OrgController {
         addOrgDTO.setName(addOrg.getName());
 
         Org org  = orgService.addOrg(addOrgDTO,Integer.parseInt(user.getUsername()));
-        addOrgResource.setName(org.getName());
-        addOrgResource.setCode(org.getCode());
+        addOrgResource.setName(org.getBranchNm());
+        addOrgResource.setCode(org.getBranchNo());
         addOrgResource.setDescription(org.getDescription());
         addOrgResource.setParentId(org.getParentId());
         return new ResponseEntity<>(addOrgResource, HttpStatus.CREATED);
@@ -124,9 +125,9 @@ public class OrgController {
         GetOrgResource getOrgResource = new GetOrgResource();
         Org org  = orgService.getOrg(id);
         getOrgResource.setOrgId(org.getId());
-        getOrgResource.setCode(org.getCode());
+        getOrgResource.setCode(org.getBranchNo());
         getOrgResource.setDescription(org.getDescription());
-        getOrgResource.setName(org.getName());
+        getOrgResource.setName(org.getBranchNo());
         return new ResponseEntity<>(getOrgResource, HttpStatus.OK);
     }
 
@@ -146,9 +147,9 @@ public class OrgController {
 
         Org org  = orgService.updateOrg(id,editOrgDTO,Integer.valueOf(user.getUsername()));
         editOrgResource.setOrgId(org.getId());
-        editOrgResource.setCode(org.getCode());
+        editOrgResource.setCode(org.getBranchNo());
         editOrgResource.setDescription(org.getDescription());
-        editOrgResource.setName(org.getName());
+        editOrgResource.setName(org.getBranchNm());
         return new ResponseEntity<>(editOrgResource, HttpStatus.OK);
     }
 
@@ -162,8 +163,8 @@ public class OrgController {
         DeleteOrgResource deleteOrgResource = new DeleteOrgResource();
         Org org  = orgService.deleteOrg(id);
         deleteOrgResource.setOrgId(org.getId());
-        deleteOrgResource.setCode(org.getCode());
-        deleteOrgResource.setName(org.getName());
+        deleteOrgResource.setCode(org.getBranchNo());
+        deleteOrgResource.setName(org.getBranchNm());
         deleteOrgResource.setDescription(org.getDescription());
         return new ResponseEntity<>(deleteOrgResource, HttpStatus.NO_CONTENT);
     }

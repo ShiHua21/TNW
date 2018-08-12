@@ -71,12 +71,15 @@ public class JwtTokenUtil implements Serializable {
         return expiration;
     }
 
+    /**
+     * 解析jwt
+     */
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
+            claims = Jwts.parser() //得到DefaultJwtParser
+                    .setSigningKey(secret) //设置签名密钥
+                    .parseClaimsJws(token) //设置需要解析的jwt
                     .getBody();
         } catch (Exception e) {
             claims = null;
@@ -85,7 +88,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
+        return new Date(System.currentTimeMillis() + expiration * 1000); //过期时间7天
     }
 
     private Boolean isTokenExpired(String token) {
@@ -109,8 +112,8 @@ public class JwtTokenUtil implements Serializable {
     public String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .setExpiration(generateExpirationDate()) //设置过期时间
+                .signWith(SignatureAlgorithm.HS512, secret) //设置签名使用的签名算法和签名使用的秘钥
                 .compact();
     }
 

@@ -48,7 +48,7 @@ flyway {
 // Use your favourite XML builder to construct the code generation configuration file
 def writer = new StringWriter()
 def xml = new groovy.xml.MarkupBuilder(writer)
-.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
+        .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
     jdbc() {
         driver('com.mysql.jdbc.Driver')
         url('jdbc:mysql://127.0.0.1:50005/TNW?useSSL=false')
@@ -87,7 +87,7 @@ def xml = new groovy.xml.MarkupBuilder(writer)
                 forcedType(){
                     name "integer2LocalDateTime"
                     //converter "com.jic.elearning.db.converter.LocalDateTimeConverter1"
-                   // userType "java.time.LocalDateTime"
+                    // userType "java.time.LocalDateTime"
                     types ".*"
                     expression ".*\\.*time"
                 }

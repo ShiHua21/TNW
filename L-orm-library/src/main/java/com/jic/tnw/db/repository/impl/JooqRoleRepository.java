@@ -60,10 +60,12 @@ public class JooqRoleRepository extends AbstractJooqRepository<Role,RoleRecord> 
         return roleRecord;
     }
     @Override
-    public Role delete(Integer id) {
+    public Role delete(String id) {
         Role role = findById(id);
+        int iid = Integer.parseInt(id);
+
         int deletedRecordCount = jooq.delete(com.jic.tnw.db.mysql.tables.Role.ROLE)
-                .where(com.jic.tnw.db.mysql.tables.Role.ROLE.ID.eq(id))
+                .where(com.jic.tnw.db.mysql.tables.Role.ROLE.ID.eq(iid))
                 .execute();
         LOGGER.debug(String.format("delete role role=%s",role));
         LOGGER.debug(String.format("delete count= %sd",deletedRecordCount));
@@ -82,9 +84,11 @@ public class JooqRoleRepository extends AbstractJooqRepository<Role,RoleRecord> 
     }
 
     @Override
-    public Role findById(Integer id) {
+    public Role findById(String id) {
+        int iid = Integer.parseInt(id);
+
         RoleRecord roleResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Role.ROLE)
-                .where(com.jic.tnw.db.mysql.tables.Role.ROLE.ID.eq(id))
+                .where(com.jic.tnw.db.mysql.tables.Role.ROLE.ID.eq(iid))
                 .fetchOne();
         return convertQueryResultToPojo(roleResult);
     }
@@ -246,7 +250,7 @@ public class JooqRoleRepository extends AbstractJooqRepository<Role,RoleRecord> 
                 .where(com.jic.tnw.db.mysql.tables.Role.ROLE.ID.equal(roleId))
                 .execute();
         LOGGER.debug(String.format("PostGroup update_time =====%s",updateCount));
-        return findById(roleId);
+        return findById(roleId.toString());
     }
 
     @Override

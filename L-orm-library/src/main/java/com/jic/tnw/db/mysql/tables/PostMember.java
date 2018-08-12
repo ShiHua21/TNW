@@ -9,23 +9,14 @@ import com.jic.tnw.db.mysql.Indexes;
 import com.jic.tnw.db.mysql.Keys;
 import com.jic.tnw.db.mysql.Tnw;
 import com.jic.tnw.db.mysql.tables.records.PostMemberRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -41,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PostMember extends TableImpl<PostMemberRecord> {
 
-    private static final long serialVersionUID = 1036074896;
+    private static final long serialVersionUID = 1432197959;
 
     /**
      * The reference instance of <code>TNW.post_member</code>
@@ -62,9 +53,9 @@ public class PostMember extends TableImpl<PostMemberRecord> {
     public final TableField<PostMemberRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "ID");
 
     /**
-     * The column <code>TNW.post_member.post_id</code>. ??ID
+     * The column <code>TNW.post_member.position_id</code>. ??ID
      */
-    public final TableField<PostMemberRecord, Integer> POST_ID = createField("post_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??ID");
+    public final TableField<PostMemberRecord, Integer> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "??ID");
 
     /**
      * The column <code>TNW.post_member.user_id</code>. ??ID

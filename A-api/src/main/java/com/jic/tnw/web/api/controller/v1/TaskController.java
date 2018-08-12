@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jic.tnw.db.mysql.enums.TasksStatus;
 import com.jic.tnw.db.mysql.tables.pojos.Tasks;
 import com.jic.tnw.task.service.TaskService;
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,10 +20,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Created by lee5hx on 2017/12/10.
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/v1")
 @Api(description = "任务信息处理", tags = {"X-任务模块"})

@@ -4,19 +4,7 @@
 package com.jic.tnw.db.mysql;
 
 
-import com.jic.tnw.db.mysql.tables.Log;
-import com.jic.tnw.db.mysql.tables.Org;
-import com.jic.tnw.db.mysql.tables.Post;
-import com.jic.tnw.db.mysql.tables.PostGroup;
-import com.jic.tnw.db.mysql.tables.PostMember;
-import com.jic.tnw.db.mysql.tables.Role;
-import com.jic.tnw.db.mysql.tables.Tasks;
-import com.jic.tnw.db.mysql.tables.User;
-import com.jic.tnw.db.mysql.tables.UserGroup;
-import com.jic.tnw.db.mysql.tables.UserGroupMember;
-import com.jic.tnw.db.mysql.tables.UserOrg;
-import com.jic.tnw.db.mysql.tables.UserProfile;
-import com.jic.tnw.db.mysql.tables.WebUrlResource;
+import com.jic.tnw.db.mysql.tables.*;
 
 import javax.annotation.Generated;
 
@@ -33,6 +21,71 @@ import javax.annotation.Generated;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * ????
+     */
+    public static final DwComment DW_COMMENT = com.jic.tnw.db.mysql.tables.DwComment.DW_COMMENT;
+
+    /**
+     * ????
+     */
+    public static final DwFabulous DW_FABULOUS = com.jic.tnw.db.mysql.tables.DwFabulous.DW_FABULOUS;
+
+    /**
+     * ???
+     */
+    public static final DwMyMessage DW_MY_MESSAGE = com.jic.tnw.db.mysql.tables.DwMyMessage.DW_MY_MESSAGE;
+
+    /**
+     * ?????
+     */
+    public static final DwOldActivity DW_OLD_ACTIVITY = com.jic.tnw.db.mysql.tables.DwOldActivity.DW_OLD_ACTIVITY;
+
+    /**
+     * ?????
+     */
+    public static final DwOrgcircleActivity DW_ORGCIRCLE_ACTIVITY = com.jic.tnw.db.mysql.tables.DwOrgcircleActivity.DW_ORGCIRCLE_ACTIVITY;
+
+    /**
+     * ?????
+     */
+    public static final DwOrgcircleDynamic DW_ORGCIRCLE_DYNAMIC = com.jic.tnw.db.mysql.tables.DwOrgcircleDynamic.DW_ORGCIRCLE_DYNAMIC;
+
+    /**
+     * ???
+     */
+    public static final DwOtherMessage DW_OTHER_MESSAGE = com.jic.tnw.db.mysql.tables.DwOtherMessage.DW_OTHER_MESSAGE;
+
+    /**
+     * The table <code>TNW.dw_ranking_compete</code>.
+     */
+    public static final DwRankingCompete DW_RANKING_COMPETE = com.jic.tnw.db.mysql.tables.DwRankingCompete.DW_RANKING_COMPETE;
+
+    /**
+     * The table <code>TNW.dw_ranking_comprehensive</code>.
+     */
+    public static final DwRankingComprehensive DW_RANKING_COMPREHENSIVE = com.jic.tnw.db.mysql.tables.DwRankingComprehensive.DW_RANKING_COMPREHENSIVE;
+
+    /**
+     * The table <code>TNW.dw_ranking_detail</code>.
+     */
+    public static final DwRankingDetail DW_RANKING_DETAIL = com.jic.tnw.db.mysql.tables.DwRankingDetail.DW_RANKING_DETAIL;
+
+    /**
+     * The table <code>TNW.dw_ranking_profit</code>.
+     */
+    public static final DwRankingProfit DW_RANKING_PROFIT = com.jic.tnw.db.mysql.tables.DwRankingProfit.DW_RANKING_PROFIT;
+
+    /**
+     * ????
+     */
+    public static final FileStore FILE_STORE = com.jic.tnw.db.mysql.tables.FileStore.FILE_STORE;
+
+    /**
+     * ???
+     */
+    public static final FileStoreGroup FILE_STORE_GROUP = com.jic.tnw.db.mysql.tables.FileStoreGroup.FILE_STORE_GROUP;
 
     /**
      * ???????

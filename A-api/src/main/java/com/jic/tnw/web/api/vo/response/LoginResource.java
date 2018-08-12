@@ -3,11 +3,48 @@ package com.jic.tnw.web.api.vo.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.ResourceSupport;
 
-/**
- * Created by lee5hx on 2017/10/17.
- */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class LoginResource extends ResourceSupport {
+public class LoginResource<T> extends ResourceSupport {
+
+    private Integer status;
+
+    private String message;
+
+    private T data;
+
+    private String lumobile;
+
+    public String getLumobile() {
+        return lumobile;
+    }
+
+    public void setLumobile(String lumobile) {
+        this.lumobile = lumobile;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     private String token;
     private String roles;

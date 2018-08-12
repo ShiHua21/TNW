@@ -6,10 +6,9 @@ package com.jic.tnw.db.mysql.tables.pojos;
 
 import com.jic.tnw.db.mysql.enums.UserApprovalStatus;
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.annotation.Generated;
 
 
 /**
@@ -25,404 +24,464 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 2039068757;
+    private static final long serialVersionUID = -481253315;
 
-    private Integer            id;
-    private String             email;
-    private String             mobile;
-    private String             password;
-    private String             payPassword;
-    private String             locale;
-    private String             uri;
-    private String             username;
-    private String             truename;
-    private String             title;
-    private String             tags;
-    private String             type;
-    private Integer            point;
-    private Integer            coin;
-    private String             smallAvatar;
-    private String             mediumAvatar;
-    private String             largeAvatar;
-    private Boolean            emailVerified;
-    private Boolean            setup;
-    private String             roles;
-    private Boolean            promoted;
-    private Integer            promotedSeq;
-    private LocalDateTime      promotedTime;
-    private Boolean            locked;
-    private Integer            lockDeadline;
-    private Integer            consecutivePasswordErrorTimes;
+    private String             luuserid;
+    private String             luusername;
+    private String             luemail;
+    private String             lupwd;
+    private String             luoldpwd;
+    private String             lumobile;
+    private String             luphone;
+    private String             luworkercode;
+    private String             luusertype;
+    private LocalDateTime      luregtime;
+    private LocalDateTime      lulastlogtime;
+    private String             lulastlogip;
+    private String             luheadpic;
+    private String             positionId;
+    private String             positionName;
+    private String             branchNo;
+    private String             branchNm;
+    private String             pointpraiseNo;
+    private String             messageNo;
+    private String             commentNo;
+    private String             lubrowsertype;
+    private String             luflag;
+    private Boolean            luactive;
+    private String             lusex;
+    private String             lulogintoken;
+    private String             token;
+    private String             luenabled;
+    private String             lubrowserpath;
+    private String             luhomepage;
+    private String             lucorpid;
+    private Integer            lushopseq;
+    private String             luorgid;
+    private String             lumodiuserid;
+    private String             organizationId;
+    private Integer            lupagerows;
+    private LocalDateTime      lugxtime;
     private LocalDateTime      lastPasswordFailTime;
     private LocalDateTime      lastPasswordResetTime;
-    private LocalDateTime      loginTime;
-    private String             loginIp;
-    private String             loginSessionId;
-    private LocalDateTime      approvalTime;
     private UserApprovalStatus approvalStatus;
-    private Integer            newMessageNum;
-    private Integer            newNotificationNum;
-    private String             createdIp;
-    private LocalDateTime      createdTime;
     private LocalDateTime      updatedTime;
-    private String             inviteCode;
-    private String             registeredWay;
-    private Boolean            pwdInit;
-    private Integer            postId;
-    private Boolean            readGuide;
-    private String             orgIds;
-    private String             orgCodes;
 
     public User() {}
 
     public User(User value) {
-        this.id = value.id;
-        this.email = value.email;
-        this.mobile = value.mobile;
-        this.password = value.password;
-        this.payPassword = value.payPassword;
-        this.locale = value.locale;
-        this.uri = value.uri;
-        this.username = value.username;
-        this.truename = value.truename;
-        this.title = value.title;
-        this.tags = value.tags;
-        this.type = value.type;
-        this.point = value.point;
-        this.coin = value.coin;
-        this.smallAvatar = value.smallAvatar;
-        this.mediumAvatar = value.mediumAvatar;
-        this.largeAvatar = value.largeAvatar;
-        this.emailVerified = value.emailVerified;
-        this.setup = value.setup;
-        this.roles = value.roles;
-        this.promoted = value.promoted;
-        this.promotedSeq = value.promotedSeq;
-        this.promotedTime = value.promotedTime;
-        this.locked = value.locked;
-        this.lockDeadline = value.lockDeadline;
-        this.consecutivePasswordErrorTimes = value.consecutivePasswordErrorTimes;
+        this.luuserid = value.luuserid;
+        this.luusername = value.luusername;
+        this.luemail = value.luemail;
+        this.lupwd = value.lupwd;
+        this.luoldpwd = value.luoldpwd;
+        this.lumobile = value.lumobile;
+        this.luphone = value.luphone;
+        this.luworkercode = value.luworkercode;
+        this.luusertype = value.luusertype;
+        this.luregtime = value.luregtime;
+        this.lulastlogtime = value.lulastlogtime;
+        this.lulastlogip = value.lulastlogip;
+        this.luheadpic = value.luheadpic;
+        this.positionId = value.positionId;
+        this.positionName = value.positionName;
+        this.branchNo = value.branchNo;
+        this.branchNm = value.branchNm;
+        this.pointpraiseNo = value.pointpraiseNo;
+        this.messageNo = value.messageNo;
+        this.commentNo = value.commentNo;
+        this.lubrowsertype = value.lubrowsertype;
+        this.luflag = value.luflag;
+        this.luactive = value.luactive;
+        this.lusex = value.lusex;
+        this.lulogintoken = value.lulogintoken;
+        this.token = value.token;
+        this.luenabled = value.luenabled;
+        this.lubrowserpath = value.lubrowserpath;
+        this.luhomepage = value.luhomepage;
+        this.lucorpid = value.lucorpid;
+        this.lushopseq = value.lushopseq;
+        this.luorgid = value.luorgid;
+        this.lumodiuserid = value.lumodiuserid;
+        this.organizationId = value.organizationId;
+        this.lupagerows = value.lupagerows;
+        this.lugxtime = value.lugxtime;
         this.lastPasswordFailTime = value.lastPasswordFailTime;
         this.lastPasswordResetTime = value.lastPasswordResetTime;
-        this.loginTime = value.loginTime;
-        this.loginIp = value.loginIp;
-        this.loginSessionId = value.loginSessionId;
-        this.approvalTime = value.approvalTime;
         this.approvalStatus = value.approvalStatus;
-        this.newMessageNum = value.newMessageNum;
-        this.newNotificationNum = value.newNotificationNum;
-        this.createdIp = value.createdIp;
-        this.createdTime = value.createdTime;
         this.updatedTime = value.updatedTime;
-        this.inviteCode = value.inviteCode;
-        this.registeredWay = value.registeredWay;
-        this.pwdInit = value.pwdInit;
-        this.postId = value.postId;
-        this.readGuide = value.readGuide;
-        this.orgIds = value.orgIds;
-        this.orgCodes = value.orgCodes;
     }
 
     public User(
-        Integer            id,
-        String             email,
-        String             mobile,
-        String             password,
-        String             payPassword,
-        String             locale,
-        String             uri,
-        String             username,
-        String             truename,
-        String             title,
-        String             tags,
-        String             type,
-        Integer            point,
-        Integer            coin,
-        String             smallAvatar,
-        String             mediumAvatar,
-        String             largeAvatar,
-        Boolean            emailVerified,
-        Boolean            setup,
-        String             roles,
-        Boolean            promoted,
-        Integer            promotedSeq,
-        LocalDateTime      promotedTime,
-        Boolean            locked,
-        Integer            lockDeadline,
-        Integer            consecutivePasswordErrorTimes,
+        String             luuserid,
+        String             luusername,
+        String             luemail,
+        String             lupwd,
+        String             luoldpwd,
+        String             lumobile,
+        String             luphone,
+        String             luworkercode,
+        String             luusertype,
+        LocalDateTime      luregtime,
+        LocalDateTime      lulastlogtime,
+        String             lulastlogip,
+        String             luheadpic,
+        String             positionId,
+        String             positionName,
+        String             branchNo,
+        String             branchNm,
+        String             pointpraiseNo,
+        String             messageNo,
+        String             commentNo,
+        String             lubrowsertype,
+        String             luflag,
+        Boolean            luactive,
+        String             lusex,
+        String             lulogintoken,
+        String             token,
+        String             luenabled,
+        String             lubrowserpath,
+        String             luhomepage,
+        String             lucorpid,
+        Integer            lushopseq,
+        String             luorgid,
+        String             lumodiuserid,
+        String             organizationId,
+        Integer            lupagerows,
+        LocalDateTime      lugxtime,
         LocalDateTime      lastPasswordFailTime,
         LocalDateTime      lastPasswordResetTime,
-        LocalDateTime      loginTime,
-        String             loginIp,
-        String             loginSessionId,
-        LocalDateTime      approvalTime,
         UserApprovalStatus approvalStatus,
-        Integer            newMessageNum,
-        Integer            newNotificationNum,
-        String             createdIp,
-        LocalDateTime      createdTime,
-        LocalDateTime      updatedTime,
-        String             inviteCode,
-        String             registeredWay,
-        Boolean            pwdInit,
-        Integer            postId,
-        Boolean            readGuide,
-        String             orgIds,
-        String             orgCodes
+        LocalDateTime      updatedTime
     ) {
-        this.id = id;
-        this.email = email;
-        this.mobile = mobile;
-        this.password = password;
-        this.payPassword = payPassword;
-        this.locale = locale;
-        this.uri = uri;
-        this.username = username;
-        this.truename = truename;
-        this.title = title;
-        this.tags = tags;
-        this.type = type;
-        this.point = point;
-        this.coin = coin;
-        this.smallAvatar = smallAvatar;
-        this.mediumAvatar = mediumAvatar;
-        this.largeAvatar = largeAvatar;
-        this.emailVerified = emailVerified;
-        this.setup = setup;
-        this.roles = roles;
-        this.promoted = promoted;
-        this.promotedSeq = promotedSeq;
-        this.promotedTime = promotedTime;
-        this.locked = locked;
-        this.lockDeadline = lockDeadline;
-        this.consecutivePasswordErrorTimes = consecutivePasswordErrorTimes;
+        this.luuserid = luuserid;
+        this.luusername = luusername;
+        this.luemail = luemail;
+        this.lupwd = lupwd;
+        this.luoldpwd = luoldpwd;
+        this.lumobile = lumobile;
+        this.luphone = luphone;
+        this.luworkercode = luworkercode;
+        this.luusertype = luusertype;
+        this.luregtime = luregtime;
+        this.lulastlogtime = lulastlogtime;
+        this.lulastlogip = lulastlogip;
+        this.luheadpic = luheadpic;
+        this.positionId = positionId;
+        this.positionName = positionName;
+        this.branchNo = branchNo;
+        this.branchNm = branchNm;
+        this.pointpraiseNo = pointpraiseNo;
+        this.messageNo = messageNo;
+        this.commentNo = commentNo;
+        this.lubrowsertype = lubrowsertype;
+        this.luflag = luflag;
+        this.luactive = luactive;
+        this.lusex = lusex;
+        this.lulogintoken = lulogintoken;
+        this.token = token;
+        this.luenabled = luenabled;
+        this.lubrowserpath = lubrowserpath;
+        this.luhomepage = luhomepage;
+        this.lucorpid = lucorpid;
+        this.lushopseq = lushopseq;
+        this.luorgid = luorgid;
+        this.lumodiuserid = lumodiuserid;
+        this.organizationId = organizationId;
+        this.lupagerows = lupagerows;
+        this.lugxtime = lugxtime;
         this.lastPasswordFailTime = lastPasswordFailTime;
         this.lastPasswordResetTime = lastPasswordResetTime;
-        this.loginTime = loginTime;
-        this.loginIp = loginIp;
-        this.loginSessionId = loginSessionId;
-        this.approvalTime = approvalTime;
         this.approvalStatus = approvalStatus;
-        this.newMessageNum = newMessageNum;
-        this.newNotificationNum = newNotificationNum;
-        this.createdIp = createdIp;
-        this.createdTime = createdTime;
         this.updatedTime = updatedTime;
-        this.inviteCode = inviteCode;
-        this.registeredWay = registeredWay;
-        this.pwdInit = pwdInit;
-        this.postId = postId;
-        this.readGuide = readGuide;
-        this.orgIds = orgIds;
-        this.orgCodes = orgCodes;
     }
 
-    public Integer getId() {
-        return this.id;
+    public String getLuuserid() {
+        return this.luuserid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setLuuserid(String luuserid) {
+        this.luuserid = luuserid;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getLuusername() {
+        return this.luusername;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLuusername(String luusername) {
+        this.luusername = luusername;
     }
 
-    public String getMobile() {
-        return this.mobile;
+    public String getLuemail() {
+        return this.luemail;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setLuemail(String luemail) {
+        this.luemail = luemail;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getLupwd() {
+        return this.lupwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLupwd(String lupwd) {
+        this.lupwd = lupwd;
     }
 
-    public String getPayPassword() {
-        return this.payPassword;
+    public String getLuoldpwd() {
+        return this.luoldpwd;
     }
 
-    public void setPayPassword(String payPassword) {
-        this.payPassword = payPassword;
+    public void setLuoldpwd(String luoldpwd) {
+        this.luoldpwd = luoldpwd;
     }
 
-    public String getLocale() {
-        return this.locale;
+    public String getLumobile() {
+        return this.lumobile;
     }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
+    public void setLumobile(String lumobile) {
+        this.lumobile = lumobile;
     }
 
-    public String getUri() {
-        return this.uri;
+    public String getLuphone() {
+        return this.luphone;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setLuphone(String luphone) {
+        this.luphone = luphone;
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getLuworkercode() {
+        return this.luworkercode;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLuworkercode(String luworkercode) {
+        this.luworkercode = luworkercode;
     }
 
-    public String getTruename() {
-        return this.truename;
+    public String getLuusertype() {
+        return this.luusertype;
     }
 
-    public void setTruename(String truename) {
-        this.truename = truename;
+    public void setLuusertype(String luusertype) {
+        this.luusertype = luusertype;
     }
 
-    public String getTitle() {
-        return this.title;
+    public LocalDateTime getLuregtime() {
+        return this.luregtime;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setLuregtime(LocalDateTime luregtime) {
+        this.luregtime = luregtime;
     }
 
-    public String getTags() {
-        return this.tags;
+    public LocalDateTime getLulastlogtime() {
+        return this.lulastlogtime;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setLulastlogtime(LocalDateTime lulastlogtime) {
+        this.lulastlogtime = lulastlogtime;
     }
 
-    public String getType() {
-        return this.type;
+    public String getLulastlogip() {
+        return this.lulastlogip;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLulastlogip(String lulastlogip) {
+        this.lulastlogip = lulastlogip;
     }
 
-    public Integer getPoint() {
-        return this.point;
+    public String getLuheadpic() {
+        return this.luheadpic;
     }
 
-    public void setPoint(Integer point) {
-        this.point = point;
+    public void setLuheadpic(String luheadpic) {
+        this.luheadpic = luheadpic;
     }
 
-    public Integer getCoin() {
-        return this.coin;
+    public String getPositionId() {
+        return this.positionId;
     }
 
-    public void setCoin(Integer coin) {
-        this.coin = coin;
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
     }
 
-    public String getSmallAvatar() {
-        return this.smallAvatar;
+    public String getPositionName() {
+        return this.positionName;
     }
 
-    public void setSmallAvatar(String smallAvatar) {
-        this.smallAvatar = smallAvatar;
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
     }
 
-    public String getMediumAvatar() {
-        return this.mediumAvatar;
+    public String getBranchNo() {
+        return this.branchNo;
     }
 
-    public void setMediumAvatar(String mediumAvatar) {
-        this.mediumAvatar = mediumAvatar;
+    public void setBranchNo(String branchNo) {
+        this.branchNo = branchNo;
     }
 
-    public String getLargeAvatar() {
-        return this.largeAvatar;
+    public String getBranchNm() {
+        return this.branchNm;
     }
 
-    public void setLargeAvatar(String largeAvatar) {
-        this.largeAvatar = largeAvatar;
+    public void setBranchNm(String branchNm) {
+        this.branchNm = branchNm;
     }
 
-    public Boolean getEmailVerified() {
-        return this.emailVerified;
+    public String getPointpraiseNo() {
+        return this.pointpraiseNo;
     }
 
-    public void setEmailVerified(Boolean emailVerified) {
-        this.emailVerified = emailVerified;
+    public void setPointpraiseNo(String pointpraiseNo) {
+        this.pointpraiseNo = pointpraiseNo;
     }
 
-    public Boolean getSetup() {
-        return this.setup;
+    public String getMessageNo() {
+        return this.messageNo;
     }
 
-    public void setSetup(Boolean setup) {
-        this.setup = setup;
+    public void setMessageNo(String messageNo) {
+        this.messageNo = messageNo;
     }
 
-    public String getRoles() {
-        return this.roles;
+    public String getCommentNo() {
+        return this.commentNo;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setCommentNo(String commentNo) {
+        this.commentNo = commentNo;
     }
 
-    public Boolean getPromoted() {
-        return this.promoted;
+    public String getLubrowsertype() {
+        return this.lubrowsertype;
     }
 
-    public void setPromoted(Boolean promoted) {
-        this.promoted = promoted;
+    public void setLubrowsertype(String lubrowsertype) {
+        this.lubrowsertype = lubrowsertype;
     }
 
-    public Integer getPromotedSeq() {
-        return this.promotedSeq;
+    public String getLuflag() {
+        return this.luflag;
     }
 
-    public void setPromotedSeq(Integer promotedSeq) {
-        this.promotedSeq = promotedSeq;
+    public void setLuflag(String luflag) {
+        this.luflag = luflag;
     }
 
-    public LocalDateTime getPromotedTime() {
-        return this.promotedTime;
+    public Boolean getLuactive() {
+        return this.luactive;
     }
 
-    public void setPromotedTime(LocalDateTime promotedTime) {
-        this.promotedTime = promotedTime;
+    public void setLuactive(Boolean luactive) {
+        this.luactive = luactive;
     }
 
-    public Boolean getLocked() {
-        return this.locked;
+    public String getLusex() {
+        return this.lusex;
     }
 
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
+    public void setLusex(String lusex) {
+        this.lusex = lusex;
     }
 
-    public Integer getLockDeadline() {
-        return this.lockDeadline;
+    public String getLulogintoken() {
+        return this.lulogintoken;
     }
 
-    public void setLockDeadline(Integer lockDeadline) {
-        this.lockDeadline = lockDeadline;
+    public void setLulogintoken(String lulogintoken) {
+        this.lulogintoken = lulogintoken;
     }
 
-    public Integer getConsecutivePasswordErrorTimes() {
-        return this.consecutivePasswordErrorTimes;
+    public String getToken() {
+        return this.token;
     }
 
-    public void setConsecutivePasswordErrorTimes(Integer consecutivePasswordErrorTimes) {
-        this.consecutivePasswordErrorTimes = consecutivePasswordErrorTimes;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getLuenabled() {
+        return this.luenabled;
+    }
+
+    public void setLuenabled(String luenabled) {
+        this.luenabled = luenabled;
+    }
+
+    public String getLubrowserpath() {
+        return this.lubrowserpath;
+    }
+
+    public void setLubrowserpath(String lubrowserpath) {
+        this.lubrowserpath = lubrowserpath;
+    }
+
+    public String getLuhomepage() {
+        return this.luhomepage;
+    }
+
+    public void setLuhomepage(String luhomepage) {
+        this.luhomepage = luhomepage;
+    }
+
+    public String getLucorpid() {
+        return this.lucorpid;
+    }
+
+    public void setLucorpid(String lucorpid) {
+        this.lucorpid = lucorpid;
+    }
+
+    public Integer getLushopseq() {
+        return this.lushopseq;
+    }
+
+    public void setLushopseq(Integer lushopseq) {
+        this.lushopseq = lushopseq;
+    }
+
+    public String getLuorgid() {
+        return this.luorgid;
+    }
+
+    public void setLuorgid(String luorgid) {
+        this.luorgid = luorgid;
+    }
+
+    public String getLumodiuserid() {
+        return this.lumodiuserid;
+    }
+
+    public void setLumodiuserid(String lumodiuserid) {
+        this.lumodiuserid = lumodiuserid;
+    }
+
+    public String getOrganizationId() {
+        return this.organizationId;
+    }
+
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public Integer getLupagerows() {
+        return this.lupagerows;
+    }
+
+    public void setLupagerows(Integer lupagerows) {
+        this.lupagerows = lupagerows;
+    }
+
+    public LocalDateTime getLugxtime() {
+        return this.lugxtime;
+    }
+
+    public void setLugxtime(LocalDateTime lugxtime) {
+        this.lugxtime = lugxtime;
     }
 
     public LocalDateTime getLastPasswordFailTime() {
@@ -441,76 +500,12 @@ public class User implements Serializable {
         this.lastPasswordResetTime = lastPasswordResetTime;
     }
 
-    public LocalDateTime getLoginTime() {
-        return this.loginTime;
-    }
-
-    public void setLoginTime(LocalDateTime loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public String getLoginIp() {
-        return this.loginIp;
-    }
-
-    public void setLoginIp(String loginIp) {
-        this.loginIp = loginIp;
-    }
-
-    public String getLoginSessionId() {
-        return this.loginSessionId;
-    }
-
-    public void setLoginSessionId(String loginSessionId) {
-        this.loginSessionId = loginSessionId;
-    }
-
-    public LocalDateTime getApprovalTime() {
-        return this.approvalTime;
-    }
-
-    public void setApprovalTime(LocalDateTime approvalTime) {
-        this.approvalTime = approvalTime;
-    }
-
     public UserApprovalStatus getApprovalStatus() {
         return this.approvalStatus;
     }
 
     public void setApprovalStatus(UserApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
-    }
-
-    public Integer getNewMessageNum() {
-        return this.newMessageNum;
-    }
-
-    public void setNewMessageNum(Integer newMessageNum) {
-        this.newMessageNum = newMessageNum;
-    }
-
-    public Integer getNewNotificationNum() {
-        return this.newNotificationNum;
-    }
-
-    public void setNewNotificationNum(Integer newNotificationNum) {
-        this.newNotificationNum = newNotificationNum;
-    }
-
-    public String getCreatedIp() {
-        return this.createdIp;
-    }
-
-    public void setCreatedIp(String createdIp) {
-        this.createdIp = createdIp;
-    }
-
-    public LocalDateTime getCreatedTime() {
-        return this.createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
     }
 
     public LocalDateTime getUpdatedTime() {
@@ -521,111 +516,50 @@ public class User implements Serializable {
         this.updatedTime = updatedTime;
     }
 
-    public String getInviteCode() {
-        return this.inviteCode;
-    }
-
-    public void setInviteCode(String inviteCode) {
-        this.inviteCode = inviteCode;
-    }
-
-    public String getRegisteredWay() {
-        return this.registeredWay;
-    }
-
-    public void setRegisteredWay(String registeredWay) {
-        this.registeredWay = registeredWay;
-    }
-
-    public Boolean getPwdInit() {
-        return this.pwdInit;
-    }
-
-    public void setPwdInit(Boolean pwdInit) {
-        this.pwdInit = pwdInit;
-    }
-
-    public Integer getPostId() {
-        return this.postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-
-    public Boolean getReadGuide() {
-        return this.readGuide;
-    }
-
-    public void setReadGuide(Boolean readGuide) {
-        this.readGuide = readGuide;
-    }
-
-    public String getOrgIds() {
-        return this.orgIds;
-    }
-
-    public void setOrgIds(String orgIds) {
-        this.orgIds = orgIds;
-    }
-
-    public String getOrgCodes() {
-        return this.orgCodes;
-    }
-
-    public void setOrgCodes(String orgCodes) {
-        this.orgCodes = orgCodes;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("User (");
 
-        sb.append(id);
-        sb.append(", ").append(email);
-        sb.append(", ").append(mobile);
-        sb.append(", ").append(password);
-        sb.append(", ").append(payPassword);
-        sb.append(", ").append(locale);
-        sb.append(", ").append(uri);
-        sb.append(", ").append(username);
-        sb.append(", ").append(truename);
-        sb.append(", ").append(title);
-        sb.append(", ").append(tags);
-        sb.append(", ").append(type);
-        sb.append(", ").append(point);
-        sb.append(", ").append(coin);
-        sb.append(", ").append(smallAvatar);
-        sb.append(", ").append(mediumAvatar);
-        sb.append(", ").append(largeAvatar);
-        sb.append(", ").append(emailVerified);
-        sb.append(", ").append(setup);
-        sb.append(", ").append(roles);
-        sb.append(", ").append(promoted);
-        sb.append(", ").append(promotedSeq);
-        sb.append(", ").append(promotedTime);
-        sb.append(", ").append(locked);
-        sb.append(", ").append(lockDeadline);
-        sb.append(", ").append(consecutivePasswordErrorTimes);
+        sb.append(luuserid);
+        sb.append(", ").append(luusername);
+        sb.append(", ").append(luemail);
+        sb.append(", ").append(lupwd);
+        sb.append(", ").append(luoldpwd);
+        sb.append(", ").append(lumobile);
+        sb.append(", ").append(luphone);
+        sb.append(", ").append(luworkercode);
+        sb.append(", ").append(luusertype);
+        sb.append(", ").append(luregtime);
+        sb.append(", ").append(lulastlogtime);
+        sb.append(", ").append(lulastlogip);
+        sb.append(", ").append(luheadpic);
+        sb.append(", ").append(positionId);
+        sb.append(", ").append(positionName);
+        sb.append(", ").append(branchNo);
+        sb.append(", ").append(branchNm);
+        sb.append(", ").append(pointpraiseNo);
+        sb.append(", ").append(messageNo);
+        sb.append(", ").append(commentNo);
+        sb.append(", ").append(lubrowsertype);
+        sb.append(", ").append(luflag);
+        sb.append(", ").append(luactive);
+        sb.append(", ").append(lusex);
+        sb.append(", ").append(lulogintoken);
+        sb.append(", ").append(token);
+        sb.append(", ").append(luenabled);
+        sb.append(", ").append(lubrowserpath);
+        sb.append(", ").append(luhomepage);
+        sb.append(", ").append(lucorpid);
+        sb.append(", ").append(lushopseq);
+        sb.append(", ").append(luorgid);
+        sb.append(", ").append(lumodiuserid);
+        sb.append(", ").append(organizationId);
+        sb.append(", ").append(lupagerows);
+        sb.append(", ").append(lugxtime);
         sb.append(", ").append(lastPasswordFailTime);
         sb.append(", ").append(lastPasswordResetTime);
-        sb.append(", ").append(loginTime);
-        sb.append(", ").append(loginIp);
-        sb.append(", ").append(loginSessionId);
-        sb.append(", ").append(approvalTime);
         sb.append(", ").append(approvalStatus);
-        sb.append(", ").append(newMessageNum);
-        sb.append(", ").append(newNotificationNum);
-        sb.append(", ").append(createdIp);
-        sb.append(", ").append(createdTime);
         sb.append(", ").append(updatedTime);
-        sb.append(", ").append(inviteCode);
-        sb.append(", ").append(registeredWay);
-        sb.append(", ").append(pwdInit);
-        sb.append(", ").append(postId);
-        sb.append(", ").append(readGuide);
-        sb.append(", ").append(orgIds);
-        sb.append(", ").append(orgCodes);
 
         sb.append(")");
         return sb.toString();

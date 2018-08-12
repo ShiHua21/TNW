@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 //@EnableScheduling
-@ComponentScan({ "com.jic.elearning"})
+@ComponentScan({ "com.jic.tnw"})
 public class Application {
 
 

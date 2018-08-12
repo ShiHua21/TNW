@@ -5,16 +5,14 @@ package com.jic.tnw.db.mysql.tables.records;
 
 
 import com.jic.tnw.db.mysql.tables.PostMember;
-
-import java.time.LocalDateTime;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record7;
 import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> implements Record7<Integer, Integer, Integer, Integer, LocalDateTime, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = 688935391;
+    private static final long serialVersionUID = -1601753949;
 
     /**
      * Setter for <code>TNW.post_member.id</code>. ID
@@ -47,16 +45,16 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
     }
 
     /**
-     * Setter for <code>TNW.post_member.post_id</code>. ??ID
+     * Setter for <code>TNW.post_member.position_id</code>. ??ID
      */
-    public void setPostId(Integer value) {
+    public void setPositionId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>TNW.post_member.post_id</code>. ??ID
+     * Getter for <code>TNW.post_member.position_id</code>. ??ID
      */
-    public Integer getPostId() {
+    public Integer getPositionId() {
         return (Integer) get(1);
     }
 
@@ -175,7 +173,7 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
      */
     @Override
     public Field<Integer> field2() {
-        return PostMember.POST_MEMBER.POST_ID;
+        return PostMember.POST_MEMBER.POSITION_ID;
     }
 
     /**
@@ -231,7 +229,7 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
      */
     @Override
     public Integer component2() {
-        return getPostId();
+        return getPositionId();
     }
 
     /**
@@ -287,7 +285,7 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
      */
     @Override
     public Integer value2() {
-        return getPostId();
+        return getPositionId();
     }
 
     /**
@@ -344,7 +342,7 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
      */
     @Override
     public PostMemberRecord value2(Integer value) {
-        setPostId(value);
+        setPositionId(value);
         return this;
     }
 
@@ -422,11 +420,11 @@ public class PostMemberRecord extends UpdatableRecordImpl<PostMemberRecord> impl
     /**
      * Create a detached, initialised PostMemberRecord
      */
-    public PostMemberRecord(Integer id, Integer postId, Integer userId, Integer createdUserId, LocalDateTime createdTime, Integer lastUpdUserId, LocalDateTime lastUpdTime) {
+    public PostMemberRecord(Integer id, Integer positionId, Integer userId, Integer createdUserId, LocalDateTime createdTime, Integer lastUpdUserId, LocalDateTime lastUpdTime) {
         super(PostMember.POST_MEMBER);
 
         set(0, id);
-        set(1, postId);
+        set(1, positionId);
         set(2, userId);
         set(3, createdUserId);
         set(4, createdTime);

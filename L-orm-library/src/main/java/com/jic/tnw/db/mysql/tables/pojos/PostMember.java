@@ -4,10 +4,9 @@
 package com.jic.tnw.db.mysql.tables.pojos;
 
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.annotation.Generated;
 
 
 /**
@@ -23,10 +22,10 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PostMember implements Serializable {
 
-    private static final long serialVersionUID = -119047609;
+    private static final long serialVersionUID = -951643312;
 
     private Integer       id;
-    private Integer       postId;
+    private Integer       positionId;
     private Integer       userId;
     private Integer       createdUserId;
     private LocalDateTime createdTime;
@@ -37,7 +36,7 @@ public class PostMember implements Serializable {
 
     public PostMember(PostMember value) {
         this.id = value.id;
-        this.postId = value.postId;
+        this.positionId = value.positionId;
         this.userId = value.userId;
         this.createdUserId = value.createdUserId;
         this.createdTime = value.createdTime;
@@ -47,7 +46,7 @@ public class PostMember implements Serializable {
 
     public PostMember(
         Integer       id,
-        Integer       postId,
+        Integer       positionId,
         Integer       userId,
         Integer       createdUserId,
         LocalDateTime createdTime,
@@ -55,7 +54,7 @@ public class PostMember implements Serializable {
         LocalDateTime lastUpdTime
     ) {
         this.id = id;
-        this.postId = postId;
+        this.positionId = positionId;
         this.userId = userId;
         this.createdUserId = createdUserId;
         this.createdTime = createdTime;
@@ -71,12 +70,12 @@ public class PostMember implements Serializable {
         this.id = id;
     }
 
-    public Integer getPostId() {
-        return this.postId;
+    public Integer getPositionId() {
+        return this.positionId;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 
     public Integer getUserId() {
@@ -124,7 +123,7 @@ public class PostMember implements Serializable {
         StringBuilder sb = new StringBuilder("PostMember (");
 
         sb.append(id);
-        sb.append(", ").append(postId);
+        sb.append(", ").append(positionId);
         sb.append(", ").append(userId);
         sb.append(", ").append(createdUserId);
         sb.append(", ").append(createdTime);

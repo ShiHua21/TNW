@@ -6,16 +6,14 @@ package com.jic.tnw.db.mysql.tables.daos;
 
 import com.jic.tnw.db.mysql.tables.PostMember;
 import com.jic.tnw.db.mysql.tables.records.PostMemberRecord;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -70,10 +68,10 @@ public class PostMemberDao extends DAOImpl<PostMemberRecord, com.jic.tnw.db.mysq
     }
 
     /**
-     * Fetch records that have <code>post_id IN (values)</code>
+     * Fetch records that have <code>position_id IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.PostMember> fetchByPostId(Integer... values) {
-        return fetch(PostMember.POST_MEMBER.POST_ID, values);
+    public List<com.jic.tnw.db.mysql.tables.pojos.PostMember> fetchByPositionId(Integer... values) {
+        return fetch(PostMember.POST_MEMBER.POSITION_ID, values);
     }
 
     /**

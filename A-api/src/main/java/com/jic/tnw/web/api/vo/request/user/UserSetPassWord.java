@@ -3,6 +3,10 @@ package com.jic.tnw.web.api.vo.request.user;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class UserSetPassWord {
+
+    @NotBlank(message = "{user.oldpassword.not.blank}")
+    private String oldpassword;
+
     /**
      * password
      * user.password.not.blank = 密码不能为空!
@@ -16,6 +20,14 @@ public class UserSetPassWord {
      */
     @NotBlank(message = "{user.q2password.not.blank}")
     private String q2password;
+
+    public String getOldpassword() {
+        return oldpassword;
+    }
+
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
+    }
 
     public String getPassword() {
         return password;

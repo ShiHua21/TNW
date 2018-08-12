@@ -32,16 +32,15 @@ public class JelAuthenticationToken extends AbstractAuthenticationToken {
         this.principal = principal;
         super.setAuthenticated(true);
     }
-
+    @Override
     public Object getPrincipal() {
         return this.principal;
     }
-
     @Override
     public Object getCredentials() {
         return this.credentials;
     }
-
+    @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
         if (isAuthenticated) {
             throw new IllegalArgumentException(

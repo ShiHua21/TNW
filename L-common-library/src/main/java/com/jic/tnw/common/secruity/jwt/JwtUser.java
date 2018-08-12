@@ -6,26 +6,33 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 public class JwtUser implements UserDetails {
-    private final Integer id;
+    private final String id;
     private final String username;
+    private final String lumobile;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final LocalDateTime lastPasswordResetTime;
 
     public JwtUser(
-            Integer id,
+            String id,
+            String lumobile,
             String username,
             String password,
             Collection<? extends GrantedAuthority> authorities,
             LocalDateTime lastPasswordResetTime) {
         this.id = id;
+        this.lumobile = lumobile;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.lastPasswordResetTime = lastPasswordResetTime;
+    }
+
+    @JsonIgnore
+    public String getLumobile() {
+        return lumobile;
     }
 
     @Override
@@ -34,7 +41,7 @@ public class JwtUser implements UserDetails {
     }
 
     @JsonIgnore
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

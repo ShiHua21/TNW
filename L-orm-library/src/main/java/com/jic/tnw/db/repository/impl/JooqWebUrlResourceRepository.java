@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by lee5hx on 2017/10/30.
- */
+
 @Repository
 public class JooqWebUrlResourceRepository extends AbstractJooqRepository<WebUrlResource, WebUrlResourceRecord> implements WebUrlResourceRepository {
 
@@ -47,7 +45,7 @@ public class JooqWebUrlResourceRepository extends AbstractJooqRepository<WebUrlR
     }
 
     @Override
-    public WebUrlResource delete(Integer id) {
+    public WebUrlResource delete(String id) {
         return null;
     }
 
@@ -63,8 +61,10 @@ public class JooqWebUrlResourceRepository extends AbstractJooqRepository<WebUrlR
     }
 
     @Override
-    public WebUrlResource findById(Integer id) {
-        WebUrlResourceRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.WebUrlResource.WEB_URL_RESOURCE).where(com.jic.tnw.db.mysql.tables.WebUrlResource.WEB_URL_RESOURCE.ID.eq(id))
+    public WebUrlResource findById(String id) {
+        int iid = Integer.parseInt(id);
+
+        WebUrlResourceRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.WebUrlResource.WEB_URL_RESOURCE).where(com.jic.tnw.db.mysql.tables.WebUrlResource.WEB_URL_RESOURCE.ID.eq(iid))
                 .fetchOne();
         return convertQueryResultToPojo(queryResult);    }
 

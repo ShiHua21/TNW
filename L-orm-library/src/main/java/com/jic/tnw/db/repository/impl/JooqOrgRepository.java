@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created by lee5hx on 2017/10/30.
- */
 @Repository
 public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> implements OrgRepository {
 
@@ -42,8 +39,8 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     private OrgRecord createRecord(Org entry) {
         OrgRecord record = new OrgRecord();
         // record.setId(entry.getId());
-        record.setName(entry.getName());
-        record.setCode(entry.getCode());
+        record.setBranchNm(entry.getBranchNm());
+        record.setBranchNo(entry.getBranchNo());
         record.setParentId(entry.getParentId());
         record.setChildrenNum(entry.getChildrenNum());
         record.setCreatedTime(entry.getCreatedTime());
@@ -60,11 +57,12 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     }
 
     @Override
-    public Org delete(Integer id) {
+    public Org delete(String id) {
         LOGGER.info(String.format("Deleting Org entry by id: [%d]", id));
         Org deleted = findById(id);
+        int iid = Integer.parseInt(id);
         int deletedRecordCount = jooq.delete(com.jic.tnw.db.mysql.tables.Org.ORG)
-                .where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.equal(id))
+                .where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.equal(iid))
                 .execute();
         LOGGER.debug(String.format("Deleted [%d] todo entries", deletedRecordCount));
         LOGGER.info(String.format("Returning deleted Org entry:%s ", deleted));
@@ -75,7 +73,7 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     public List<Org> findAll() {
         LOGGER.info("Finding all Org entries.");
         List<OrgRecord> queryResults = jooq
-                .selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).orderBy(com.jic.tnw.db.mysql.tables.Org.ORG.ORG_CODE.asc())
+                .selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).orderBy(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NO.asc())
                 .fetchInto(OrgRecord.class);
         List<Org> entries = convertQueryResultToPojos(queryResults);
         LOGGER.info(String.format("Found [%d] Org entries", entries.size()));
@@ -85,15 +83,16 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     @Override
     public List<Org> findByContainsName(String name) {
         List<OrgRecord> queryResults = jooq.select().from(com.jic.tnw.db.mysql.tables.Org.ORG)
-                .where(com.jic.tnw.db.mysql.tables.Org.ORG.NAME.like(name + "%"))
+                .where(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NM.like(name + "%"))
                 .fetchInto(OrgRecord.class);
         return convertQueryResultToPojos(queryResults);
     }
 
 
     @Override
-    public Org findById(Integer id) {
-        OrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.eq(id))
+    public Org findById(String id) {
+        int iid = Integer.parseInt(id);
+        OrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.eq(iid))
                 .fetchOne();
         return convertQueryResultToPojo(queryResult);
     }
@@ -113,7 +112,7 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     public void updateOrgCodeById(Integer id, String orgCode) {
         LOGGER.info(String.format("Update Org.OrgCode ById:[%d]", id));
         int updatedRecordCount = jooq.update(com.jic.tnw.db.mysql.tables.Org.ORG)
-                .set(com.jic.tnw.db.mysql.tables.Org.ORG.ORG_CODE, orgCode)
+                .set(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NO, orgCode)
                 .where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.eq(id))
                 .execute();
         LOGGER.debug(String.format("Updated [%d] Org.OrgCode entry.", updatedRecordCount));
@@ -123,7 +122,7 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
 
     @Override
     public Org findByCode(String code) {
-        OrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).where(com.jic.tnw.db.mysql.tables.Org.ORG.CODE.eq(code))
+        OrgRecord queryResult = jooq.selectFrom(com.jic.tnw.db.mysql.tables.Org.ORG).where(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NO.eq(code))
                 .fetchOne();
         return convertQueryResultToPojo(queryResult);
     }
@@ -131,15 +130,15 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     @Override
     public Org update(Org entry) {
         int updatedRecordCount = jooq.update(com.jic.tnw.db.mysql.tables.Org.ORG)
-                .set(com.jic.tnw.db.mysql.tables.Org.ORG.NAME, entry.getName())
-                .set(com.jic.tnw.db.mysql.tables.Org.ORG.CODE, entry.getCode())
+                .set(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NM, entry.getBranchNm())
+                .set(com.jic.tnw.db.mysql.tables.Org.ORG.BRANCH_NO, entry.getBranchNo())
                 .set(com.jic.tnw.db.mysql.tables.Org.ORG.DESCRIPTION, entry.getDescription())
                 .set(com.jic.tnw.db.mysql.tables.Org.ORG.LAST_UPD_TIME, LocalDateTime.now())
                 .set(com.jic.tnw.db.mysql.tables.Org.ORG.LAST_UPD_USER_ID, entry.getLastUpdUserId())
                 .where(com.jic.tnw.db.mysql.tables.Org.ORG.ID.equal(entry.getId()))
                 .execute();
         LOGGER.debug(String.format("Updated %d Org entry.", updatedRecordCount));
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
 
@@ -152,4 +151,5 @@ public class JooqOrgRepository extends AbstractJooqRepository<Org, OrgRecord> im
     protected Class<Org> getPojoClass() {
         return Org.class;
     }
+
 }

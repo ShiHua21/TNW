@@ -4,18 +4,17 @@
 package com.jic.tnw.db.mysql.tables.daos;
 
 
+import com.jic.tnw.db.mysql.enums.UserGroupMemberMemberType;
 import com.jic.tnw.db.mysql.tables.UserGroupMember;
 import com.jic.tnw.db.mysql.tables.records.UserGroupMemberRecord;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Generated;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -86,7 +85,7 @@ public class UserGroupMemberDao extends DAOImpl<UserGroupMemberRecord, com.jic.t
     /**
      * Fetch records that have <code>member_type IN (values)</code>
      */
-    public List<com.jic.tnw.db.mysql.tables.pojos.UserGroupMember> fetchByMemberType(String... values) {
+    public List<com.jic.tnw.db.mysql.tables.pojos.UserGroupMember> fetchByMemberType(UserGroupMemberMemberType... values) {
         return fetch(UserGroupMember.USER_GROUP_MEMBER.MEMBER_TYPE, values);
     }
 

@@ -1,6 +1,5 @@
 package com.jic.tnw.web.api.vo.response;
 
-import com.jic.elearning.web.api.vo.response.post.AllKindPost;
 import com.jic.tnw.web.api.vo.response.post.AllKindPost;
 import org.springframework.hateoas.ResourceSupport;
 

@@ -1,27 +1,25 @@
 package com.jic.tnw.web.api.controller.v1;
 
 import com.google.i18n.phonenumbers.Phonenumber;
-import com.jic.tnw.common.exception.UserMobileExistsException;
+import com.jic.tnw.common.exception.*;
 import com.jic.tnw.common.secruity.jwt.JwtTokenUtil;
 import com.jic.tnw.common.utils.PhoneUtils;
 import com.jic.tnw.db.mysql.tables.pojos.User;
-import com.jic.elearning.thrid.domain.VerifyCode;
-import com.jic.elearning.thrid.service.SMSCodeService;
-import com.jic.elearning.web.api.auth.AuthService;
-import com.jic.elearning.web.api.config.LocaleMessageSourceService;
-import com.jic.elearning.web.api.vo.request.RegisterAppStep1;
-import com.jic.elearning.web.api.vo.request.RegisterAppStep2;
-import com.jic.elearning.web.api.vo.request.RegisterAppStep3;
-import com.jic.elearning.web.api.vo.response.LoginResource;
-import com.jic.elearning.web.api.vo.response.RegisterAppStep1Resource;
-import com.jic.elearning.web.api.vo.response.RegisterAppStep2Resource;
-import com.jic.elearning.web.api.vo.response.RegisterAppStep3Resource;
-import com.jic.elearning.web.api.secruity.JwtAuthenticationRequest;
-import com.jic.elearning.web.api.secruity.JwtAuthenticationResponse;
+import com.jic.tnw.thrid.domain.VerifyCode;
+import com.jic.tnw.thrid.service.SMSCodeService;
 import com.jic.tnw.user.service.UserService;
-import com.jic.tnw.web.api.vo.request.RegisterAppStep1;
-import com.jic.tnw.web.api.vo.request.RegisterAppStep2;
-import com.jic.tnw.web.api.vo.request.RegisterAppStep3;
+import com.jic.tnw.user.service.dto.user.JelUser;
+import com.jic.tnw.web.api.auth.AuthService;
+import com.jic.tnw.web.api.config.LocaleMessageSourceService;
+import com.jic.tnw.web.api.secruity.JwtAuthenticationResponse;
+import com.jic.tnw.web.api.vo.request.CheckCode;
+import com.jic.tnw.web.api.vo.request.MobileCheck;
+import com.jic.tnw.web.api.vo.request.user.UserSetPassWord;
+import com.jic.tnw.web.api.vo.response.CheckCodeResource;
+import com.jic.tnw.web.api.vo.response.LoginResource;
+import com.jic.tnw.web.api.vo.response.MobileCheckResource;
+import com.jic.tnw.web.api.vo.response.user.JelUserResourceAssembler;
+import com.jic.tnw.web.api.vo.response.user.UserResource;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -33,24 +31,23 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @RestController
 @RequestMapping("/v1")
-@Api(description = "登陆 刷新令牌", tags = {"B-认证"})
+@Api(description = "登陆", tags = {"B-登陆认证"})
 public class AuthController {
     private static final Log LOGGER = LogFactory.getLog(AuthController.class);
 
@@ -60,12 +57,17 @@ public class AuthController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
+    private final JelUserResourceAssembler jelUserResourceAssembler = new JelUserResourceAssembler(UserController.class, UserResource.class);
+
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private LocaleMessageSourceService localeMessageSourceService;
 
     @Value("${jwt.header}")
     private String tokenHeader;
-    //private final ProfileService profileService;
 
     @Autowired
     public AuthController(AuthService authService,
@@ -75,57 +77,37 @@ public class AuthController {
         this.authService = authService;
         this.userService = userService;
         this.smsCodeService = smsCodeService;
-        //this.profileService = profileService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
 
     @RequestMapping(value = "auth", method = RequestMethod.POST)
     @ApiOperation(value = "登陆-验证", notes = "使用用户与密码登陆成功后返回Token.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "authenticationRequest", value = "验证实体", required = true, dataType = "JwtAuthenticationRequest")
-    })
     public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest,HttpServletRequest request) throws Exception {
+            @RequestParam String principal, @RequestParam String password, HttpServletRequest request) throws Exception {
+
         LoginResource loginResource = new LoginResource();
         String ip = getIpAddr(request);
-        LOGGER.info(String.format("login Principal:[%s] Ip:[%s] ",
-                authenticationRequest.getPrincipal(),
-                ip
-        ));
-        final UserDetails userDetails = authService.login(
-                authenticationRequest.getPrincipal(),
-                authenticationRequest.getPassword(),
+        LOGGER.info(String.format("login Principal:[%s] Ip:[%s] ", principal, ip));
+
+        UserDetails userDetails = authService.login(
+                principal,
+                password,
                 getIpAddr(request));
+
+        String name = userDetails.getUsername();
+        User user = userService.findByPrincipal(name);
+
         String token = jwtTokenUtil.generateToken(userDetails);
         LOGGER.info(String.format("login token:[%s] ", token));
+        loginResource.setStatus(HttpServletResponse.SC_OK);
+        loginResource.setMessage("登陆成功！");
         loginResource.setToken(token);
-        loginResource.setRoles(userDetails.getAuthorities().toString());
+//        loginResource.setLumobile(user.getLumobile());
+        loginResource.setData(user);
 
-        loginResource.add(linkTo(methodOn(AuthController.class).refreshAndGetAuthenticationToken(null)).withRel("refresh_token"));
-
-        if(loginResource.getRoles().contains("ROLE_SUPER_ADMIN")){
-            loginResource.add(linkTo(methodOn(OrgController.class).getOrgTree()).withRel("get_org_tree"));
-            loginResource.add(linkTo(methodOn(UserController.class).getUsers(
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            )).withRel("get_user_list"));
-            loginResource.add(linkTo(methodOn(PostController.class).getPost()).withRel("get_post_list"));
-        }
-
-        // Return the token
         return ResponseEntity.ok(loginResource);
     }
-
 
     private String getIpAddr(HttpServletRequest request) {
         String ipAddress = null;
@@ -150,23 +132,217 @@ public class AuthController {
                     ipAddress = inet.getHostAddress();
                 }
             }
-            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-            if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-                // = 15
+            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割 // "***.***.***.***".length() // = 15
+            if (ipAddress != null && ipAddress.length() > 15) {
+
                 if (ipAddress.indexOf(",") > 0) {
                     ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
                 }
             }
         } catch (Exception e) {
-            ipAddress="";
+            ipAddress = "";
         }
-        // ipAddress = this.getRequest().getRemoteAddr();
-
         return ipAddress;
     }
 
+
+    @RequestMapping(value = "auth/mobile/send/code", method = RequestMethod.POST)
+    @ApiOperation(value = "sendCode(绑定手机：发送短信验证码)", notes = "绑定手机：发送短信验证码")
+    public ResponseEntity<?> sendCode(@Validated @RequestParam String country, @RequestParam String phoneNo) throws Exception {
+
+        MobileCheckResource mobileCheckResource = new MobileCheckResource();
+        MobileCheck mobileCheck = new MobileCheck();
+        mobileCheck.setPhoneNo(phoneNo);
+        mobileCheck.setCountry(country);
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(phoneNo, country);
+
+        String countryCode = String.valueOf(number.getCountryCode());
+        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", countryCode));
+        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", nationalNumber));
+
+        if (userService.existsPhoneNo(phoneNo)) {
+            throw new UserMobileExistsException();
+        }
+
+        String vcode = smsCodeService.sendCode(countryCode, nationalNumber, "AUTH_APP_REGISTER");
+        mobileCheck.setVcode(vcode);
+        mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+        mobileCheckResource.setMessage("发送短信验证码成功！");
+        mobileCheckResource.setData(mobileCheck);
+        return ResponseEntity.ok(mobileCheckResource);
+    }
+
+
+    @RequestMapping(value = {"auth/mobile/check/code"}, method = {RequestMethod.POST})
+    @ApiOperation(value = "checkCode(绑定手机：绑定手机号+code)", notes = "绑定手机：绑定手机号+code")
+    public ResponseEntity<?> checkCode(@Validated @RequestParam String id, @RequestParam String country, @RequestParam String phoneNo, @RequestParam String vcode) throws Exception {
+        CheckCode checkCode = new CheckCode();
+        if (userService.existsPhoneNo(checkCode.getPhoneNo())) {
+            throw new UserMobileExistsException();
+        } else {
+            CheckCodeResource checkCodeResource = new CheckCodeResource();
+            checkCode.setCountry(country);
+            checkCode.setPhoneNo(phoneNo);
+            checkCode.setVcode(vcode);
+            Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(checkCode.getPhoneNo(), checkCode.getCountry());
+            String countryCode = String.valueOf(number.getCountryCode());
+            String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+            VerifyCode verifyCode = new VerifyCode();
+            verifyCode.setCountryCode(countryCode);
+            verifyCode.setPhoneNumber(nationalNumber);
+            verifyCode.setCode(checkCode.getVcode());
+            verifyCode.setScene("AUTH_APP_REGISTER");
+            if (this.smsCodeService.verifyCode(verifyCode)) {
+//            String name = principalUser.getUsername();
+                JelUser jUser = userService.findById(id);
+                JelUser jelUser = userService.userSetMobile(phoneNo, id);
+                checkCodeResource.setStatus(200);
+                checkCodeResource.setMessage("绑定手机号成功！");
+                checkCodeResource.setData(verifyCode);
+                this.jelUserResourceAssembler.toResource(jelUser);
+            }
+
+            return ResponseEntity.ok(checkCodeResource);
+        }
+    }
+
+    /**
+     * 校验该用户是否绑定手机
+     */
+    @RequestMapping(value = "auth/mobile", method = RequestMethod.POST)
+    @ApiOperation(value = "验证-帐号是否绑定手机号", notes = "验证-帐号是否绑定手机号")
+    public ResponseEntity<?> checkUsername(
+            @RequestParam String principal, HttpServletRequest request) throws Exception {
+
+        LoginResource loginResource = new LoginResource();
+
+        User user = userService.findByPrincipal(principal);
+        if (!StringUtils.isEmpty(user)) {
+
+            String mobile = user.getLumobile();
+            if (mobile != null && mobile.length() != 0) {
+                loginResource.setStatus(HttpServletResponse.SC_OK);
+                loginResource.setMessage("帐号已绑定手机号！");
+                loginResource.setData(user);
+            } else {
+                throw new UserNoMobileExistsException2();
+            }
+        } else {
+            throw new UserNoException();
+        }
+        return ResponseEntity.ok(loginResource);
+    }
+
+    @ApiIgnore
+    @RequestMapping(value = "auth/mobile/check", method = RequestMethod.POST)
+    @ApiOperation(value = "check(忘记密码：手机号校验)", notes = "忘记密码：手机号校验")
+    public ResponseEntity<?> mobileCheck(@Validated @RequestParam String country, @RequestParam String phoneNo) throws Exception {
+
+        MobileCheckResource mobileCheckResource = new MobileCheckResource();
+        MobileCheck mobileCheck = new MobileCheck();
+        mobileCheck.setCountry(country);
+        mobileCheck.setPhoneNo(phoneNo);
+
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(mobileCheck.getPhoneNo(), mobileCheck.getCountry());
+        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", String.valueOf(number.getCountryCode())));
+        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", String.valueOf(number.getNationalNumber())));
+//        校验手机号是否存在
+        if (userService.existsPhoneNo(mobileCheck.getPhoneNo())) {
+            mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+            mobileCheckResource.setMessage("该手机号校验通过！");
+            mobileCheckResource.setData(new MobileCheckResource());
+        } else {
+
+            throw new UserNoMobileExistsException();
+        }
+        return ResponseEntity.ok(mobileCheckResource);
+    }
+
+    @RequestMapping(value = "auth/mobile/code", method = RequestMethod.POST)
+    @ApiOperation(value = "check(忘记密码：发送短信)", notes = "忘记密码：发送短信")
+    public ResponseEntity<?> mobileCheckToken(@Validated @RequestParam String country, @RequestParam String phoneNo) throws Exception {
+
+        MobileCheckResource mobileCheckResource = new MobileCheckResource();
+        MobileCheck mobileCheck = new MobileCheck();
+
+        mobileCheck.setCountry(country);
+        mobileCheck.setPhoneNo(phoneNo);
+
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(mobileCheck.getPhoneNo(), mobileCheck.getCountry());
+        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", String.valueOf(number.getCountryCode())));
+        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", String.valueOf(number.getNationalNumber())));
+        //校验手机号是否存在
+        if (userService.existsPhoneNo(mobileCheck.getPhoneNo())) {
+            //发送验证码
+            String countryCode = String.valueOf(number.getCountryCode());
+            String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+            String vcode = smsCodeService.sendCode(countryCode, nationalNumber, "AUTH_APP_REGISTER");
+            mobileCheck.setVcode(vcode.toString());
+//            mobileCheckResource.setResidueTime(residueTime);
+        } else {
+            //该手机号码不存在！
+            throw new UserNoMobileExistsException();
+        }
+
+        mobileCheckResource.setStatus(HttpServletResponse.SC_OK);
+        mobileCheckResource.setMessage("验证码已发送！");
+        mobileCheckResource.setData(mobileCheck);
+        return ResponseEntity.ok(mobileCheckResource);
+    }
+
+    @RequestMapping(value = "auth/mobile/edit/pwd", method = RequestMethod.POST)
+    @ApiOperation(value = "checkCode(忘记密码：更改密码+code)", notes = "忘记密码：更改密码+code")
+    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "checkCode", value = "验证码", required = true, dataType = "CheckCode")
+    })
+    public ResponseEntity<?> checkCode(@Validated @RequestParam String luuserid, @RequestParam String country, @RequestParam String phoneNo,
+                                       @RequestParam String vcode, UserSetPassWord userSetPassWord) throws Exception {
+
+        CheckCodeResource checkCodeResource = new CheckCodeResource();
+        CheckCode checkCode = new CheckCode();
+        checkCode.setCountry(country);
+        checkCode.setPhoneNo(phoneNo);
+        checkCode.setVcode(vcode);
+
+        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(checkCode.getPhoneNo(), checkCode.getCountry());
+        String countryCode = String.valueOf(number.getCountryCode());
+        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
+
+        VerifyCode verifyCode = new VerifyCode();
+        verifyCode.setCountryCode(countryCode);
+        verifyCode.setPhoneNumber(nationalNumber);
+        verifyCode.setCode(checkCode.getVcode());
+        verifyCode.setScene("AUTH_APP_REGISTER");
+        if (smsCodeService.verifyCode(verifyCode)) {
+
+            if (!userSetPassWord.getQ2password().equals(userSetPassWord.getPassword())) {
+                //2次密码不一致
+                throw new TwoDifferentPasswordException();
+            }
+
+            if (userService.existsPhoneNo(phoneNo)) {
+                //根据电话号码差user
+                User user = userService.findByphoneNo(checkCode.getPhoneNo());
+                JelUser jelUser = userService.editUserPwd(passwordEncoder.encode(userSetPassWord.getPassword()), user.getLuuserid());
+                UserResource userResource = jelUserResourceAssembler.toResource(jelUser);
+
+                checkCodeResource.setStatus(HttpServletResponse.SC_OK);
+                checkCodeResource.setMessage("修改密码成功！");
+                checkCodeResource.setData(checkCode);
+            } else {
+                //该手机号码不存在！
+                throw new UserNoMobileExistsException();
+            }
+
+        }
+        return ResponseEntity.ok(checkCodeResource);
+    }
+
+
+    @ApiIgnore
     @RequestMapping(value = "auth/refresh", method = RequestMethod.GET)
-    @ApiOperation(value = "刷新-令牌", notes = "使用旧token换取新的Token.")
+    @ApiOperation(value = "登陆-验证-刷新-令牌", notes = "使用旧token换取新的Token.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "JWT令牌", required = true, paramType = "header", dataType = "String")
     })
@@ -181,112 +357,5 @@ public class AuthController {
         }
     }
 
-    @ApiIgnore
-    @RequestMapping(value = "auth/register/app/step/1_1", method = RequestMethod.POST)
-    @ApiOperation(value = "APP_注册_STEP_1_1-(手机号校验)", notes = "手机号校验")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "registerAppStep1", value = "手机号", required = true, dataType = "RegisterAppStep1")
-    })
-    public ResponseEntity<?> register_app_step_1_1(@Validated @RequestBody RegisterAppStep1 registerAppStep1) throws Exception {
-        RegisterAppStep1Resource registerAppStep1Resource = new RegisterAppStep1Resource();
-
-        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(registerAppStep1.getPhoneNo(), registerAppStep1.getCountry());
-        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", String.valueOf(number.getCountryCode())));
-        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", String.valueOf(number.getNationalNumber())));
-        //校验手机号是否存在
-        if (userService.existsPhoneNo(registerAppStep1.getPhoneNo())) {
-            throw new UserMobileExistsException();
-        }
-        registerAppStep1Resource.setCountry(String.valueOf(number.getCountryCode()));
-        registerAppStep1Resource.setPhoneNo(String.valueOf(number.getNationalNumber()));
-        registerAppStep1Resource.add(linkTo(methodOn(AuthController.class).register_app_step_1_2(null)).withRel("register_app_step_1_2"));
-        return ResponseEntity.ok(registerAppStep1Resource);
-    }
-    @ApiIgnore
-    @RequestMapping(value = "auth/register/app/step/1_2", method = RequestMethod.POST)
-    @ApiOperation(value = "APP_注册_STEP_1_2-(发送注册短信验证码)", notes = "发送注册短信验证码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "registerAppStep1", value = "手机号", required = true, dataType = "RegisterAppStep1")
-    })
-    public ResponseEntity<?> register_app_step_1_2(@Validated @RequestBody RegisterAppStep1 registerAppStep1) throws Exception {
-        RegisterAppStep1Resource registerAppStep1Resource = new RegisterAppStep1Resource();
-        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(registerAppStep1.getPhoneNo(), registerAppStep1.getCountry());
-
-        String countryCode = String.valueOf(number.getCountryCode());
-        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
-        LOGGER.info(String.format("PhoneNumber-CountryCode:%s", countryCode));
-        LOGGER.info(String.format("PhoneNumber-NationalNumber:%s", nationalNumber));
-
-        Integer residueTime = smsCodeService.sendCode(countryCode, nationalNumber, "AUTH_APP_REGISTER");
-        registerAppStep1Resource.setResidueTime(residueTime);
-        registerAppStep1Resource.add(linkTo(methodOn(AuthController.class).register_app_step_2(null)).withRel("register_app_step_2"));
-        return ResponseEntity.ok(registerAppStep1Resource);
-    }
-    @ApiIgnore
-    @RequestMapping(value = "auth/register/app/step/2", method = RequestMethod.POST)
-    @ApiOperation(value = "APP_注册_STEP_2-(验证码校验)", notes = "验证码校验")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "registerAppStep2", value = "验证码", required = true, dataType = "RegisterAppStep2")
-    })
-    public ResponseEntity<?> register_app_step_2(@Validated @RequestBody RegisterAppStep2 registerAppStep2) throws Exception {
-        RegisterAppStep2Resource registerAppStep2Resource = new RegisterAppStep2Resource();
-        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(registerAppStep2.getPhoneNo(), registerAppStep2.getCountry());
-        String countryCode = String.valueOf(number.getCountryCode());
-        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
-
-        VerifyCode verifyCode = new VerifyCode();
-        verifyCode.setCountryCode(countryCode);
-        verifyCode.setPhoneNumber(nationalNumber);
-        verifyCode.setCode(registerAppStep2.getVcode());
-        verifyCode.setScene("AUTH_APP_REGISTER");
-        if (smsCodeService.verifyCode(verifyCode)) {
-            registerAppStep2Resource.setCountry(registerAppStep2.getCountry());
-            registerAppStep2Resource.setPhoneNo(registerAppStep2.getPhoneNo());
-            registerAppStep2Resource.setCountry(registerAppStep2.getCountry());
-            registerAppStep2Resource.setVcode(registerAppStep2.getVcode());
-        }
-        registerAppStep2Resource.add(linkTo(methodOn(AuthController.class).register_app_step_3(null)).withRel("register_app_step_3"));
-        return ResponseEntity.ok(registerAppStep2Resource);
-    }
-    @ApiIgnore
-    @RequestMapping(value = "auth/register/app/step/3", method = RequestMethod.POST)
-    @ApiOperation(value = "APP_注册_STEP_3-(密码设置)", notes = "密码设置")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "registerAppStep3", value = "密码", required = true, dataType = "RegisterAppStep3")
-    })
-    public ResponseEntity<?> register_app_step_3(@Validated @RequestBody RegisterAppStep3 registerAppStep3) throws Exception {
-        RegisterAppStep3Resource registerAppStep3Resource = new RegisterAppStep3Resource();
-        Phonenumber.PhoneNumber number = PhoneUtils.getPhoneNumber(registerAppStep3.getPhoneNo(), registerAppStep3.getCountry());
-        String countryCode = String.valueOf(number.getCountryCode());
-        String nationalNumber = String.valueOf(String.valueOf(number.getNationalNumber()));
-        VerifyCode verifyCode = new VerifyCode();
-        verifyCode.setCountryCode(countryCode);
-        verifyCode.setPhoneNumber(nationalNumber);
-        verifyCode.setCode(registerAppStep3.getVcode());
-        verifyCode.setScene("AUTH_APP_REGISTER");
-        if (smsCodeService.verifyCode(verifyCode)) {
-            User addUser = new User();
-            addUser.setMobile(registerAppStep3.getPhoneNo());
-            addUser.setPassword(registerAppStep3.getPassword());
-            //addUser = authService.register(addUser);
-            smsCodeService.useCode(verifyCode);
-            registerAppStep3Resource.setPhoneNo(addUser.getMobile());
-            registerAppStep3Resource.setUserName(addUser.getUsername());
-            registerAppStep3Resource.add(linkTo(methodOn(AuthController.class).createAuthenticationToken(null,null)).withRel("login_app"));
-        }
-        return ResponseEntity.ok(registerAppStep3Resource);
-    }
-    @ApiIgnore
-    @RequestMapping(value = "auth/register/web", method = RequestMethod.POST)
-    @ApiOperation(value = "WEB_注册", notes = "用户注册")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "registerAppStep3", value = "密码", required = true, dataType = "RegisterAppStep3")
-    })
-    public ResponseEntity<?> register_web(@Validated @RequestBody RegisterAppStep3 registerAppStep3) throws Exception {
-
-
-        return ResponseEntity.ok("");
-    }
 }
-
 

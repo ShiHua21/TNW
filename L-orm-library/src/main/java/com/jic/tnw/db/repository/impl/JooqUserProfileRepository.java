@@ -12,10 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-/**
- * @author lee5hx
- */
 @Repository
 public class JooqUserProfileRepository extends AbstractJooqRepository<UserProfile, UserProfileRecord> implements UserProfileRepository {
 
@@ -44,9 +40,11 @@ public class JooqUserProfileRepository extends AbstractJooqRepository<UserProfil
     }
 
     @Override
-    public UserProfile delete(Integer id) {
+    public UserProfile delete(String id) {
+        int iid = Integer.parseInt(id);
+
         int deleteCount = jooq.delete(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE)
-                .where(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE.ID.eq(id))
+                .where(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE.ID.eq(iid))
                 .execute();
         LOGGER.info(String.format("user profile delete count %d", deleteCount));
         return findById(id);
@@ -61,9 +59,11 @@ public class JooqUserProfileRepository extends AbstractJooqRepository<UserProfil
     }
 
     @Override
-    public UserProfile findById(Integer id) {
+    public UserProfile findById(String id) {
+        int iid = Integer.parseInt(id);
+
         UserProfileRecord userProfileRecord = jooq.selectFrom(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE)
-                .where(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE.ID.eq(id))
+                .where(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE.ID.eq(iid))
                 .fetchOne();
         UserProfile userProfile = convertQueryResultToPojo(userProfileRecord);
         return userProfile;
@@ -84,7 +84,7 @@ public class JooqUserProfileRepository extends AbstractJooqRepository<UserProfil
                 .where(com.jic.tnw.db.mysql.tables.UserProfile.USER_PROFILE.ID.eq(entry.getId()))
                 .execute();
         LOGGER.info(String.format("user profile update count %s", updatedRecordCount));
-        return findById(entry.getId());
+        return findById(entry.getId().toString());
     }
 
     @Override

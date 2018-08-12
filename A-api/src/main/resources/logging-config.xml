@@ -37,6 +37,7 @@
         <logger name="org.jooq" level="debug"/>
         <logger name="org.springframework.cache" level="debug"/>
         <logger name="com.jic.elearning" level="debug"/>
+        <logger name="com.jic.tnw" level="debug"/>
 
         <Root level="info">
             <AppenderRef ref="Console" />

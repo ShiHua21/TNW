@@ -4,10 +4,11 @@
 package com.jic.tnw.db.mysql.tables.pojos;
 
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.jic.tnw.db.mysql.enums.UserGroupMemberMemberType;
 
 import javax.annotation.Generated;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 /**
@@ -23,16 +24,16 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserGroupMember implements Serializable {
 
-    private static final long serialVersionUID = 1420889294;
+    private static final long serialVersionUID = 1355344538;
 
-    private Integer       id;
-    private Integer       groupId;
-    private Integer       memberId;
-    private String        memberType;
-    private Integer       createdUserId;
-    private LocalDateTime createdTime;
-    private Integer       lastUpdUserId;
-    private LocalDateTime lastUpdTime;
+    private Integer                   id;
+    private Integer                   groupId;
+    private Integer                   memberId;
+    private UserGroupMemberMemberType memberType;
+    private Integer                   createdUserId;
+    private LocalDateTime             createdTime;
+    private Integer                   lastUpdUserId;
+    private LocalDateTime             lastUpdTime;
 
     public UserGroupMember() {}
 
@@ -48,14 +49,14 @@ public class UserGroupMember implements Serializable {
     }
 
     public UserGroupMember(
-        Integer       id,
-        Integer       groupId,
-        Integer       memberId,
-        String        memberType,
-        Integer       createdUserId,
-        LocalDateTime createdTime,
-        Integer       lastUpdUserId,
-        LocalDateTime lastUpdTime
+        Integer                   id,
+        Integer                   groupId,
+        Integer                   memberId,
+        UserGroupMemberMemberType memberType,
+        Integer                   createdUserId,
+        LocalDateTime             createdTime,
+        Integer                   lastUpdUserId,
+        LocalDateTime             lastUpdTime
     ) {
         this.id = id;
         this.groupId = groupId;
@@ -91,11 +92,11 @@ public class UserGroupMember implements Serializable {
         this.memberId = memberId;
     }
 
-    public String getMemberType() {
+    public UserGroupMemberMemberType getMemberType() {
         return this.memberType;
     }
 
-    public void setMemberType(String memberType) {
+    public void setMemberType(UserGroupMemberMemberType memberType) {
         this.memberType = memberType;
     }
 

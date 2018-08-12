@@ -8,24 +8,16 @@ import com.jic.tnw.db.converter.LocalDateTimeConverter1;
 import com.jic.tnw.db.mysql.Indexes;
 import com.jic.tnw.db.mysql.Keys;
 import com.jic.tnw.db.mysql.Tnw;
+import com.jic.tnw.db.mysql.enums.UserGroupMemberMemberType;
 import com.jic.tnw.db.mysql.tables.records.UserGroupMemberRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -41,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserGroupMember extends TableImpl<UserGroupMemberRecord> {
 
-    private static final long serialVersionUID = -347229084;
+    private static final long serialVersionUID = -1435331692;
 
     /**
      * The reference instance of <code>TNW.user_group_member</code>
@@ -74,7 +66,7 @@ public class UserGroupMember extends TableImpl<UserGroupMemberRecord> {
     /**
      * The column <code>TNW.user_group_member.member_type</code>. ????
      */
-    public final TableField<UserGroupMemberRecord, String> MEMBER_TYPE = createField("member_type", org.jooq.impl.SQLDataType.VARCHAR(32).nullable(false), this, "????");
+    public final TableField<UserGroupMemberRecord, UserGroupMemberMemberType> MEMBER_TYPE = createField("member_type", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(com.jic.tnw.db.mysql.enums.UserGroupMemberMemberType.class), this, "????");
 
     /**
      * The column <code>TNW.user_group_member.created_user_id</code>. ????ID
